@@ -19,7 +19,32 @@ class Database
         if (self::$con) {
             return self::$con;
         }
-        $a = new self();
-        return self::$con;
+        return $instance = new self();
+    }
+
+    public function read($query, $data = array())
+    {
+        $stm = self::$con->prepare($query);
+        $result = $stm->execute($data);
+
+        if ($result) {
+            $data = $stm->fetchAll(PDO::FETCH_OBJ);
+
+            if (is_array($data)) {
+                return $data;
+            }
+        }
+        return false;
+    }
+
+    public function write($query, $data = array())
+    {
+        $stm = self::$con->prepare($query);
+        $result = $stm->execute($data);
+
+        if ($result) {
+            return true;
+        }
+        return false;
     }
 }
