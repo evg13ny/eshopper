@@ -51,6 +51,7 @@ class User
         if ($this->error == "") {
             $data['date'] = date("Y-m-d H:i:s");
             $data['rank'] = "customer";
+            $data['password'] = hash('sha1', $data['password']);
 
             $query = "insert into users (url_address,name,email,password,date,rank) values (:url_address,:name,:email,:password,:date,:rank)";
             $result = $db->write($query, $data);
