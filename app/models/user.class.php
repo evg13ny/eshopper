@@ -34,6 +34,7 @@ class User
         $sql = "select * from users where email = :email limit 1";
         $arr['email'] = $data['email'];
         $check = $db->read($sql, $arr);
+
         if (is_array($check)) {
             $this->error .= "That email is already in use <br>";
         }
@@ -44,6 +45,7 @@ class User
         $sql = "select * from users where url_address = :url_address limit 1";
         $arr['url_address'] = $data['url_address'];
         $check = $db->read($sql, $arr);
+
         if (is_array($check)) {
             $data['url_address'] = $this->get_random_string_max(60);
         }
@@ -92,8 +94,10 @@ class User
                 header("Location: " . ROOT . "home");
                 die;
             }
+
             $this->error .= "Wrong email or password <br>";
         }
+
         $_SESSION['error'] = $this->error;
     }
 
@@ -117,5 +121,34 @@ class User
         }
 
         return $text;
+    }
+
+    public function check_login()
+    {
+        if (isset($_SESSION['user_url'])) {
+            $query = "select * from users where url_address = :url limit 1";
+
+            $arr['url'] = $_SESSION['user_url'];
+
+            $db = Database::getInstance();
+
+            $result = $db->read($query, $arr);
+
+            if (is_array($result)) {
+                return $result[0];
+            }
+        }
+
+        return false;
+    }
+
+    public function logout()
+    {
+        if (isset($_SESSION['user_url'])) {
+            unset($_SESSION['user_url']);
+        }
+
+        header("Location: " . ROOT . "home");
+        die;
     }
 }
