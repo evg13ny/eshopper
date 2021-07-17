@@ -14,7 +14,7 @@
 					<!--login form-->
 					<h2>Login to your account</h2>
 					<form method="POST">
-						<input type="email" name="email" placeholder="Email Address" />
+						<input type="email" name="email" value="<?= isset($_POST['email']) ? $_POST['email'] : ''; ?>" placeholder="Email Address" />
 						<input type="password" name="password" placeholder="Password" />
 						<span>
 							<input type="checkbox" class="checkbox">
