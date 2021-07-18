@@ -19,10 +19,6 @@
     <script src="<?= ASSETS . THEME ?>js/respond.min.js"></script>
     <![endif]-->
 
-    <!-- Custom styles for this template -->
-    <link href="<?= ASSETS . THEME ?>admin/css/style.css" rel="stylesheet">
-    <link href="<?= ASSETS . THEME ?>admin/css/style-responsive.css" rel="stylesheet">
-
     <link rel="shortcut icon" href="<?= ASSETS . THEME ?>images/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?= ASSETS . THEME ?>images/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?= ASSETS . THEME ?>images/ico/apple-touch-icon-114-precomposed.png">
