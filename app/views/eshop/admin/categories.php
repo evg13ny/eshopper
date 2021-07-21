@@ -2,6 +2,6 @@
 
 <?php $this->view("admin/sidebar", $data); ?>
 
-<p>Main Admin page.</p>
+<p>Categories page.</p>
 
 <?php $this->view("admin/footer", $data); ?>
