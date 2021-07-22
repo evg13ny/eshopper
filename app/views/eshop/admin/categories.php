@@ -6,7 +6,8 @@
     .add_new {
         width: 500px;
         height: 300px;
-        background-color: #cecccc;
+        background-color: #eae8e8;
+        box-shadow: 0px 0px 10px #aaa;
         position: absolute;
         padding: 6px;
     }
@@ -28,8 +29,21 @@
 
                 <!-- add new category -->
                 <div class="add_new hide">
+                    <!-- BASIC FORM ELELEMNTS -->
+                    <h4 class="mb"><i class="fa fa-angle-right"></i> Add New Category</h4>
+                    <form class="form-horizontal style-form" method="post">
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Category Name:</label>
+                            <div class="col-sm-10">
+                                <input id="category" name="category" type="text" class="form-control" autofocus>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" style="position: absolute; bottom: 10px; right: 10px;">Save</button>
+                    </form>
+                    <br>
+                    <br>
                 </div>
-                <!-- !add new category -->
+                <!-- /add new category -->
 
                 <hr>
                 <thead>
@@ -64,6 +78,8 @@
         var show_add_box = document.querySelector(".add_new");
         if (show_add_box.classList.contains("hide")) {
             show_add_box.classList.remove("hide");
+            var category_input = document.querySelector("#category");
+            category_input.focus();
         } else {
             show_add_box.classList.add("hide");
         }
