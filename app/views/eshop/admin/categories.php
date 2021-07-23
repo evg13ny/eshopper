@@ -38,7 +38,8 @@
                                 <input id="category" name="category" type="text" class="form-control" autofocus>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-primary" style="position: absolute; bottom: 10px; right: 10px;">Save</button>
+                        <button type="button" class="btn btn-warning" onclick="show_add_new(event)" style="position: absolute; bottom: 10px; left: 10px;">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="send_data(event)" style="position: absolute; bottom: 10px; right: 10px;">Save</button>
                     </form>
                     <br>
                     <br>
@@ -76,6 +77,7 @@
 <script type="text/javascript">
     function show_add_new(e) {
         var show_add_box = document.querySelector(".add_new");
+
         if (show_add_box.classList.contains("hide")) {
             show_add_box.classList.remove("hide");
             var category_input = document.querySelector("#category");
@@ -83,6 +85,23 @@
         } else {
             show_add_box.classList.add("hide");
         }
+    }
+
+    function collect_data(e) {}
+
+    function send_data(data) {
+        var ajax = new XMLHttpRequest();
+        var form = new FormData();
+        form.append('name', 'myname');
+
+        ajax.addEventListener('readystatechange', function() {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                alert(ajax.responseText);
+            }
+        });
+
+        ajax.open("POST", "<?= ROOT ?>ajax", true);
+        ajax.send(form);
     }
 </script>
 
