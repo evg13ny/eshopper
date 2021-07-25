@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2021 at 02:27 PM
+-- Generation Time: Jul 25, 2021 at 09:19 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -29,8 +29,24 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
-  `category` varchar(30) NOT NULL
+  `category` varchar(30) NOT NULL,
+  `disabled` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `category`, `disabled`) VALUES
+(1, 'Food', 0),
+(3, 'Drinks', 0),
+(4, 'Books', 0),
+(5, 'Sodas', 0),
+(6, 'Clothes', 0),
+(7, 'Meat', 0),
+(8, 'Bags', 0),
+(9, 'Cars', 0),
+(10, 'Pens', 0);
 
 -- --------------------------------------------------------
 
@@ -46,9 +62,9 @@ CREATE TABLE `products` (
   `price` double NOT NULL,
   `quantity` int(11) NOT NULL,
   `image` varchar(500) NOT NULL,
-  `image2` varchar(500) NOT NULL,
-  `image3` varchar(500) NOT NULL,
-  `image4` varchar(500) NOT NULL,
+  `image2` varchar(500) DEFAULT NULL,
+  `image3` varchar(500) DEFAULT NULL,
+  `image4` varchar(500) DEFAULT NULL,
   `date` datetime NOT NULL,
   `slag` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -87,7 +103,8 @@ INSERT INTO `users` (`id`, `url_address`, `name`, `email`, `password`, `date`, `
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `category` (`category`);
+  ADD KEY `category` (`category`),
+  ADD KEY `disabled` (`disabled`);
 
 --
 -- Indexes for table `products`
@@ -121,7 +138,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `products`

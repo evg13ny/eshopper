@@ -1,6 +1,6 @@
 <?php
 
-Class Admin extends Controller
+class Admin extends Controller
 {
     public function index()
     {
@@ -26,6 +26,18 @@ Class Admin extends Controller
 
         if (is_object($user_data)) {
             $data['user_data'] = $user_data;
+        }
+
+        $DB = Database::newInstance();
+
+        $categories = $DB->read("select * from categories order by id desc");
+
+        $category = $this->load_model("Category");
+
+        $tbl_rows = $category->make_table($categories);
+
+        if (is_array($categories)) {
+            $data['tbl_rows'] = $tbl_rows;
         }
 
         $data['page_title'] = "Admin";

@@ -50,24 +50,16 @@
                 <thead>
                     <tr>
                         <th><i class="fa fa-bullhorn"></i> Category</th>
-                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> Descrition</th>
-                        <th><i class="fa fa-bookmark"></i> Price</th>
                         <th><i class=" fa fa-edit"></i> Status</th>
                         <th><i class=" fa fa-edit"></i> Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="basic_table.html#">Company Ltd</a></td>
-                        <td class="hidden-phone">Lorem Ipsum dolor</td>
-                        <td>12000.00$ </td>
-                        <td><span class="label label-info label-mini">Enabled</span></td>
-                        <td>
-                            <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                        </td>
-                    </tr>
+                <tbody id="table_body">
+
+                    <?php
+                    echo $data['tbl_rows'];
+                    ?>
+
                 </tbody>
             </table>
         </div><!-- /content-panel -->
@@ -97,7 +89,8 @@
 
         var data = category_input.value.trim();
         send_data({
-            data: data
+            data: data,
+            data_type: 'add_category'
         });
     }
 
@@ -115,8 +108,20 @@
     }
 
     function handle_result(result) {
-        alert(result);
-        show_add_new();
+        if (result != "") {
+            var obj = JSON.parse(result);
+
+            if (typeof obj.message_type != 'undefined') {
+                if (obj.message_type == "info") {
+                    alert(obj.message);
+                    show_add_new();
+                    var table_body = document.querySelector("#table_body");
+                    table_body.innerHTML = obj.data;
+                } else {
+                    alert(obj.message);
+                }
+            }
+        }
     }
 </script>
 
