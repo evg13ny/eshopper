@@ -56,9 +56,7 @@
                 </thead>
                 <tbody id="table_body">
 
-                    <?php
-                    echo $data['tbl_rows'];
-                    ?>
+                    <?= $tbl_rows ?>
 
                 </tbody>
             </table>
@@ -111,17 +109,36 @@
         if (result != "") {
             var obj = JSON.parse(result);
 
-            if (typeof obj.message_type != 'undefined') {
-                if (obj.message_type == "info") {
-                    alert(obj.message);
-                    show_add_new();
-                    var table_body = document.querySelector("#table_body");
-                    table_body.innerHTML = obj.data;
-                } else {
+            if (typeof obj.data_type != 'undefined') {
+                if (obj.data_type == "add_new") {
+                    if (obj.message_type == "info") {
+                        alert(obj.message);
+                        show_add_new();
+                        var table_body = document.querySelector("#table_body");
+                        table_body.innerHTML = obj.data;
+                    } else {
+                        alert(obj.message);
+                    }
+                } else if (obj.data_type = "delete_row") {
                     alert(obj.message);
                 }
             }
         }
+    }
+
+    function edit_row(e, id) {
+        alert(id);
+    }
+
+    function delete_row(e, id) {
+        if (!confirm("Are you sure you want to delete this row?")) {
+            return;
+        }
+
+        send_data({
+            data_type: "delete_row",
+            id: id
+        });
     }
 </script>
 
