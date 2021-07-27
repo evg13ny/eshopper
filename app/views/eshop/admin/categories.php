@@ -119,6 +119,9 @@
                     } else {
                         alert(obj.message);
                     }
+                } else if (obj.data_type = "disable_row") {
+                    var table_body = document.querySelector("#table_body");
+                    table_body.innerHTML = obj.data;
                 } else if (obj.data_type = "delete_row") {
                     alert(obj.message);
                 }
@@ -126,11 +129,11 @@
         }
     }
 
-    function edit_row(e, id) {
+    function edit_row(id) {
         alert(id);
     }
 
-    function delete_row(e, id) {
+    function delete_row(id) {
         if (!confirm("Are you sure you want to delete this row?")) {
             return;
         }
@@ -138,6 +141,14 @@
         send_data({
             data_type: "delete_row",
             id: id
+        });
+    }
+
+    function disable_row(id, state) {
+        send_data({
+            data_type: "disable_row",
+            id: id,
+            current_state: state
         });
     }
 </script>
