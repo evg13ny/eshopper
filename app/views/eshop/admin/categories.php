@@ -3,7 +3,8 @@
 <?php $this->view("admin/sidebar", $data); ?>
 
 <style type="text/css">
-    .add_new {
+    .add_new,
+    .edit_category {
         width: 500px;
         height: 300px;
         background-color: #eae8e8;
@@ -46,6 +47,25 @@
                 </div>
                 <!-- /add new category -->
 
+                <!-- edit category -->
+                <div class="edit_category hide">
+                    <!-- BASIC FORM ELELEMNTS -->
+                    <h4 class="mb"><i class="fa fa-angle-right"></i> Edit Category</h4>
+                    <form class="form-horizontal style-form" method="post">
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Category Name:</label>
+                            <div class="col-sm-10">
+                                <input id="category_edit" name="category" type="text" class="form-control" autofocus>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-warning" onclick="show_edit_category(0,'',event)" style="position: absolute; bottom: 10px; left: 10px;">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="collect_edit_data(event)" style="position: absolute; bottom: 10px; right: 10px;">Save</button>
+                    </form>
+                    <br>
+                    <br>
+                </div>
+                <!-- /edit category -->
+
                 <hr>
                 <thead>
                     <tr>
@@ -66,8 +86,24 @@
 
 <script type="text/javascript">
     function show_add_new() {
-        var show_add_box = document.querySelector(".add_new");
+        var show_edit_box = document.querySelector(".edit_category");
         var category_input = document.querySelector("#category");
+
+        if (show_edit_box.classList.contains("hide")) {
+            show_edit_box.classList.remove("hide");
+            category_input.focus();
+        } else {
+            show_edit_box.classList.add("hide");
+            category_input.value = "";
+        }
+    }
+
+    function show_edit_category(id, category, e) {
+        var show_add_box = document.querySelector(".edit_category");
+        // show_add_box.style.left = (e.clientX - 700) + "px";
+        show_add_box.style.top = (e.clientY - 100) + "px";
+        var category_input = document.querySelector("#category_edit");
+        category_input.value = category;
 
         if (show_add_box.classList.contains("hide")) {
             show_add_box.classList.remove("hide");
@@ -123,6 +159,9 @@
                     var table_body = document.querySelector("#table_body");
                     table_body.innerHTML = obj.data;
                 } else if (obj.data_type = "delete_row") {
+                    var table_body = document.querySelector("#table_body");
+                    table_body.innerHTML = obj.data;
+
                     alert(obj.message);
                 }
             }
