@@ -5,7 +5,7 @@ class Category
 {
     public function create($DATA)
     {
-        $DB = Database::getInstance();
+        $DB = Database::newInstance();
 
         $arr['category'] = ucwords($DATA->data);
 
@@ -24,8 +24,13 @@ class Category
         return false;
     }
 
-    public function edit($DATA)
+    public function edit($id, $category)
     {
+        $DB = Database::newInstance();
+        $arr['id'] = $id;
+        $arr['category'] = $category;
+        $query = "update categories set category = :category where id = :id limit 1";
+        $DB->write($query, $arr);
     }
 
     public function delete($id)

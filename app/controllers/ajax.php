@@ -49,6 +49,18 @@ class Ajax extends Controller
                 $arr['data_type'] = "disable_row";
 
                 echo json_encode($arr);
+            } else if ($data->data_type == 'edit_category') {
+                $category->edit($data->id, $data->category);
+                $arr['message'] = "Your row was successfully edited";
+                $_SESSION['error'] = "";
+                $arr['message_type'] = "info";
+
+                $cats = $category->get_all();
+                $arr['data'] = $category->make_table($cats);
+
+                $arr['data_type'] = "edit_category";
+
+                echo json_encode($arr);
             } else if ($data->data_type == 'delete_row') {
                 $category->delete($data->id);
                 $arr['message'] = "Your row was successfully deleted";

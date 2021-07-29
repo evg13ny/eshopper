@@ -85,8 +85,10 @@
 </div><!-- /row -->
 
 <script type="text/javascript">
+    var EDIT_ID = 0;
+
     function show_add_new() {
-        var show_edit_box = document.querySelector(".edit_category");
+        var show_edit_box = document.querySelector(".add_new");
         var category_input = document.querySelector("#category");
 
         if (show_edit_box.classList.contains("hide")) {
@@ -99,6 +101,7 @@
     }
 
     function show_edit_category(id, category, e) {
+        EDIT_ID = id;
         var show_add_box = document.querySelector(".edit_category");
         // show_add_box.style.left = (e.clientX - 700) + "px";
         show_add_box.style.top = (e.clientY - 100) + "px";
@@ -122,9 +125,26 @@
         }
 
         var data = category_input.value.trim();
+
         send_data({
             data: data,
             data_type: 'add_category'
+        });
+    }
+
+    function collect_edit_data(e) {
+        var category_input = document.querySelector("#category_edit");
+
+        if (category_input.value.trim() == "" || !isNaN(category_input.value.trim())) {
+            alert("Please enter a valid category name");
+        }
+
+        var data = category_input.value.trim();
+
+        send_data({
+            id: EDIT_ID,
+            category: data,
+            data_type: 'edit_category'
         });
     }
 
@@ -155,6 +175,10 @@
                     } else {
                         alert(obj.message);
                     }
+                } else if (obj.data_type = "edit_category") {
+                    show_edit_category(0, '', false);
+                    var table_body = document.querySelector("#table_body");
+                    table_body.innerHTML = obj.data;
                 } else if (obj.data_type = "disable_row") {
                     var table_body = document.querySelector("#table_body");
                     table_body.innerHTML = obj.data;
