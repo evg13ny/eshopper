@@ -24,9 +24,7 @@ MAIN SIDEBAR MENU
                     <span>Products</span>
                 </a>
                 <ul class="sub">
-                    <li><a href="<?= ROOT ?>admin/products/add">Add New Product</a></li>
-                    <li><a href="<?= ROOT ?>admin/products/edit">Edit Product</a></li>
-                    <li><a href="<?= ROOT ?>admin/products/delete">Delete Product</a></li>
+                    <li><a href="<?= ROOT ?>admin/products/add">View Products</a></li>
                 </ul>
             </li>
 
@@ -37,9 +35,6 @@ MAIN SIDEBAR MENU
                 </a>
                 <ul class="sub">
                     <li><a href="<?= ROOT ?>admin/categories">View Category</a></li>
-                    <li><a href="<?= ROOT ?>admin/categories/add">Add New Category</a></li>
-                    <li><a href="<?= ROOT ?>admin/categories/edit">Edit Category</a></li>
-                    <li><a href="<?= ROOT ?>admin/categories/delete">Delete Category</a></li>
                 </ul>
             </li>
 

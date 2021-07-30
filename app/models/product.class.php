@@ -1,0 +1,74 @@
+<?php
+
+class Product
+
+{
+    public function create($DATA)
+    {
+        $DB = Database::newInstance();
+
+        $arr['description'] = ucwords($DATA->data);
+
+        if (!preg_match("/^[a-zA-Z ]+$/", trim($arr['description']))) {
+            $_SESSION['error'] = "Please enter a valid description for this product";
+        }
+
+        if (!isset($_SESSION['error']) || $_SESSION['error'] == "") {
+            $query = "insert into products (description) values (:description)";
+            $check = $DB->write($query, $arr);
+
+            if ($check) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function edit($id, $description)
+    {
+        $DB = Database::newInstance();
+        $arr['id'] = $id;
+        $arr['description'] = $description;
+        $query = "update products set description = :description where id = :id limit 1";
+        $DB->write($query, $arr);
+    }
+
+    public function delete($id)
+    {
+        $DB = Database::newInstance();
+        $id = (int)$id;
+        $query = "delete from products where id = '$id' limit 1";
+        $DB->write($query);
+    }
+
+    public function get_all()
+    {
+        $DB = Database::newInstance();
+
+        return $DB->read("select * from products order by id desc");
+    }
+
+    public function make_table($cats)
+    {
+        $result = "";
+        if (is_array($cats)) {
+            foreach ($cats as $cat_row) {
+                $color = $cat_row->disabled ? "#ae7c04" : "#5bc0de";
+                $cat_row->disabled = $cat_row->disabled ? "Disabled" : "Enabled";
+                $args = $cat_row->id . ",'" . $cat_row->disabled . "'";
+                $edit_args = $cat_row->id . ",'" . $cat_row->description . "'";
+                $result .= "<tr>";
+                $result .= '
+                    <td><a href="basic_table.html#">' . $cat_row->description . '</a></td>
+                    <td><span onclick="disable_row(' . $args . ')" class="label label-info label-mini" style="cursor:pointer;background-color:' . $color . ';">' . $cat_row->disabled . '</span></td>
+                    <td>
+                        <button onclick="show_edit_description(' . $edit_args . ',event)" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                        <button onclick="delete_row(' . $cat_row->id . ')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                    </td>
+                ';
+                $result .= "</tr>";
+            }
+        }
+        return $result;
+    }
+}
