@@ -48,17 +48,17 @@
                 <!-- /add new product -->
 
                 <!-- edit product -->
-                <div class="edit_category hide">
+                <div class="edit_product hide">
                     <!-- BASIC FORM ELELEMNTS -->
                     <h4 class="mb"><i class="fa fa-angle-right"></i> Edit Product</h4>
                     <form class="form-horizontal style-form" method="post">
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Product Name:</label>
                             <div class="col-sm-10">
-                                <input id="category_edit" name="product" type="text" class="form-control" autofocus>
+                                <input id="product_edit" name="product" type="text" class="form-control" autofocus>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-warning" onclick="show_edit_category(0,'',event)" style="position: absolute; bottom: 10px; left: 10px;">Cancel</button>
+                        <button type="button" class="btn btn-warning" onclick="show_edit_product(0,'',event)" style="position: absolute; bottom: 10px; left: 10px;">Cancel</button>
                         <button type="button" class="btn btn-primary" onclick="collect_edit_data(event)" style="position: absolute; bottom: 10px; right: 10px;">Save</button>
                     </form>
                     <br>
@@ -89,62 +89,62 @@
 
     function show_add_new() {
         var show_edit_box = document.querySelector(".add_new");
-        var category_input = document.querySelector("#product");
+        var product_input = document.querySelector("#product");
 
         if (show_edit_box.classList.contains("hide")) {
             show_edit_box.classList.remove("hide");
-            category_input.focus();
+            product_input.focus();
         } else {
             show_edit_box.classList.add("hide");
-            category_input.value = "";
+            product_input.value = "";
         }
     }
 
-    function show_edit_category(id, product, e) {
+    function show_edit_product(id, product, e) {
         EDIT_ID = id;
-        var show_add_box = document.querySelector(".edit_category");
+        var show_add_box = document.querySelector(".edit_product");
         // show_add_box.style.left = (e.clientX - 700) + "px";
         show_add_box.style.top = (e.clientY - 100) + "px";
-        var category_input = document.querySelector("#category_edit");
-        category_input.value = product;
+        var product_input = document.querySelector("#product_edit");
+        product_input.value = product;
 
         if (show_add_box.classList.contains("hide")) {
             show_add_box.classList.remove("hide");
-            category_input.focus();
+            product_input.focus();
         } else {
             show_add_box.classList.add("hide");
-            category_input.value = "";
+            product_input.value = "";
         }
     }
 
     function collect_data(e) {
-        var category_input = document.querySelector("#product");
+        var product_input = document.querySelector("#product");
 
-        if (category_input.value.trim() == "" || !isNaN(category_input.value.trim())) {
+        if (product_input.value.trim() == "" || !isNaN(product_input.value.trim())) {
             alert("Please enter a valid product name");
         }
 
-        var data = category_input.value.trim();
+        var data = product_input.value.trim();
 
         send_data({
             data: data,
-            data_type: 'add_category'
+            data_type: 'add_product'
         });
     }
 
     function collect_edit_data(e) {
-        var category_input = document.querySelector("#category_edit");
+        var product_input = document.querySelector("#product_edit");
 
-        if (category_input.value.trim() == "" || !isNaN(category_input.value.trim())) {
+        if (product_input.value.trim() == "" || !isNaN(product_input.value.trim())) {
             alert("Please enter a valid product name");
         }
 
-        var data = category_input.value.trim();
+        var data = product_input.value.trim();
 
         send_data({
             id: EDIT_ID,
             product: data,
-            data_type: 'edit_category'
+            data_type: 'edit_product'
         });
     }
 
@@ -157,11 +157,12 @@
             }
         });
 
-        ajax.open("POST", "<?= ROOT ?>ajax", true);
+        ajax.open("POST", "<?= ROOT ?>ajax_product", true);
         ajax.send(JSON.stringify(data));
     }
 
     function handle_result(result) {
+        console.log(result);
         if (result != "") {
             var obj = JSON.parse(result);
 
@@ -175,8 +176,8 @@
                     } else {
                         alert(obj.message);
                     }
-                } else if (obj.data_type = "edit_category") {
-                    show_edit_category(0, '', false);
+                } else if (obj.data_type = "edit_product") {
+                    show_edit_product(0, '', false);
                     var table_body = document.querySelector("#table_body");
                     table_body.innerHTML = obj.data;
                 } else if (obj.data_type = "disable_row") {

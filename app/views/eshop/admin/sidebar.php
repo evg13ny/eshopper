@@ -24,7 +24,7 @@ MAIN SIDEBAR MENU
                     <span>Products</span>
                 </a>
                 <ul class="sub">
-                    <li><a href="<?= ROOT ?>admin/products/add">View Products</a></li>
+                    <li><a href="<?= ROOT ?>admin/products">View Products</a></li>
                 </ul>
             </li>
 

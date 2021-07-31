@@ -53,14 +53,11 @@ class Product
         $result = "";
         if (is_array($cats)) {
             foreach ($cats as $cat_row) {
-                $color = $cat_row->disabled ? "#ae7c04" : "#5bc0de";
-                $cat_row->disabled = $cat_row->disabled ? "Disabled" : "Enabled";
-                $args = $cat_row->id . ",'" . $cat_row->disabled . "'";
                 $edit_args = $cat_row->id . ",'" . $cat_row->description . "'";
                 $result .= "<tr>";
                 $result .= '
                     <td><a href="basic_table.html#">' . $cat_row->description . '</a></td>
-                    <td><span onclick="disable_row(' . $args . ')" class="label label-info label-mini" style="cursor:pointer;background-color:' . $color . ';">' . $cat_row->disabled . '</span></td>
+                    <td></td>
                     <td>
                         <button onclick="show_edit_description(' . $edit_args . ',event)" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
                         <button onclick="delete_row(' . $cat_row->id . ')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>

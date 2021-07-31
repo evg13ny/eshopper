@@ -1,6 +1,6 @@
 <?php
 
-class Ajax extends Controller
+class Ajax_product extends Controller
 {
     public function index()
     {
@@ -10,11 +10,11 @@ class Ajax extends Controller
 
         if (is_object($data) && isset($data->data_type)) {
             $DB = Database::getInstance();
-            $category = $this->load_model('Category');
+            $product = $this->load_model('Product');
 
-            if ($data->data_type == 'add_category') {
-                // add new category
-                $check = $category->create($data);
+            if ($data->data_type == 'add_product') {
+                // add new product
+                $check = $product->create($data);
 
                 if ($_SESSION['error'] != "") {
                     $arr['message'] = $_SESSION['error'];
@@ -25,10 +25,10 @@ class Ajax extends Controller
 
                     echo json_encode($arr);
                 } else {
-                    $arr['message'] = "Category added successfully!";
+                    $arr['message'] = "Product added successfully!";
                     $arr['message_type'] = "info";
-                    $cats = $category->get_all();
-                    $arr['data'] = $category->make_table($cats);
+                    $cats = $product->get_all();
+                    $arr['data'] = $product->make_table($cats);
                     $arr['data_type'] = "add_new";
 
                     echo json_encode($arr);
@@ -43,32 +43,32 @@ class Ajax extends Controller
                 $_SESSION['error'] = "";
                 $arr['message_type'] = "info";
 
-                $cats = $category->get_all();
-                $arr['data'] = $category->make_table($cats);
+                $cats = $product->get_all();
+                $arr['data'] = $product->make_table($cats);
 
                 $arr['data_type'] = "disable_row";
 
                 echo json_encode($arr);
-            } else if ($data->data_type == 'edit_category') {
-                $category->edit($data->id, $data->category);
+            } else if ($data->data_type == 'edit_product') {
+                $product->edit($data->id, $data->product);
                 $arr['message'] = "Your row was successfully edited";
                 $_SESSION['error'] = "";
                 $arr['message_type'] = "info";
 
-                $cats = $category->get_all();
-                $arr['data'] = $category->make_table($cats);
+                $cats = $product->get_all();
+                $arr['data'] = $product->make_table($cats);
 
-                $arr['data_type'] = "edit_category";
+                $arr['data_type'] = "edit_product";
 
                 echo json_encode($arr);
             } else if ($data->data_type == 'delete_row') {
-                $category->delete($data->id);
+                $product->delete($data->id);
                 $arr['message'] = "Your row was successfully deleted";
                 $_SESSION['error'] = "";
                 $arr['message_type'] = "info";
 
-                $cats = $category->get_all();
-                $arr['data'] = $category->make_table($cats);
+                $cats = $product->get_all();
+                $arr['data'] = $product->make_table($cats);
 
                 $arr['data_type'] = "delete_row";
 
