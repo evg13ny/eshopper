@@ -5,16 +5,35 @@ class Product
 {
     public function create($DATA)
     {
+        $_SESSION['error'] = "";
+
         $DB = Database::newInstance();
 
-        $arr['description'] = ucwords($DATA->data);
+        $arr['description'] = ucwords($DATA->description);
+        $arr['quantity']    = ucwords($DATA->quantity);
+        $arr['category']    = ucwords($DATA->category);
+        $arr['price']       = ucwords($DATA->price);
+        $arr['date']        = date("Y-m-d H:i:s");
+        $arr['user_url']    = $_SESSION['user_url'];
 
         if (!preg_match("/^[a-zA-Z ]+$/", trim($arr['description']))) {
-            $_SESSION['error'] = "Please enter a valid description for this product";
+            $_SESSION['error'] .= "Please enter a valid description for this product<br>";
+        }
+
+        if (!is_numeric($arr['quantity'])) {
+            $_SESSION['error'] .= "Please enter a valid quantity<br>";
+        }
+
+        if (!is_numeric($arr['category'])) {
+            $_SESSION['error'] .= "Please enter a valid category<br>";
+        }
+
+        if (!is_numeric($arr['price'])) {
+            $_SESSION['error'] .= "Please enter a valid price<br>";
         }
 
         if (!isset($_SESSION['error']) || $_SESSION['error'] == "") {
-            $query = "insert into products (description) values (:description)";
+            $query = "insert into products (description, quantity, category, price, date, user_url) values (:description, :quantity, :category, :price, :date, :user_url)";
             $check = $DB->write($query, $arr);
 
             if ($check) {

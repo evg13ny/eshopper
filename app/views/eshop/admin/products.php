@@ -37,7 +37,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Product Name:</label>
                             <div class="col-sm-10">
-                                <input id="product" name="description" type="text" class="form-control" autofocus required>
+                                <input id="description" name="description" type="text" class="form-control" autofocus required>
                             </div>
                         </div>
 
@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Quantity:</label>
                             <div class="col-sm-10">
-                                <input id="product" name="quantity" type="number" value="1" class="form-control" required>
+                                <input id="quantity" name="quantity" type="number" value="1" class="form-control" required>
                             </div>
                         </div>
 
@@ -53,7 +53,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Category:</label>
                             <div class="col-sm-10">
-                                <select name="category" id="product" class="form-control" required>
+                                <select id="category" name="category" class="form-control" required>
                                     <option></option>
                                     <?php if (is_array($categories)) : ?>
                                         <?php foreach ($categories as $categ) : ?>
@@ -68,7 +68,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Price:</label>
                             <div class="col-sm-10">
-                                <input id="product" name="price" type="number" placeholder="0.00" step=".01" class="form-control" required>
+                                <input id="price" name="price" type="number" placeholder="0.00" step=".01" class="form-control" required>
                             </div>
                         </div>
 
@@ -76,31 +76,31 @@
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Image:</label>
                             <div class="col-sm-10">
-                                <input id="product" name="image" type="file" class="form-control" required>
+                                <input id="image" name="image" type="file" class="form-control" required>
                             </div>
                         </div>
 
                         <br><br style="clear: both;">
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">Image2(Optional):</label>
+                            <label class="col-sm-2 col-sm-2 control-label">Image2 (Optional):</label>
                             <div class="col-sm-10">
-                                <input id="product" name="image2" type="file" class="form-control">
+                                <input id="image2" name="image2" type="file" class="form-control">
                             </div>
                         </div>
 
                         <br><br style="clear: both;">
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">Image3(Optional):</label>
+                            <label class="col-sm-2 col-sm-2 control-label">Image3 (Optional):</label>
                             <div class="col-sm-10">
-                                <input id="product" name="image3" type="file" class="form-control">
+                                <input id="image3" name="image3" type="file" class="form-control">
                             </div>
                         </div>
 
                         <br><br style="clear: both;">
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">Image4(Optional):</label>
+                            <label class="col-sm-2 col-sm-2 control-label">Image4 (Optional):</label>
                             <div class="col-sm-10">
-                                <input id="product" name="image4" type="file" class="form-control">
+                                <input id="image4" name="image4" type="file" class="form-control">
                             </div>
                         </div>
 
@@ -154,7 +154,7 @@
 
     function show_add_new() {
         var show_edit_box = document.querySelector(".add_new");
-        var product_input = document.querySelector("#product");
+        var product_input = document.querySelector("#description");
 
         if (show_edit_box.classList.contains("hide")) {
             show_edit_box.classList.remove("hide");
@@ -183,16 +183,37 @@
     }
 
     function collect_data(e) {
-        var product_input = document.querySelector("#product");
-
+        var product_input = document.querySelector("#description");
         if (product_input.value.trim() == "" || !isNaN(product_input.value.trim())) {
             alert("Please enter a valid product name");
+            return;
+        }
+
+        var quantity_input = document.querySelector("#quantity");
+        if (quantity_input.value.trim() == "" || isNaN(quantity_input.value.trim())) {
+            alert("Please enter a valid quantity");
+            return;
+        }
+
+        var category_input = document.querySelector("#category");
+        if (category_input.value.trim() == "" || isNaN(category_input.value.trim())) {
+            alert("Please enter a valid category");
+            return;
+        }
+
+        var price_input = document.querySelector("#price");
+        if (price_input.value.trim() == "" || isNaN(price_input.value.trim())) {
+            alert("Please enter a valid price");
+            return;
         }
 
         var data = product_input.value.trim();
 
         send_data({
-            data: data,
+            description: product_input.value.trim(),
+            quantity: quantity_input.value.trim(),
+            category: category_input.value.trim(),
+            price: price_input.value.trim(),
             data_type: 'add_product'
         });
     }
