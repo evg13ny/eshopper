@@ -6,7 +6,7 @@
     .add_new,
     .edit_product {
         width: 500px;
-        height: 600px;
+        height: 550px;
         background-color: #eae8e8;
         box-shadow: 0px 0px 10px #aaa;
         position: absolute;
@@ -117,12 +117,77 @@
                     <!-- BASIC FORM ELELEMNTS -->
                     <h4 class="mb"><i class="fa fa-angle-right"></i> Edit Product</h4>
                     <form class="form-horizontal style-form" method="post">
+
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Product Name:</label>
                             <div class="col-sm-10">
-                                <input id="product_edit" name="product" type="text" class="form-control" autofocus>
+                                <input id="edit_description" name="description" type="text" class="form-control" autofocus required>
                             </div>
                         </div>
+
+                        <br><br style="clear: both;">
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Quantity:</label>
+                            <div class="col-sm-10">
+                                <input id="edit_quantity" name="quantity" type="number" value="1" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <br><br style="clear: both;">
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Category:</label>
+                            <div class="col-sm-10">
+                                <select id="edit_category" name="category" class="form-control" required>
+                                    <option></option>
+                                    <?php if (is_array($categories)) : ?>
+                                        <?php foreach ($categories as $categ) : ?>
+                                            <option value="<?= $categ->id ?>"><?= $categ->category ?></option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <br><br style="clear: both;">
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Price:</label>
+                            <div class="col-sm-10">
+                                <input id="edit_price" name="price" type="number" placeholder="0.00" step=".01" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <br><br style="clear: both;">
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Image:</label>
+                            <div class="col-sm-10">
+                                <input id="edit_image" name="image" type="file" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <br><br style="clear: both;">
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Image2 (Optional):</label>
+                            <div class="col-sm-10">
+                                <input id="edit_image2" name="image2" type="file" class="form-control">
+                            </div>
+                        </div>
+
+                        <br><br style="clear: both;">
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Image3 (Optional):</label>
+                            <div class="col-sm-10">
+                                <input id="edit_image3" name="image3" type="file" class="form-control">
+                            </div>
+                        </div>
+
+                        <br><br style="clear: both;">
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Image4 (Optional):</label>
+                            <div class="col-sm-10">
+                                <input id="edit_image4" name="image4" type="file" class="form-control">
+                            </div>
+                        </div>
+
                         <button type="button" class="btn btn-warning" onclick="show_edit_product(0,'',event)" style="position: absolute; bottom: 10px; left: 10px;">Cancel</button>
                         <button type="button" class="btn btn-primary" onclick="collect_edit_data(event)" style="position: absolute; bottom: 10px; right: 10px;">Save</button>
                     </form>
@@ -134,8 +199,12 @@
                 <hr>
                 <thead>
                     <tr>
-                        <th><i class="fa fa-bullhorn"></i> Product</th>
-                        <th><i class=" fa fa-edit"></i> Status</th>
+                        <th>Product id</th>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Date</th>
                         <th><i class=" fa fa-edit"></i> Action</th>
                     </tr>
                 </thead>
@@ -170,15 +239,15 @@
         var show_add_box = document.querySelector(".edit_product");
         // show_add_box.style.left = (e.clientX - 700) + "px";
         show_add_box.style.top = (e.clientY - 100) + "px";
-        var product_input = document.querySelector("#product_edit");
-        product_input.value = product;
+        var edit_description_input = document.querySelector("#edit_description");
+        edit_description_input.value = product;
 
         if (show_add_box.classList.contains("hide")) {
             show_add_box.classList.remove("hide");
-            product_input.focus();
+            edit_description_input.focus();
         } else {
             show_add_box.classList.add("hide");
-            product_input.value = "";
+            edit_description_input.value = "";
         }
     }
 
@@ -207,15 +276,38 @@
             return;
         }
 
-        var data = product_input.value.trim();
+        var image_input = document.querySelector("#image");
+        if (image_input.files.length == 0) {
+            alert("Please enter a valid main image");
+            return;
+        }
 
-        send_data({
-            description: product_input.value.trim(),
-            quantity: quantity_input.value.trim(),
-            category: category_input.value.trim(),
-            price: price_input.value.trim(),
-            data_type: 'add_product'
-        });
+        // create a form        
+        var data = new FormData();
+
+        var image2_input = document.querySelector("#image2");
+        if (image2_input.files.length > 0) {
+            data.append('image2', image2_input.files[0]);
+        }
+
+        var image3_input = document.querySelector("#image3");
+        if (image3_input.files.length > 0) {
+            data.append('image3', image3_input.files[0]);
+        }
+
+        var image4_input = document.querySelector("#image4");
+        if (image4_input.files.length > 0) {
+            data.append('image4', image4_input.files[0]);
+        }
+
+        data.append('description', product_input.value.trim());
+        data.append('quantity', quantity_input.value.trim());
+        data.append('category', category_input.value.trim());
+        data.append('price', price_input.value.trim());
+        data.append('data_type', 'add_product');
+        data.append('image', image_input.files[0]);
+
+        send_data_files(data);
     }
 
     function collect_edit_data(e) {
@@ -245,6 +337,19 @@
 
         ajax.open("POST", "<?= ROOT ?>ajax_product", true);
         ajax.send(JSON.stringify(data));
+    }
+
+    function send_data_files(formdata = {}) {
+        var ajax = new XMLHttpRequest();
+
+        ajax.addEventListener('readystatechange', function() {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                handle_result(ajax.responseText);
+            }
+        });
+
+        ajax.open("POST", "<?= ROOT ?>ajax_product", true);
+        ajax.send(formdata);
     }
 
     function handle_result(result) {
