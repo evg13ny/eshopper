@@ -20,6 +20,8 @@
     .hide {
         display: none;
     }
+
+    .edit_product_images {}
 </style>
 
 <div class="row mt">
@@ -188,6 +190,7 @@
                             </div>
                         </div>
 
+                        <div class="js-product-images edit_product_images"></div>
                         <button type="button" class="btn btn-warning" onclick="show_edit_product(0,'',event)" style="position: absolute; bottom: 10px; left: 10px;">Cancel</button>
                         <button type="button" class="btn btn-primary" onclick="collect_edit_data(event)" style="position: absolute; bottom: 10px; right: 10px;">Save</button>
                     </form>
@@ -235,12 +238,32 @@
     }
 
     function show_edit_product(id, product, e) {
+        var a = e.currentTarget.getAttribute("info");
+        var info = JSON.parse(a.replaceAll("'", '"'));
+
         EDIT_ID = id;
+
         var show_add_box = document.querySelector(".edit_product");
         // show_add_box.style.left = (e.clientX - 700) + "px";
         show_add_box.style.top = (e.clientY - 100) + "px";
+
         var edit_description_input = document.querySelector("#edit_description");
-        edit_description_input.value = product;
+        edit_description_input.value = info.description;
+
+        var edit_quantity_input = document.querySelector("#edit_quantity");
+        edit_quantity_input.value = info.quantity;
+
+        var edit_category_input = document.querySelector("#edit_category");
+        edit_category_input.value = info.category;
+
+        var edit_price_input = document.querySelector("#edit_price");
+        edit_price_input.value = info.price;
+
+        var product_images_input = document.querySelector(".js-product-images");
+        product_images_input.innerHTML = `<img src="<?= ROOT ?>${info.image}"/>`;
+        product_images_input.innerHTML += `<img src="<?= ROOT ?>${info.image2}"/>`;
+        product_images_input.innerHTML += `<img src="<?= ROOT ?>${info.image3}"/>`;
+        product_images_input.innerHTML += `<img src="<?= ROOT ?>${info.image4}"/>`;
 
         if (show_add_box.classList.contains("hide")) {
             show_add_box.classList.remove("hide");
@@ -367,14 +390,14 @@
                     } else {
                         alert(obj.message);
                     }
-                } else if (obj.data_type = "edit_product") {
+                } else if (obj.data_type == "edit_product") {
                     show_edit_product(0, '', false);
                     var table_body = document.querySelector("#table_body");
                     table_body.innerHTML = obj.data;
-                } else if (obj.data_type = "disable_row") {
+                } else if (obj.data_type == "disable_row") {
                     var table_body = document.querySelector("#table_body");
                     table_body.innerHTML = obj.data;
-                } else if (obj.data_type = "delete_row") {
+                } else if (obj.data_type == "delete_row") {
                     var table_body = document.querySelector("#table_body");
                     table_body.innerHTML = obj.data;
 

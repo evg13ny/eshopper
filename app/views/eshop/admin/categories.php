@@ -83,7 +83,7 @@
                             <label class="col-sm-2 col-sm-2 control-label">Parent (optional):</label>
                             <div class="col-sm-10">
 
-                                <select id="parent" name="parent_edit" class="form-control" required>
+                                <select id="parent_edit" name="parent" class="form-control" required>
                                     <option></option>
                                     <?php if (is_array($categories)) : ?>
                                         <?php foreach ($categories as $categ) : ?>
@@ -138,17 +138,17 @@
         }
     }
 
-    function show_edit_category(id, category, /*parent,*/ e) {
+    function show_edit_category(id, category, parent, e) {
         EDIT_ID = id;
         var show_add_box = document.querySelector(".edit_category");
         // show_add_box.style.left = (e.clientX - 700) + "px";
-        show_add_box.style.top = (e.clientY - 100) + "px";
+        show_add_box.style.top = (event.clientY - 100) + "px";
 
         var category_input = document.querySelector("#category_edit");
         category_input.value = category;
 
-        // var parent_input = document.querySelector("#parent_edit");
-        // parent_input.value = parent;
+        var parent_input = document.querySelector("#parent_edit");
+        parent_input.value = parent;
 
         if (show_add_box.classList.contains("hide")) {
             show_add_box.classList.remove("hide");
@@ -231,7 +231,7 @@
                         alert(obj.message);
                     }
                 } else if (obj.data_type == "edit_category") {
-                    show_edit_category(0, '', /*'',*/ false);
+                    show_edit_category(0, '', '', false);
                     var table_body = document.querySelector("#table_body");
                     table_body.innerHTML = obj.data;
                 } else if (obj.data_type == "disable_row") {

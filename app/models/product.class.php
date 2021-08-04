@@ -106,7 +106,22 @@ class Product
         if (is_array($cats)) {
             foreach ($cats as $cat_row) {
                 $edit_args = $cat_row->id . ",'" . $cat_row->description . "'";
+
+                $info = array();
+                $info['id'] = $cat_row->id;
+                $info['description'] = $cat_row->description;
+                $info['quantity'] = $cat_row->quantity;
+                $info['category'] = $cat_row->category;
+                $info['price'] = $cat_row->price;
+                $info['image'] = $cat_row->image;
+                $info['image2'] = $cat_row->image2;
+                $info['image3'] = $cat_row->image3;
+                $info['image4'] = $cat_row->image4;
+
+                $info = str_replace('"', "'", json_encode($info));
+
                 $one_cat = $model->get_one($cat_row->category);
+
                 $result .= "<tr>";
                 $result .= '
                     <td><a href="basic_table.html#">' . $cat_row->id . '</a></td>    
@@ -118,7 +133,7 @@ class Product
                     <td><a href="basic_table.html#"><img src="' . ROOT . $cat_row->image . '" style="width: 70px; height: 70px;"/></a></td>                    
                     <td></td>
                     <td>
-                        <button onclick="show_edit_product(' . $edit_args . ',event)" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                        <button info="' . $info . '" onclick="show_edit_product(' . $edit_args . ',event)" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
                         <button onclick="delete_row(' . $cat_row->id . ')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
                     </td>
                 ';

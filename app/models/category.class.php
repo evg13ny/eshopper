@@ -70,8 +70,7 @@ class Category
                 $color = $cat_row->disabled ? "#ae7c04" : "#5bc0de";
                 $cat_row->disabled = $cat_row->disabled ? "Disabled" : "Enabled";
                 $args = $cat_row->id . ",'" . $cat_row->disabled . "'";
-                $edit_args = $cat_row->id . ",'" . $cat_row->category . "'";
-                // $edit_args = $cat_row->id . ",'" . $cat_row->category . "'," . $cat_row->parent;
+                $edit_args = $cat_row->id . ",'" . $cat_row->category . "'," . $cat_row->parent;
 
                 $parent = "";
 
