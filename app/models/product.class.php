@@ -76,8 +76,13 @@ class Product
         return false;
     }
 
-    public function edit($id, $description)
+    public function edit($data)
     {
+        show($data);
+        die;
+        
+        $id = $data->id;
+        $description = $data->description;
         $DB = Database::newInstance();
         $arr['id'] = $id;
         $arr['description'] = $description;
@@ -107,16 +112,16 @@ class Product
             foreach ($cats as $cat_row) {
                 $edit_args = $cat_row->id . ",'" . $cat_row->description . "'";
 
-                $info = array();
-                $info['id'] = $cat_row->id;
-                $info['description'] = $cat_row->description;
-                $info['quantity'] = $cat_row->quantity;
-                $info['category'] = $cat_row->category;
-                $info['price'] = $cat_row->price;
-                $info['image'] = $cat_row->image;
-                $info['image2'] = $cat_row->image2;
-                $info['image3'] = $cat_row->image3;
-                $info['image4'] = $cat_row->image4;
+                $info                   = array();
+                $info['id']             = $cat_row->id;
+                $info['description']    = $cat_row->description;
+                $info['quantity']       = $cat_row->quantity;
+                $info['category']       = $cat_row->category;
+                $info['price']          = $cat_row->price;
+                $info['image']          = $cat_row->image;
+                $info['image2']         = $cat_row->image2;
+                $info['image3']         = $cat_row->image3;
+                $info['image4']         = $cat_row->image4;
 
                 $info = str_replace('"', "'", json_encode($info));
 

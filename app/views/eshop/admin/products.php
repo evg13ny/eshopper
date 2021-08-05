@@ -6,7 +6,7 @@
     .add_new,
     .edit_product {
         width: 500px;
-        height: 550px;
+        height: 600px;
         background-color: #eae8e8;
         box-shadow: 0px 0px 10px #aaa;
         position: absolute;
@@ -21,7 +21,15 @@
         display: none;
     }
 
-    .edit_product_images {}
+    .edit_product_images {
+        display: flex;
+    }
+
+    .edit_product_images img {
+        flex: 1;
+        width: 10px;
+        margin: 2xp;
+    }
 </style>
 
 <div class="row mt">
@@ -190,6 +198,7 @@
                             </div>
                         </div>
 
+                        <br>
                         <div class="js-product-images edit_product_images"></div>
                         <button type="button" class="btn btn-warning" onclick="show_edit_product(0,'',event)" style="position: absolute; bottom: 10px; left: 10px;">Cancel</button>
                         <button type="button" class="btn btn-primary" onclick="collect_edit_data(event)" style="position: absolute; bottom: 10px; right: 10px;">Save</button>
@@ -334,19 +343,60 @@
     }
 
     function collect_edit_data(e) {
-        var product_input = document.querySelector("#product_edit");
-
+        var product_input = document.querySelector("#edit_description");
         if (product_input.value.trim() == "" || !isNaN(product_input.value.trim())) {
             alert("Please enter a valid product name");
+            return;
         }
 
-        var data = product_input.value.trim();
+        var quantity_input = document.querySelector("#edit_quantity");
+        if (quantity_input.value.trim() == "" || isNaN(quantity_input.value.trim())) {
+            alert("Please enter a valid quantity");
+            return;
+        }
 
-        send_data({
-            id: EDIT_ID,
-            product: data,
-            data_type: 'edit_product'
-        });
+        var category_input = document.querySelector("#edit_category");
+        if (category_input.value.trim() == "" || isNaN(category_input.value.trim())) {
+            alert("Please enter a valid category");
+            return;
+        }
+
+        var price_input = document.querySelector("#edit_price");
+        if (price_input.value.trim() == "" || isNaN(price_input.value.trim())) {
+            alert("Please enter a valid price");
+            return;
+        }
+
+        // create a form        
+        var data = new FormData();
+
+        var image_input = document.querySelector("#edit_image");
+        if (image_input.files.length > 0) {
+            data.append('image', image_input.files[0]);
+        }
+
+        var image2_input = document.querySelector("#edit_image2");
+        if (image2_input.files.length > 0) {
+            data.append('image2', image2_input.files[0]);
+        }
+
+        var image3_input = document.querySelector("#edit_image3");
+        if (image3_input.files.length > 0) {
+            data.append('image3', image3_input.files[0]);
+        }
+
+        var image4_input = document.querySelector("#edit_image4");
+        if (image4_input.files.length > 0) {
+            data.append('image4', image4_input.files[0]);
+        }
+
+        data.append('description', product_input.value.trim());
+        data.append('quantity', quantity_input.value.trim());
+        data.append('category', category_input.value.trim());
+        data.append('price', price_input.value.trim());
+        data.append('data_type', 'edit_product');
+
+        send_data_files(data);
     }
 
     function send_data(data = {}) {
