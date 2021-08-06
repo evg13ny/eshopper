@@ -58,7 +58,7 @@ class Ajax_product extends Controller
                 $arr['message_type'] = "info";
 
                 $cats = $product->get_all();
-                $arr['data'] = $product->make_table($cats);
+                $arr['data'] = $product->make_table($cats, $category);
 
                 $arr['data_type'] = "edit_product";
 

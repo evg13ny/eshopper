@@ -76,18 +76,67 @@ class Product
         return false;
     }
 
-    public function edit($data)
+    public function edit($data, $FILES)
     {
-        show($data);
-        die;
-        
-        $id = $data->id;
-        $description = $data->description;
-        $DB = Database::newInstance();
-        $arr['id'] = $id;
-        $arr['description'] = $description;
-        $query = "update products set description = :description where id = :id limit 1";
-        $DB->write($query, $arr);
+        $arr['id']          = $data->id;
+        $arr['description'] = $data->description;
+        $arr['quantity']    = $data->quantity;
+        $arr['category']    = $data->category;
+        $arr['price']       = $data->price;
+
+        $images_string = "";
+
+        if (!preg_match("/^[a-zA-Z ]+$/", trim($arr['description']))) {
+            $_SESSION['error'] .= "Please enter a valid description for this product<br>";
+        }
+
+        if (!is_numeric($arr['quantity'])) {
+            $_SESSION['error'] .= "Please enter a valid quantity<br>";
+        }
+
+        if (!is_numeric($arr['category'])) {
+            $_SESSION['error'] .= "Please enter a valid category<br>";
+        }
+
+        if (!is_numeric($arr['price'])) {
+            $_SESSION['error'] .= "Please enter a valid price<br>";
+        }
+
+        $allowed[] = "image/jpeg";
+        $allowed[] = "image/png";
+        $allowed[] = "image/gif";
+        $allowed[] = "application/pdf";
+
+        $size = 10;
+        $size = ($size * 1024 * 1024);
+
+        $folder = "uploads/";
+
+        if (!file_exists($folder)) {
+            mkdir($folder, 0777, true);
+        }
+
+        // check for files
+
+        foreach ($FILES as $key => $img_row) {
+            if ($img_row['error'] == 0 && in_array($img_row['type'], $allowed)) {
+                if ($img_row['size'] < $size) {
+                    $destination = $folder . $img_row['name'];
+                    move_uploaded_file($img_row['tmp_name'], $destination);
+                    $arr[$key] = $destination;
+
+                    $images_string = "," . $key . " = :" . $key;
+                } else {
+                    $_SESSION['error'] .= $key . " is bigger than required size<br>";
+                }
+            }
+        }
+
+        if (!isset($_SESSION['error']) || $_SESSION['error'] == "") {
+            $DB = Database::newInstance();
+            $query = "update products set description = :description, quantity = :quantity, category = :category, price = :price $images_string where id = :id limit 1";
+            $DB->write($query, $arr);
+        }
     }
 
     public function delete($id)
@@ -112,16 +161,16 @@ class Product
             foreach ($cats as $cat_row) {
                 $edit_args = $cat_row->id . ",'" . $cat_row->description . "'";
 
-                $info                   = array();
-                $info['id']             = $cat_row->id;
-                $info['description']    = $cat_row->description;
-                $info['quantity']       = $cat_row->quantity;
-                $info['category']       = $cat_row->category;
-                $info['price']          = $cat_row->price;
-                $info['image']          = $cat_row->image;
-                $info['image2']         = $cat_row->image2;
-                $info['image3']         = $cat_row->image3;
-                $info['image4']         = $cat_row->image4;
+                $info                = array();
+                $info['id']          = $cat_row->id;
+                $info['description'] = $cat_row->description;
+                $info['quantity']    = $cat_row->quantity;
+                $info['category']    = $cat_row->category;
+                $info['price']       = $cat_row->price;
+                $info['image']       = $cat_row->image;
+                $info['image2']      = $cat_row->image2;
+                $info['image3']      = $cat_row->image3;
+                $info['image4']      = $cat_row->image4;
 
                 $info = str_replace('"', "'", json_encode($info));
 

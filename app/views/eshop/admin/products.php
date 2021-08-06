@@ -23,12 +23,14 @@
 
     .edit_product_images {
         display: flex;
+        width: 100%;
     }
 
     .edit_product_images img {
         flex: 1;
-        width: 10px;
-        margin: 2xp;
+        width: 50px;
+        margin: 2px;
+        height: 80px;
     }
 </style>
 
@@ -247,32 +249,35 @@
     }
 
     function show_edit_product(id, product, e) {
-        var a = e.currentTarget.getAttribute("info");
-        var info = JSON.parse(a.replaceAll("'", '"'));
-
-        EDIT_ID = id;
-
         var show_add_box = document.querySelector(".edit_product");
-        // show_add_box.style.left = (e.clientX - 700) + "px";
-        show_add_box.style.top = (e.clientY - 100) + "px";
-
         var edit_description_input = document.querySelector("#edit_description");
-        edit_description_input.value = info.description;
 
-        var edit_quantity_input = document.querySelector("#edit_quantity");
-        edit_quantity_input.value = info.quantity;
+        if (e) {
+            var a = e.currentTarget.getAttribute("info");
+            var info = JSON.parse(a.replaceAll("'", '"'));
 
-        var edit_category_input = document.querySelector("#edit_category");
-        edit_category_input.value = info.category;
+            EDIT_ID = info.id;
 
-        var edit_price_input = document.querySelector("#edit_price");
-        edit_price_input.value = info.price;
+            // show_add_box.style.left = (e.clientX - 700) + "px";
+            show_add_box.style.top = (e.clientY - 100) + "px";
 
-        var product_images_input = document.querySelector(".js-product-images");
-        product_images_input.innerHTML = `<img src="<?= ROOT ?>${info.image}"/>`;
-        product_images_input.innerHTML += `<img src="<?= ROOT ?>${info.image2}"/>`;
-        product_images_input.innerHTML += `<img src="<?= ROOT ?>${info.image3}"/>`;
-        product_images_input.innerHTML += `<img src="<?= ROOT ?>${info.image4}"/>`;
+            edit_description_input.value = info.description;
+
+            var edit_quantity_input = document.querySelector("#edit_quantity");
+            edit_quantity_input.value = info.quantity;
+
+            var edit_category_input = document.querySelector("#edit_category");
+            edit_category_input.value = info.category;
+
+            var edit_price_input = document.querySelector("#edit_price");
+            edit_price_input.value = info.price;
+
+            var product_images_input = document.querySelector(".js-product-images");
+            product_images_input.innerHTML = `<img src="<?= ROOT ?>${info.image}"/>`;
+            product_images_input.innerHTML += `<img src="<?= ROOT ?>${info.image2}"/>`;
+            product_images_input.innerHTML += `<img src="<?= ROOT ?>${info.image3}"/>`;
+            product_images_input.innerHTML += `<img src="<?= ROOT ?>${info.image4}"/>`;
+        }
 
         if (show_add_box.classList.contains("hide")) {
             show_add_box.classList.remove("hide");
@@ -395,6 +400,7 @@
         data.append('category', category_input.value.trim());
         data.append('price', price_input.value.trim());
         data.append('data_type', 'edit_product');
+        data.append('id', EDIT_ID);
 
         send_data_files(data);
     }
