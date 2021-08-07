@@ -1,6 +1,6 @@
 <?php
 
-Class Home extends Controller
+class Home extends Controller
 {
     public function index()
     {
@@ -12,7 +12,13 @@ Class Home extends Controller
             $data['user_data'] = $user_data;
         }
 
+        $DB = Database::newInstance();
+
+        $ROWS = $DB->read("select * from products");
+
         $data['page_title'] = "Home";
+
+        $data['ROWS'] = $ROWS;
 
         $this->view("index", $data);
     }
