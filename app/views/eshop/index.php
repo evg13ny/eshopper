@@ -231,7 +231,11 @@
 								<div class="product-image-wrapper">
 									<div class="single-products">
 										<div class="productinfo text-center">
-											<div style="overflow: hidden;"><img class="product-image" src="<?= ROOT . $row->image ?>" alt="" /></div>
+
+											<a href="<?= ROOT ?>product_details/<?= $row->id ?>">
+												<div style="overflow: hidden;"><img class="product-image" src="<?= ROOT . $row->image ?>" alt="" /></div>
+											</a>
+
 											<h2>$<?= $row->price ?></h2>
 											<p><?= $row->description ?></p>
 											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
