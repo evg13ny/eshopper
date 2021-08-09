@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 25, 2021 at 09:19 AM
+-- Generation Time: Aug 09, 2021 at 07:52 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -30,23 +30,26 @@ SET time_zone = "+00:00";
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `category` varchar(30) NOT NULL,
-  `disabled` tinyint(1) NOT NULL DEFAULT 0
+  `disabled` tinyint(1) NOT NULL DEFAULT 0,
+  `parent` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `category`, `disabled`) VALUES
-(1, 'Food', 0),
-(3, 'Drinks', 0),
-(4, 'Books', 0),
-(5, 'Sodas', 0),
-(6, 'Clothes', 0),
-(7, 'Meat', 0),
-(8, 'Bags', 0),
-(9, 'Cars', 0),
-(10, 'Pens', 0);
+INSERT INTO `categories` (`id`, `category`, `disabled`, `parent`) VALUES
+(3, 'Water', 0, 0),
+(5, 'Mineral Water', 0, 3),
+(6, 'Clothes', 0, 0),
+(7, 'Chips', 0, 0),
+(8, 'Bags', 0, 0),
+(10, 'Pens', 1, 6),
+(11, 'Books', 1, 0),
+(13, 'Soda', 0, 3),
+(14, 'Milk', 0, 0),
+(16, 'Shirts', 0, 6),
+(19, 'Skirt', 0, 6);
 
 -- --------------------------------------------------------
 
@@ -68,6 +71,18 @@ CREATE TABLE `products` (
   `date` datetime NOT NULL,
   `slag` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `user_url`, `description`, `category`, `price`, `quantity`, `image`, `image2`, `image3`, `image4`, `date`, `slag`) VALUES
+(3, 'SSy0xP4JUO26Zl3oaOv', 'Lays', 7, 1.56, 3, 'uploads/lays1.jpeg', 'uploads/lays2.jpg', 'uploads/lays3.jpeg', 'uploads/lays4.jpg', '2021-08-01 14:02:13', ''),
+(4, 'SSy0xP4JUO26Zl3oaOv', 'Coke', 13, 1.07, 9, 'uploads/cola1.png', 'uploads/cola2.jpeg', 'uploads/cola3.jpeg', 'uploads/cola4.jpeg', '2021-08-02 21:40:42', ''),
+(5, 'SSy0xP4JUO26Zl3oaOv', 'Pepsi', 13, 0.96, 10, 'uploads/pepsi1.jpeg', 'uploads/pepsi2.jpeg', 'uploads/pepsi3.jpeg', 'uploads/pepsi4.jpeg', '2021-08-02 21:46:59', ''),
+(6, 'SSy0xP4JUO26Zl3oaOv', 'Borjomi', 5, 1.98, 14, 'uploads/borjomi1.jpg', 'uploads/borjomi2.jpg', 'uploads/borjomi3.jpg', 'uploads/borjomi4.jpg', '2021-08-03 23:02:39', ''),
+(7, 'SSy0xP4JUO26Zl3oaOv', 'Baikal', 13, 0.01, 1, 'uploads/photo_2021-05-25_23-51-50.jpg', '', '', '', '2021-08-09 19:35:33', 'baikal'),
+(8, 'SSy0xP4JUO26Zl3oaOv', 'Kolokolchik 250 Ml', 13, 0.02, 1, 'uploads/photo_2021-05-25_23-51-50.jpg', '', '', '', '2021-08-09 19:38:37', 'kolokolchik-250-ml');
 
 -- --------------------------------------------------------
 
@@ -104,7 +119,8 @@ INSERT INTO `users` (`id`, `url_address`, `name`, `email`, `password`, `date`, `
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`),
   ADD KEY `category` (`category`),
-  ADD KEY `disabled` (`disabled`);
+  ADD KEY `disabled` (`disabled`),
+  ADD KEY `parent` (`parent`);
 
 --
 -- Indexes for table `products`
@@ -138,13 +154,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`

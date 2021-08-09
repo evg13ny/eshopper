@@ -172,7 +172,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Image:</label>
                             <div class="col-sm-10">
-                                <input id="edit_image" name="image" type="file" class="form-control" required>
+                                <input id="edit_image" name="image" type="file" onchange="display_image(this.files[0],this.name)" class="form-control" required>
                             </div>
                         </div>
 
@@ -180,7 +180,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Image2 (Optional):</label>
                             <div class="col-sm-10">
-                                <input id="edit_image2" name="image2" type="file" class="form-control">
+                                <input id="edit_image2" name="image2" type="file" onchange="display_image(this.files[0],this.name)" class="form-control">
                             </div>
                         </div>
 
@@ -188,7 +188,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Image3 (Optional):</label>
                             <div class="col-sm-10">
-                                <input id="edit_image3" name="image3" type="file" class="form-control">
+                                <input id="edit_image3" name="image3" type="file" onchange="display_image(this.files[0],this.name)" class="form-control">
                             </div>
                         </div>
 
@@ -196,7 +196,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Image4 (Optional):</label>
                             <div class="col-sm-10">
-                                <input id="edit_image4" name="image4" type="file" class="form-control">
+                                <input id="edit_image4" name="image4" type="file" onchange="display_image(this.files[0],this.name)" class="form-control">
                             </div>
                         </div>
 
@@ -461,6 +461,23 @@
                 }
             }
         }
+    }
+
+    function display_image(file, name) {
+        var index = 0;
+
+        if (name == "image2") {
+            index = 1;
+        } else if (name == "image3") {
+            index = 2;
+        } else if (name == "image4") {
+            index = 3;
+        }
+
+        var image_holder = document.querySelector(".js-product-images");
+        var images = image_holder.querySelectorAll("IMG");
+
+        images[index].src = URL.createObjectURL(file);
     }
 
     function edit_row(id) {
