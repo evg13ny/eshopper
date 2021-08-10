@@ -232,7 +232,7 @@
 									<div class="single-products">
 										<div class="productinfo text-center">
 
-											<a href="<?= ROOT ?>product_details/<?= $row->id ?>">
+											<a href="<?= ROOT ?>product_details/<?= $row->slag ?>">
 												<div style="overflow: hidden;"><img class="product-image" src="<?= ROOT . $row->image ?>" alt="" /></div>
 											</a>
 

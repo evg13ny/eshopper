@@ -2,9 +2,9 @@
 
 class Product_details extends Controller
 {
-    public function index($id)
+    public function index($slag)
     {
-        $id = (int)$id;
+        $slag = esc($slag);
 
         $User = $this->load_model('User');
 
@@ -16,11 +16,11 @@ class Product_details extends Controller
 
         $DB = Database::newInstance();
 
-        $ROW = $DB->read("select * from products where id = :id", ['id' => $id]);
+        $ROW = $DB->read("select * from products where slag = :slag", ['slag' => $slag]);
 
         $data['page_title'] = "Product Details";
 
-        $data['ROW'] = $ROW[0];
+        $data['ROW'] = is_array($ROW) ? $ROW[0] : false;
 
         $this->view("product-details", $data);
     }

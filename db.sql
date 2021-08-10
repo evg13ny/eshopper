@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2021 at 07:52 PM
+-- Generation Time: Aug 10, 2021 at 06:28 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -77,12 +77,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `user_url`, `description`, `category`, `price`, `quantity`, `image`, `image2`, `image3`, `image4`, `date`, `slag`) VALUES
-(3, 'SSy0xP4JUO26Zl3oaOv', 'Lays', 7, 1.56, 3, 'uploads/lays1.jpeg', 'uploads/lays2.jpg', 'uploads/lays3.jpeg', 'uploads/lays4.jpg', '2021-08-01 14:02:13', ''),
-(4, 'SSy0xP4JUO26Zl3oaOv', 'Coke', 13, 1.07, 9, 'uploads/cola1.png', 'uploads/cola2.jpeg', 'uploads/cola3.jpeg', 'uploads/cola4.jpeg', '2021-08-02 21:40:42', ''),
-(5, 'SSy0xP4JUO26Zl3oaOv', 'Pepsi', 13, 0.96, 10, 'uploads/pepsi1.jpeg', 'uploads/pepsi2.jpeg', 'uploads/pepsi3.jpeg', 'uploads/pepsi4.jpeg', '2021-08-02 21:46:59', ''),
-(6, 'SSy0xP4JUO26Zl3oaOv', 'Borjomi', 5, 1.98, 14, 'uploads/borjomi1.jpg', 'uploads/borjomi2.jpg', 'uploads/borjomi3.jpg', 'uploads/borjomi4.jpg', '2021-08-03 23:02:39', ''),
-(7, 'SSy0xP4JUO26Zl3oaOv', 'Baikal', 13, 0.01, 1, 'uploads/photo_2021-05-25_23-51-50.jpg', '', '', '', '2021-08-09 19:35:33', 'baikal'),
-(8, 'SSy0xP4JUO26Zl3oaOv', 'Kolokolchik 250 Ml', 13, 0.02, 1, 'uploads/photo_2021-05-25_23-51-50.jpg', '', '', '', '2021-08-09 19:38:37', 'kolokolchik-250-ml');
+(9, 'SSy0xP4JUO26Zl3oaOv', 'Borjomi 1,25l', 5, 1.98, 21, 'uploads/borjomi1.jpg', 'uploads/borjomi2.jpg', 'uploads/borjomi3.jpg', 'uploads/borjomi4.jpg', '2021-08-10 15:53:20', 'borjomi-1-25l'),
+(10, 'SSy0xP4JUO26Zl3oaOv', 'Lays 225g', 7, 1.56, 31, 'uploads/lays1.jpeg', 'uploads/lays2.jpg', 'uploads/lays3.jpeg', 'uploads/lays4.jpg', '2021-08-10 15:55:24', 'lays-225g'),
+(11, 'SSy0xP4JUO26Zl3oaOv', 'Pepsi Max 1l', 13, 0.96, 13, 'uploads/pepsi1.jpeg', 'uploads/pepsi2.jpeg', 'uploads/pepsi3.jpeg', 'uploads/pepsi4.jpeg', '2021-08-10 15:56:31', 'pepsi-max-1l'),
+(12, 'SSy0xP4JUO26Zl3oaOv', 'Coca Cola Zero 0.9l', 13, 1.07, 17, 'uploads/cola1.png', 'uploads/cola2.jpeg', 'uploads/cola3.jpeg', 'uploads/cola4.jpeg', '2021-08-10 15:58:57', 'coca-cola-zero-0-9l');
 
 -- --------------------------------------------------------
 
@@ -160,7 +158,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `users`
