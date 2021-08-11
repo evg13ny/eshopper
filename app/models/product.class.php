@@ -3,7 +3,7 @@
 class Product
 
 {
-    public function create($DATA, $FILES)
+    public function create($DATA, $FILES, $image_class = null)
     {
         $_SESSION['error'] = "";
 
@@ -33,6 +33,16 @@ class Product
             $_SESSION['error'] .= "Please enter a valid price<br>";
         }
 
+        // check is slag unique
+
+        $slag_arr['slag'] = $arr['slag'];
+        $query = "select slag from products where slag = :slag limit 1";
+        $check = $DB->read($query, $slag_arr);
+
+        if ($check) {
+            $arr['slag'] .= "-" . rand(0, 99999);
+        }
+
         $arr['image'] = "";
         $arr['image2'] = "";
         $arr['image3'] = "";
@@ -60,6 +70,7 @@ class Product
                     $destination = $folder . $img_row['name'];
                     move_uploaded_file($img_row['tmp_name'], $destination);
                     $arr[$key] = $destination;
+                    $image_class->resize_image($destination, $destination, 1500, 1500);
                 } else {
                     $_SESSION['error'] .= $key . " is bigger than required size<br>";
                 }
@@ -77,7 +88,7 @@ class Product
         return false;
     }
 
-    public function edit($data, $FILES)
+    public function edit($data, $FILES, $image_class = null)
     {
         $arr['id']          = $data->id;
         $arr['description'] = $data->description;
@@ -125,7 +136,7 @@ class Product
                     $destination = $folder . $img_row['name'];
                     move_uploaded_file($img_row['tmp_name'], $destination);
                     $arr[$key] = $destination;
-
+                    $image_class->resize_image($destination, $destination, 1500, 1500);
                     $images_string .= "," . $key . " = :" . $key;
                 } else {
                     $_SESSION['error'] .= $key . " is bigger than required size<br>";
