@@ -49,9 +49,9 @@ class Product
         $arr['image4'] = "";
 
         $allowed[] = "image/jpeg";
-        $allowed[] = "image/png";
-        $allowed[] = "image/gif";
-        $allowed[] = "application/pdf";
+        // $allowed[] = "image/png";
+        // $allowed[] = "image/gif";
+        // $allowed[] = "application/pdf";
 
         $size = 10;
         $size = ($size * 1024 * 1024);
@@ -67,7 +67,7 @@ class Product
         foreach ($FILES as $key => $img_row) {
             if ($img_row['error'] == 0 && in_array($img_row['type'], $allowed)) {
                 if ($img_row['size'] < $size) {
-                    $destination = $folder . $img_row['name'];
+                    $destination = $folder . $image_class->generate_filename(60) . ".jpg";
                     move_uploaded_file($img_row['tmp_name'], $destination);
                     $arr[$key] = $destination;
                     $image_class->resize_image($destination, $destination, 1500, 1500);
@@ -115,9 +115,9 @@ class Product
         }
 
         $allowed[] = "image/jpeg";
-        $allowed[] = "image/png";
-        $allowed[] = "image/gif";
-        $allowed[] = "application/pdf";
+        // $allowed[] = "image/png";
+        // $allowed[] = "image/gif";
+        // $allowed[] = "application/pdf";
 
         $size = 10;
         $size = ($size * 1024 * 1024);
@@ -133,7 +133,7 @@ class Product
         foreach ($FILES as $key => $img_row) {
             if ($img_row['error'] == 0 && in_array($img_row['type'], $allowed)) {
                 if ($img_row['size'] < $size) {
-                    $destination = $folder . $img_row['name'];
+                    $destination = $folder . $image_class->generate_filename(60) . ".jpg";
                     move_uploaded_file($img_row['tmp_name'], $destination);
                     $arr[$key] = $destination;
                     $image_class->resize_image($destination, $destination, 1500, 1500);

@@ -227,36 +227,16 @@
 						<?php foreach ($ROWS as $row) : ?>
 
 							<!--one product-->
-							<div class="col-sm-4">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-										<div class="productinfo text-center">
 
-											<a href="<?= ROOT ?>product_details/<?= $row->slag ?>">
-												<div style="overflow: hidden;"><img class="product-image" src="<?= ROOT . $row->image ?>" alt="" /></div>
-											</a>
+							<?php $this->view("product.inc", $row); ?>
 
-											<h2>$<?= $row->price ?></h2>
-											<p><?= $row->description ?></p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-										</div>
-
-									</div>
-									<div class="choose">
-										<ul class="nav nav-pills nav-justified">
-											<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-											<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
 							<!--/one product-->
 
 						<?php endforeach; ?>
 					<?php endif; ?>
 
+					<!--features_items-->
 				</div>
-				<!--features_items-->
 
 				<div class="category-tab">
 					<!--category-tab-->

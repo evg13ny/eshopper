@@ -1,6 +1,6 @@
 <?php
 
-class Home extends Controller
+class Shop extends Controller
 {
     public function index()
     {
@@ -18,7 +18,7 @@ class Home extends Controller
 
         $ROWS = $DB->read("select * from products");
 
-        $data['page_title'] = "Home";
+        $data['page_title'] = "Shop";
 
         if ($ROWS) {
             foreach ($ROWS as $key => $row) {
@@ -28,6 +28,6 @@ class Home extends Controller
 
         $data['ROWS'] = $ROWS;
 
-        $this->view("index", $data);
+        $this->view("shop", $data);
     }
 }
