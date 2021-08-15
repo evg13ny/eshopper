@@ -41,4 +41,47 @@ class Add_to_cart extends Controller
 
         // die;
     }
+
+    public function add_quantity($id = '')
+    {
+        $id = esc($id);
+
+        if (isset($_SESSION['CART'])) {
+            foreach ($_SESSION['CART'] as $key => $item) {
+                if ($item['id'] == $id) {
+                    $_SESSION['CART'][$key]['qty'] += 1;
+                    break;
+                }
+            }
+        }
+    }
+
+    public function subtract_quantity($id = '')
+    {
+        $id = esc($id);
+
+        if (isset($_SESSION['CART'])) {
+            foreach ($_SESSION['CART'] as $key => $item) {
+                if ($item['id'] == $id) {
+                    $_SESSION['CART'][$key]['qty'] -= 1;
+                    break;
+                }
+            }
+        }
+    }
+
+    public function remove($id = '')
+    {
+        $id = esc($id);
+
+        if (isset($_SESSION['CART'])) {
+            foreach ($_SESSION['CART'] as $key => $item) {
+                if ($item['id'] == $id) {
+                    unset($_SESSION['CART'][$key]);
+                    $_SESSION['CART'] = array_values($_SESSION['CART']);
+                    break;
+                }
+            }
+        }
+    }
 }
