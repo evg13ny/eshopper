@@ -47,15 +47,20 @@
 									<p class="cart_total_price">$<?= $row->price * $row->cart_qty ?></p>
 								</td>
 								<td class="cart_delete">
-									<a class="cart_quantity_delete" href="<?= ROOT ?>add_to_cart/remove/<?= $row->id ?>"><i class="fa fa-times"></i></a>
+									<a class="cart_quantity_delete" delete_id="<?= $row->id ?>" onclick="delete_item(this.getAttribute('delete_id'))" href="<?= ROOT ?>add_to_cart/remove/<?= $row->id ?>"><i class="fa fa-times"></i></a>
 								</td>
 							</tr>
 
 						<?php endforeach; ?>
+					<?php else : ?>
+						<div style="font-size:18px;text-align:center;padding:6px">No items were found in the cart</div>
 					<?php endif; ?>
 
 				</tbody>
 			</table>
+
+			<div class="pull-right" style="font-size:25px;">Sub Total: $<?= number_format($sub_total, 2, ',', '.') ?></div>
+
 		</div>
 	</div>
 </section>
@@ -125,10 +130,10 @@
 			<div class="col-sm-6">
 				<div class="total_area">
 					<ul>
-						<li>Cart Sub Total <span>$59</span></li>
-						<li>Eco Tax <span>$2</span></li>
+						<li>Cart Sub Total <span>$<?= number_format($sub_total, 2, ',', '.') ?></span></li>
+						<li>Eco Tax <span>$<?= number_format($tax, 2, ',', '.') ?></span></li>
 						<li>Shipping Cost <span>Free</span></li>
-						<li>Total <span>$61</span></li>
+						<li>Total <span>$<?= number_format($sub_total, 2, ',', '.') ?></span></li>
 					</ul>
 					<a class="btn btn-default update" href="">Update</a>
 					<a class="btn btn-default check_out" href="">Check Out</a>
@@ -150,6 +155,13 @@
 		}, "edit_quantity");
 	}
 
+	function delete_item(id) {
+
+		send_data({
+			id: id.trim()
+		}, "delete_item");
+	}
+
 	function send_data(data = {}, data_type) {
 		var ajax = new XMLHttpRequest();
 
@@ -169,6 +181,9 @@
 			var obj = JSON.parse(result);
 
 			if (typeof obj.data_type != 'undefined') {
+				if (obj.data_type == "delete_item") {
+					window.location.href = window.location.href;
+				} else
 				if (obj.data_type == "edit_quantity") {
 					window.location.href = window.location.href;
 				}

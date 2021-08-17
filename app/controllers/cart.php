@@ -40,9 +40,17 @@ class Cart extends Controller
 
         $data['page_title'] = "Cart";
 
+        $data['sub_total'] = 0;
+
+        $data['tax'] = 0;
+
         if ($ROWS) {
             foreach ($ROWS as $key => $row) {
                 $ROWS[$key]->image = $image_class->get_thumb_post($ROWS[$key]->image);
+                $mytotal = $row->price * $row->cart_qty;
+
+                $data['sub_total'] += $mytotal;
+                $data['tax'] = $data['sub_total'] / 120 * 20;
             }
         }
 
