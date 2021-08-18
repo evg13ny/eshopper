@@ -1,6 +1,6 @@
 <?php
 
-class Cart extends Controller
+class Checkout extends Controller
 {
     public function index()
     {
@@ -38,7 +38,7 @@ class Cart extends Controller
             }
         }
 
-        $data['page_title'] = "Cart";
+        $data['page_title'] = "Checkout";
 
         $data['sub_total'] = 0;
 
@@ -58,6 +58,6 @@ class Cart extends Controller
 
         $data['ROWS'] = $ROWS;
 
-        $this->view("cart", $data);
+        $this->view("checkout", $data);
     }
 }
