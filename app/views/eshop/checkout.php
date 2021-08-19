@@ -17,20 +17,14 @@
 
 		<div class="shopper-informations">
 			<div class="row">
-
-				<div class="col-sm-5 clearfix">
+				<div class="col-sm-6 clearfix">
 					<div class="bill-to">
 						<p>Bill To</p>
 						<div class="form-one">
 							<form>
-								<input type="text" placeholder="Company Name">
-								<input type="text" placeholder="Email*">
-								<input type="text" placeholder="Title">
-								<input type="text" placeholder="First Name *">
-								<input type="text" placeholder="Middle Name">
-								<input type="text" placeholder="Last Name *">
-								<input type="text" placeholder="Address 1 *">
+								<input type="text" placeholder="Address 1 *" autofocus>
 								<input type="text" placeholder="Address 2">
+								<input type="text" placeholder="Phone *">
 							</form>
 						</div>
 						<div class="form-two">
@@ -38,14 +32,15 @@
 								<input type="text" placeholder="Zip / Postal Code *">
 								<select>
 									<option>-- Country --</option>
-									<option>United States</option>
-									<option>Bangladesh</option>
-									<option>UK</option>
-									<option>India</option>
-									<option>Pakistan</option>
-									<option>Ucrane</option>
-									<option>Canada</option>
-									<option>Dubai</option>
+
+									<?php if (isset($countries) && $countries) : ?>
+										<?php foreach ($countries as $row) : ?>
+
+											<option value="<?= $row->id ?>"><?= $row->country ?></option>
+
+										<?php endforeach; ?>
+									<?php endif; ?>
+
 								</select>
 								<select>
 									<option>-- State / Province / Region --</option>
@@ -54,23 +49,18 @@
 									<option>UK</option>
 									<option>India</option>
 									<option>Pakistan</option>
-									<option>Ucrane</option>
+									<option>Ukraine</option>
 									<option>Canada</option>
-									<option>Dubai</option>
+									<option>UAE</option>
 								</select>
-								<input type="password" placeholder="Confirm password">
-								<input type="text" placeholder="Phone *">
-								<input type="text" placeholder="Mobile Phone">
-								<input type="text" placeholder="Fax">
 							</form>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-6">
 					<div class="order-message">
 						<p>Shipping Order</p>
 						<textarea name="message" placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
-						<label><input type="checkbox"> Shipping to bill address</label>
 					</div>
 				</div>
 			</div>
@@ -87,5 +77,40 @@
 	</div>
 </section>
 <!--/#cart_items-->
+
+<script type="text/javascript">
+	function get_states(id) {
+
+		send_data({
+			id: id.trim()
+		}, "get_states");
+	}
+
+	function send_data(data = {}, data_type) {
+		var ajax = new XMLHttpRequest();
+
+		ajax.addEventListener('readystatechange', function() {
+			if (ajax.readyState == 4 && ajax.status == 200) {
+				handle_result(ajax.responseText);
+			}
+		});
+
+		ajax.open("POST", "<?= ROOT ?>ajax_checkout/" + data_type + "/" + JSON.stringify(data), true);
+		ajax.send();
+	}
+
+	function handle_result(result) {
+		console.log(result);
+		if (result != "") {
+			var obj = JSON.parse(result);
+
+			if (typeof obj.data_type != 'undefined') {
+				if (obj.data_type == "get_states") {
+					// window.location.href = window.location.href;
+				}
+			}
+		}
+	}
+</script>
 
 <?php $this->view("footer", $data); ?>

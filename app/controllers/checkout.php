@@ -58,6 +58,12 @@ class Checkout extends Controller
 
         $data['ROWS'] = $ROWS;
 
+        // get countries
+
+        $countries = $this->load_model('Countries');
+
+        $data['countries'] = $countries->get_countries();
+
         $this->view("checkout", $data);
     }
 }
