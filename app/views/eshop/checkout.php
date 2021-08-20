@@ -22,15 +22,15 @@
 						<p>Bill To</p>
 						<div class="form-one">
 							<form>
-								<input type="text" placeholder="Address 1 *" autofocus>
+								<input type="text" placeholder="Address 1 *" autofocus required>
 								<input type="text" placeholder="Address 2">
-								<input type="text" placeholder="Phone *">
+								<input type="text" placeholder="Phone *" required>
 							</form>
 						</div>
 						<div class="form-two">
-							<form>
-								<input type="text" placeholder="Zip / Postal Code *">
-								<select>
+							<form method="POST">
+								<input type="text" placeholder="Zip / Postal Code *" required>
+								<select name="country" class="js-country" oninput="get_states(this.value)" required>
 									<option>-- Country --</option>
 
 									<?php if (isset($countries) && $countries) : ?>
@@ -42,16 +42,8 @@
 									<?php endif; ?>
 
 								</select>
-								<select>
+								<select name="state" class="js-state">
 									<option>-- State / Province / Region --</option>
-									<option>United States</option>
-									<option>Bangladesh</option>
-									<option>UK</option>
-									<option>India</option>
-									<option>Pakistan</option>
-									<option>Ukraine</option>
-									<option>Canada</option>
-									<option>UAE</option>
 								</select>
 							</form>
 						</div>
@@ -106,7 +98,13 @@
 
 			if (typeof obj.data_type != 'undefined') {
 				if (obj.data_type == "get_states") {
-					// window.location.href = window.location.href;
+
+					var select_input = document.querySelector(".js-state");
+					select_input.innerHTML = "<option>-- State / Province / Region --</option>";
+					
+					for (var i = 0; i < obj.data.length; i++) {
+						select_input.innerHTML += "<option value='" + obj.data[i].id + "'>" + obj.data[i].state + "</option>";
+					}
 				}
 			}
 		}
