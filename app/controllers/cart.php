@@ -54,7 +54,9 @@ class Cart extends Controller
             }
         }
 
-        rsort($ROWS);
+        if (is_array($ROWS)) {
+            rsort($ROWS);
+        }
 
         $data['ROWS'] = $ROWS;
 

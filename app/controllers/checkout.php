@@ -54,7 +54,9 @@ class Checkout extends Controller
             }
         }
 
-        rsort($ROWS);
+        if (is_array($ROWS)) {
+            rsort($ROWS);
+        }
 
         $data['ROWS'] = $ROWS;
 
@@ -63,6 +65,13 @@ class Checkout extends Controller
         $countries = $this->load_model('Countries');
 
         $data['countries'] = $countries->get_countries();
+
+        /* if (count($_POST) > 0) {
+
+            show($_POST);
+            show($ROWS);
+            show($_SESSION);
+        }*/
 
         $this->view("checkout", $data);
     }
