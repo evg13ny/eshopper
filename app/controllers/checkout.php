@@ -66,12 +66,26 @@ class Checkout extends Controller
 
         $data['countries'] = $countries->get_countries();
 
-        /* if (count($_POST) > 0) {
+        if (count($_POST) > 0) {
 
-            show($_POST);
-            show($ROWS);
-            show($_SESSION);
-        }*/
+            // show($_POST);
+            // show($ROWS);
+            // show($_SESSION);
+
+            $sessionid = session_id();
+            $user_url = "";
+
+            if (isset($_SESSION['user_url'])) {
+                
+                $user_url = $_SESSION['user_url'];
+            }
+
+            $order = $this->load_model('Order');
+            $order->save_order($_POST, $ROWS, $user_url, $sessionid);
+
+            // header("Location:".ROOT."thank_you");
+            // die;
+        }
 
         $this->view("checkout", $data);
     }
