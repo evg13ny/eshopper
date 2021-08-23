@@ -1,5 +1,14 @@
 <?php $this->view("header", $data); ?>
 
+<?php
+
+if (isset($errors) && count($errors) > 0) {
+
+	print_r($errors);
+}
+
+?>
+
 <section id="cart_items">
 	<div class="container">
 		<div class="breadcrumbs">
@@ -65,7 +74,7 @@
 
 				</div>
 			</form>
-			
+
 		<?php else : ?>
 			<h3 style="text-align: center;">
 				Please add some items in the cart first!
