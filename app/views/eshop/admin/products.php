@@ -277,7 +277,7 @@
             var edit_price_input = document.querySelector("#edit_price");
             edit_price_input.value = info.price;
 
-            var product_images_input = document.querySelector(".js-product-images");
+            var product_images_input = document.querySelector(".js-product-images-edit");
             product_images_input.innerHTML = `<img src="<?= ROOT ?>${info.image}"/>`;
             product_images_input.innerHTML += `<img src="<?= ROOT ?>${info.image2}"/>`;
             product_images_input.innerHTML += `<img src="<?= ROOT ?>${info.image3}"/>`;
@@ -437,7 +437,7 @@
     }
 
     function handle_result(result) {
-        console.log(result);
+        // console.log(result);
         if (result != "") {
             var obj = JSON.parse(result);
 
@@ -452,16 +452,19 @@
                         alert(obj.message);
                     }
                 } else if (obj.data_type == "edit_product") {
-                    show_edit_product(0, '', false);
-                    var table_body = document.querySelector("#table_body");
-                    table_body.innerHTML = obj.data;
+                    if (obj.message_type == "info") {
+                        show_edit_product(0, '', false);
+                        var table_body = document.querySelector("#table_body");
+                        table_body.innerHTML = obj.data;
+                    } else {
+                        alert(obj.message);
+                    }
                 } else if (obj.data_type == "disable_row") {
                     var table_body = document.querySelector("#table_body");
                     table_body.innerHTML = obj.data;
                 } else if (obj.data_type == "delete_row") {
                     var table_body = document.querySelector("#table_body");
                     table_body.innerHTML = obj.data;
-
                     alert(obj.message);
                 }
             }

@@ -5,9 +5,12 @@ class Ajax_product extends Controller
     public function index()
     {
         if (count($_POST) > 0) {
+
             $data = (object)$_POST;
         } else {
+
             $data = file_get_contents("php://input");
+            $data = json_decode($data);
         }
 
         if (is_object($data) && isset($data->data_type)) {
@@ -54,28 +57,33 @@ class Ajax_product extends Controller
 
                 echo json_encode($arr);
             } else if ($data->data_type == 'edit_product') {
-                $product->edit($data, $_FILES, $image_class);
-                $arr['message'] = "Your row was successfully edited";
-                $_SESSION['error'] = "";
-                $arr['message_type'] = "info";
 
+                $product->edit($data, $_FILES, $image_class);
+
+                if ($_SESSION['error'] != "") {
+
+                    $arr['message'] = $_SESSION['error'];
+                    $arr['message_type'] = "error";
+                } else {
+
+                    $arr['message'] = "Your row was successfully edited";
+                    $arr['message_type'] = "info";
+                }
+
+                $_SESSION['error'] = "";
                 $cats = $product->get_all();
                 $arr['data'] = $product->make_table($cats, $category);
-
                 $arr['data_type'] = "edit_product";
-
                 echo json_encode($arr);
             } else if ($data->data_type == 'delete_row') {
+
                 $product->delete($data->id);
                 $arr['message'] = "Your row was successfully deleted";
                 $_SESSION['error'] = "";
                 $arr['message_type'] = "info";
-
                 $cats = $product->get_all();
-                $arr['data'] = $product->make_table($cats);
-
+                $arr['data'] = $product->make_table($cats, $category);
                 $arr['data_type'] = "delete_row";
-
                 echo json_encode($arr);
             }
         }

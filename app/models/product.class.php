@@ -98,7 +98,7 @@ class Product
 
         $images_string = "";
 
-        if (!preg_match("/^[a-zA-Z ]+$/", trim($arr['description']))) {
+        if (!preg_match("/^[a-zA-Z 0-9.,_\-]+$/", trim($arr['description']))) {
             $_SESSION['error'] .= "Please enter a valid description for this product<br>";
         }
 
