@@ -15,7 +15,9 @@
                 }
             </style>
 
-            <div class="col-md-4 mb" style="background-color: #eee; text-align: center; box-shadow: 0px 0px 20px #aaa; border: solid thin #ddd;">
+            <!-- profile data -->
+
+            <div class="col-md-4 mb" style="flex: 1; background-color: #eee; text-align: center; box-shadow: 0px 0px 20px #aaa; border: solid thin #ddd;">
                 <!-- WHITE PANEL - TOP USER -->
                 <div class="white-panel pn">
                     <div class="white-header" style="color: grey;">
@@ -47,6 +49,50 @@
                 </div>
             </div><!-- /col-md-4 -->
 
+            <!-- /profile data -->
+
+            <br><br style="clear: both;">
+
+            <?php if (is_array($orders)) : ?>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Order no</th>
+                            <th>Order date</th>
+                            <th>Total</th>
+                            <th>Delivery Address</th>
+                            <th>City/State</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($orders as $order) : ?>
+                            <tr>
+                                <td>
+                                    <?= $order->id ?>
+                                </td>
+                                <td>
+                                    <?= date("jS M Y h:i a", strtotime($order->date)) ?>
+                                </td>
+                                <td>
+                                    $<?= $order->total ?>
+                                </td>
+                                <td>
+                                    <?= $order->delivery_address ?>
+                                </td>
+                                <td>
+                                    <?= $order->state ?>
+                                </td>
+                                <td>
+                                    <?= $order->phone ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else : ?>
+                <div>This user has no orders yet.</div>
+            <?php endif; ?>
         </div>
 
     </section>
