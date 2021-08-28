@@ -13,11 +13,25 @@
                 #user_text {
                     color: #6e93ce;
                 }
+
+                .details {
+                    background-color: #eee;
+                    box-shadow: 0px 0px 10px #aaa;
+                    width: 100%;
+                    position: absolute;
+                    min-height: 100px;
+                    left: 0px;
+                    padding: 10px;
+                }
+
+                .hide {
+                    display: none;
+                }
             </style>
 
             <!-- profile data -->
 
-            <div class="col-md-4 mb" style="flex: 1; background-color: #eee; text-align: center; box-shadow: 0px 0px 20px #aaa; border: solid thin #ddd;">
+            <div class="col-md-4 mb" style="background-color: #eee; text-align: center; box-shadow: 0px 0px 20px #aaa; border: solid thin #ddd;">
                 <!-- WHITE PANEL - TOP USER -->
                 <div class="white-panel pn">
                     <div class="white-header" style="color: grey;">
@@ -60,14 +74,15 @@
                             <th>Order no</th>
                             <th>Order date</th>
                             <th>Total</th>
-                            <th>Delivery Address</th>
-                            <th>City/State</th>
+                            <th>Delivery address</th>
+                            <th>City / State</th>
                             <th>Phone</th>
+                            <th>...</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody onclick="show_details(event)">
                         <?php foreach ($orders as $order) : ?>
-                            <tr>
+                            <tr style="position: relative;">
                                 <td>
                                     <?= $order->id ?>
                                 </td>
@@ -86,6 +101,12 @@
                                 <td>
                                     <?= $order->phone ?>
                                 </td>
+                                <td>
+                                    <i class="fa fa-arrow-down"></i>
+                                    <div class="js-order-details details hide">
+                                        These are order details.
+                                    </div>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -97,5 +118,12 @@
 
     </section>
 </section>
+
+<script type="text/javascript">
+    function show_details(e) {
+
+        alert(e.target.tagName);
+    }
+</script>
 
 <?php $this->view("footer", $data); ?>
