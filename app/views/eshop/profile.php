@@ -22,6 +22,7 @@
                     min-height: 100px;
                     left: 0px;
                     padding: 10px;
+                    z-index: 2;
                 }
 
                 .hide {
@@ -104,7 +105,35 @@
                                 <td>
                                     <i class="fa fa-arrow-down"></i>
                                     <div class="js-order-details details hide">
-                                        These are order details.
+                                        <a style="float: right; cursor: pointer;">Close</a>
+
+                                        <h4>Order #<?= $order->id ?></h4>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Qty</th>
+                                                    <th>Description</th>
+                                                    <th>Amount</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <?php if (isset($order->details) && is_array($order->details)) : ?>
+                                                <?php foreach ($order->details as $detail) : ?>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><?= $detail->qty ?></td>
+                                                            <td><?= $detail->description ?></td>
+                                                            <td><?= $detail->amount ?></td>
+                                                            <td><?= $detail->total ?></td>
+                                                        </tr>
+                                                    </tbody>
+                                                <?php endforeach; ?>
+                                            <?php else : ?>
+                                                <div>No order details were found for this order.</div>
+                                            <?php endif; ?>
+                                        </table>
+                                        <h4 class="pull-right">Grand Total: <?= $order->grand_total ?></h4>
+
                                     </div>
                                 </td>
                             </tr>
@@ -122,7 +151,33 @@
 <script type="text/javascript">
     function show_details(e) {
 
-        alert(e.target.tagName);
+        var row = e.target.parentNode;
+
+        if (row.tagName != "TR")
+            row = row.parentNode;
+
+        var details = row.querySelector(".js-order-details");
+
+        // get all rows
+
+        var all = e.currentTarget.querySelectorAll(".js-order-details");
+
+        for (var i = 0; i < all.length; i++) {
+
+            if (all[i] != details) {
+
+                all[i].classList.add("hide");
+            }
+        }
+
+        if (details.classList.contains("hide")) {
+
+            details.classList.remove("hide");
+
+        } else {
+
+            details.classList.add("hide");
+        }
     }
 </script>
 
