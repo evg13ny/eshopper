@@ -42,7 +42,7 @@ class Admin extends Controller
 
         $data['categories'] = $categories;
 
-        $data['page_title'] = "Admin";
+        $data['page_title'] = "Admin - Categories";
 
         $this->view("admin/categories", $data);
     }
@@ -73,8 +73,51 @@ class Admin extends Controller
 
         $data['categories'] = $categories;
 
-        $data['page_title'] = "Admin";
+        $data['page_title'] = "Admin - Products";
 
         $this->view("admin/products", $data);
+    }
+
+    public function orders()
+    {
+
+        $User = $this->load_model('User');
+        $Order = $this->load_model('Order');
+
+        $user_data = $User->check_login(true, ["admin"]);
+
+        if (is_object($user_data)) {
+            $data['user_data'] = $user_data;
+        }
+
+        $orders = $Order->get_all_orders();
+
+        if (is_array($orders)) {
+
+            foreach ($orders as $key => $row) {
+
+                $details = $Order->get_orders_details($row->id);
+
+                $orders[$key]->grand_total = 0;
+
+                if (is_array($details)) {
+
+                    $totals = array_column($details, "total");
+                    $grand_total = array_sum($totals);
+                    $orders[$key]->grand_total = $grand_total;
+                }
+
+                $orders[$key]->details = $details;
+
+                $user = $User->get_user($row->user_url);
+                $orders[$key]->user = $user;
+            }
+        }
+
+        $data['orders'] = $orders;
+
+        $data['page_title'] = "Admin - Orders";
+
+        $this->view("admin/orders", $data);
     }
 }

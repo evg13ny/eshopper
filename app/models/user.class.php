@@ -103,7 +103,19 @@ class User
 
     public function get_user($url)
     {
-        
+
+        $db = Database::newInstance();
+        $arr = false;
+        $arr['url'] = addslashes($url);
+        $query = "select * from users where url_address = :url limit 1";
+        $result = $db->read($query, $arr);
+
+        if (is_array($result)) {
+
+            return $result[0];
+        }
+
+        return false;
     }
 
     private function get_random_string_max($length)
