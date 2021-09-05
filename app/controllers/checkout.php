@@ -68,9 +68,26 @@ class Checkout extends Controller
 
         if (count($_POST) > 0) {
 
-            // show($_POST);
-            // show($ROWS);
-            // show($_SESSION);
+            $order = $this->load_model('Order');
+            $order->validate($_POST);
+            $data['errors'] = $order->errors;
+
+            $_SESSION['POST_DATA'] = $_POST;
+
+            if (count($order->errors) == 0) {
+
+                header("Location:" . ROOT . "checkout/summary");
+                die;
+            }
+        }
+
+        $this->view("checkout", $data);
+    }
+
+    public function summary()
+    {
+
+        if (count($_POST) > 0) {
 
             $sessionid = session_id();
             $user_url = "";
@@ -88,6 +105,6 @@ class Checkout extends Controller
             // die;
         }
 
-        $this->view("checkout", $data);
+        $this->view("checkout.summary", $data);
     }
 }

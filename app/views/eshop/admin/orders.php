@@ -65,28 +65,37 @@
                         <h4>Customer: <?= $order->user->name ?></h4>
 
                         <!-- order details -->
-                        <table class="table">
-                            <tr>
-                                <th>Country</th>
-                                <td><?= $order->country ?></td>
-                            </tr>
-                            <tr>
-                                <th>State</th>
-                                <td><?= $order->state ?></td>
-                            </tr>
-                            <tr>
-                                <th>Delivery Address</th>
-                                <td><?= $order->delivery_address ?></td>
-                            </tr>
-                            <tr>
-                                <th>Phone</th>
-                                <td><?= $order->phone ?></td>
-                            </tr>
-                            <tr>
-                                <th>Date</th>
-                                <td><?= $order->date ?></td>
-                            </tr>
-                        </table>
+                        <div style="display: flex;">
+                            <table class="table" style="flex: 1; margin: 4px;">
+                                <tr>
+                                    <th>Country</th>
+                                    <td><?= $order->country ?></td>
+                                </tr>
+                                <tr>
+                                    <th>State</th>
+                                    <td><?= $order->state ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Delivery Address</th>
+                                    <td><?= $order->delivery_address ?></td>
+                                </tr>
+                            </table>
+
+                            <table class="table" style="flex: 1; margin: 4px;">
+                                <tr>
+                                    <th>Phone</th>
+                                    <td><?= $order->phone ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Date</th>
+                                    <td><?= $order->date ?></td>
+                                </tr>
+                                <tr>
+                                    <th>...</th>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
                         <!-- /order details -->
 
                         <hr>

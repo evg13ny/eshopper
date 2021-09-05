@@ -77,7 +77,8 @@ if (isset($errors) && count($errors) > 0) {
 						</div>
 					</div>
 
-					<input type="submit" class="btn btn-warning pull-right" value="Pay >">
+					<input type="submit" class="btn btn-warning pull-right" value="Continue >">
+					<!-- <input type="submit" class="btn btn-warning pull-right" value="Pay >"> -->
 
 				</div>
 			</form>

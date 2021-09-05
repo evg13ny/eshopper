@@ -6,8 +6,10 @@ class Order extends Controller
 
     public $errors = array();
 
-    public function save_order($POST, $ROWS, $user_url, $sessionid)
+    public function validate($POST)
     {
+
+        $this->errors = array();
 
         foreach ($POST as $key => $value) {
 
@@ -27,6 +29,10 @@ class Order extends Controller
                 }
             }
         }
+    }
+
+    public function save_order($POST, $ROWS, $user_url, $sessionid)
+    {
 
         $total = 0;
 
