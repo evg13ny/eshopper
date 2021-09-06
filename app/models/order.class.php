@@ -53,11 +53,11 @@ class Order extends Controller
             $data['sessionid']        = $sessionid;
             $data['delivery_address'] = $POST['address1'] . "" . $POST['address2'];
             $data['total']            = $total;
-            $country_obj              = $countries->get_country($POST['country']);
-            $data['country']          = $country_obj->country;
+            // $country_obj              = $countries->get_country($POST['country']);
+            $data['country']          = $POST['country'];
             // $data['country']          = $countries->get_country($POST['country']);
-            $state_obj                = $countries->get_state($POST['state']);
-            $data['state']            = $state_obj->state;
+            // $state_obj                = $countries->get_state($POST['state']);
+            $data['state']            = $POST['state'];
             // $data['state']            = $countries->get_state($POST['state']);
             $data['zip']              = $POST['postal_code'];
             $data['tax']              = 0;

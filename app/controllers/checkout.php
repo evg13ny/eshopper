@@ -63,8 +63,14 @@ class Checkout extends Controller
         // get countries
 
         $countries = $this->load_model('Countries');
-
         $data['countries'] = $countries->get_countries();
+
+        // check if old post data exists
+
+        if (isset($_SESSION['POST_DATA'])) {
+
+            $data['POST_DATA'] = $_SESSION['POST_DATA'];
+        }
 
         if (count($_POST) > 0) {
 
@@ -73,6 +79,7 @@ class Checkout extends Controller
             $data['errors'] = $order->errors;
 
             $_SESSION['POST_DATA'] = $_POST;
+            $data['POST_DATA'] = $_POST;
 
             if (count($order->errors) == 0) {
 
@@ -87,7 +94,19 @@ class Checkout extends Controller
     public function summary()
     {
 
-        if (count($_POST) > 0) {
+        $User = $this->load_model('User');
+
+        $image_class = $this->load_model('Image');
+
+        $user_data = $User->check_login();
+
+        if (is_object($user_data)) {
+            $data['user_data'] = $user_data;
+        }
+
+        $data['page_title'] = "Checkout Summary";
+
+        if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_SESSION['POST_DATA'])) {
 
             $sessionid = session_id();
             $user_url = "";
@@ -98,7 +117,7 @@ class Checkout extends Controller
             }
 
             $order = $this->load_model('Order');
-            $order->save_order($_POST, $ROWS, $user_url, $sessionid);
+            $order->save_order($_SESSION['POST_DATA'], $ROWS, $user_url, $sessionid);
             $data['errors'] = $order->errors;
 
             // header("Location:".ROOT."thank_you");

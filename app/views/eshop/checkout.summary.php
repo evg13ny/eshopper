@@ -64,22 +64,13 @@ if (isset($errors) && count($errors) > 0) {
 								<div class="form-two">
 
 									<input class="form-control" type="text" name="postal_code" value="<?= $postal_code ?>" placeholder="Zip / Postal Code *" required><br>
-									<select class="form-control" name="country" class="js-country" oninput="get_states(this.value)" required>
-
-										<?php
-										if ($country == "") {
-
-											echo "<option>-- Country --</option>";
-										} else {
-
-											echo "<option>$country</option>";
-										}
-										?>
+									<select class="form-control" name="country" value="<?= $country ?>" class="js-country" oninput="get_states(this.value)" required>
+										<option>-- Country --</option>
 
 										<?php if (isset($countries) && $countries) : ?>
 											<?php foreach ($countries as $row) : ?>
 
-												<option value="<?= $row->country ?>"><?= $row->country ?></option>
+												<option value="<?= $row->id ?>"><?= $row->country ?></option>
 
 											<?php endforeach; ?>
 										<?php endif; ?>
@@ -113,8 +104,8 @@ if (isset($errors) && count($errors) > 0) {
 			</h3>
 		<?php endif; ?>
 
-		<a href="<?= ROOT ?>cart">
-			<input type="button" class="btn btn-warning pull-left" value="< Back to cart">
+		<a href="<?= ROOT ?>checkout">
+			<input type="button" class="btn btn-warning pull-left" value="< Back to checkout">
 		</a>
 
 	</div>
@@ -154,7 +145,7 @@ if (isset($errors) && count($errors) > 0) {
 					select_input.innerHTML = "<option>-- State / Province / Region --</option>";
 
 					for (var i = 0; i < obj.data.length; i++) {
-						select_input.innerHTML += "<option value='" + obj.data[i].state + "'>" + obj.data[i].state + "</option>";
+						select_input.innerHTML += "<option value='" + obj.data[i].id + "'>" + obj.data[i].state + "</option>";
 					}
 				}
 			}
