@@ -87,7 +87,17 @@ if (isset($errors) && count($errors) > 0) {
 									</select><br>
 
 									<select name="state" value="<?= $state ?>" class="js-state">
-										<option>-- State / Province / Region --</option>
+
+										<?php
+										if ($state == "") {
+
+											echo "<option>-- State / Province / Region --</option>";
+										} else {
+
+											echo "<option>$state</option>";
+										}
+										?>
+
 									</select>
 
 								</div>
@@ -122,10 +132,10 @@ if (isset($errors) && count($errors) > 0) {
 <!--/#cart_items-->
 
 <script type="text/javascript">
-	function get_states(id) {
+	function get_states(country) {
 
 		send_data({
-			id: id.trim()
+			id: country.trim()
 		}, "get_states");
 	}
 
@@ -138,8 +148,12 @@ if (isset($errors) && count($errors) > 0) {
 			}
 		});
 
-		ajax.open("POST", "<?= ROOT ?>ajax_checkout/" + data_type + "/" + JSON.stringify(data), true);
-		ajax.send();
+		var info = {};
+		info.data_type = data_type;
+		info.data = data;
+
+		ajax.open("POST", "<?= ROOT ?>ajax_checkout/", true);
+		ajax.send(JSON.stringify(info));
 	}
 
 	function handle_result(result) {

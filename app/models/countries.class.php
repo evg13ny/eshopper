@@ -14,16 +14,27 @@ class Countries
         return $data;
     }
 
-    public function get_states($id)
+    public function get_states($country)
     {
 
-        $arr['id'] = (int)$id;
+        $arr['country'] = addslashes($country);
 
         $DB = Database::newInstance();
 
-        $query = "select * from states where parent = :id order by id desc";
+        $query = "select * from countries where country = :country limit 1";
 
-        $data = $DB->read($query, $arr);
+        $check = $DB->read($query, $arr);
+
+        $data = false;
+
+        if (is_array($check)) {
+
+            $arr = false;
+            $arr['id'] = $check[0]->id;
+
+            $query = "select * from states where parent = :id order by id desc";
+            $data = $DB->read($query, $arr);
+        }
 
         return $data;
     }
