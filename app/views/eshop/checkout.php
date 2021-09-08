@@ -29,7 +29,7 @@ if (isset($errors) && count($errors) > 0) {
 		<?php if (is_array($ROWS)) : ?>
 
 			<div class="register-req">
-				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
+				<p>Please add some information below</p>
 			</div>
 			<!--/register-req-->
 
@@ -112,7 +112,6 @@ if (isset($errors) && count($errors) > 0) {
 					</div>
 
 					<input type="submit" class="btn btn-warning pull-right" value="Continue >">
-					<!-- <input type="submit" class="btn btn-warning pull-right" value="Pay >"> -->
 
 				</div>
 			</form>

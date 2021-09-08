@@ -104,6 +104,46 @@ class Checkout extends Controller
             $data['user_data'] = $user_data;
         }
 
+        // get data
+
+        $DB = Database::newInstance();
+
+        $ROWS = false;
+
+        $prod_ids = array();
+
+        if (isset($_SESSION['CART'])) {
+            $prod_ids = array_column($_SESSION['CART'], 'id');
+            $ids_str = "'" . implode("','", $prod_ids) . "'";
+
+            $ROWS = $DB->read("select * from products where id in ($ids_str)");
+        }
+
+        if (is_array($ROWS)) {
+            foreach ($ROWS as $key => $row) {
+                foreach ($_SESSION['CART'] as $item) {
+                    if ($row->id == $item['id']) {
+                        $ROWS[$key]->cart_qty = $item['qty'];
+                        break;
+                    }
+                }
+            }
+        }
+
+        $data['sub_total'] = 0;
+
+        if ($ROWS) {
+            foreach ($ROWS as $key => $row) {
+                $mytotal = $row->price * $row->cart_qty;
+                $data['sub_total'] += $mytotal;
+                $data['tax'] = $data['sub_total'] / 120 * 20;
+            }
+        }
+
+        $data['order_details'] = $ROWS;
+
+        $data['orders'][] = $_SESSION['POST_DATA'];
+
         $data['page_title'] = "Checkout Summary";
 
         if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_SESSION['POST_DATA'])) {

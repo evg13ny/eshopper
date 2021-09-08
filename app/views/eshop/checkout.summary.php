@@ -26,77 +26,92 @@ if (isset($errors) && count($errors) > 0) {
 		</div>
 		<!--/breadcrums-->
 
-		<?php if (is_array($ROWS)) : ?>
+		<?php if (is_array($orders)) : ?>
 
 			<div class="register-req">
-				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
+				<p style="text-align: center;">Please confirm the information below</p>
 			</div>
 			<!--/register-req-->
 
-			<?php
-			$address1		= "";
-			$address2		= "";
-			$postal_code	= "";
-			$country		= "";
-			$state			= "";
-			$phone			= "";
-			$message		= "";
+			<?php foreach ($orders as $order) : ?>
 
-			if (isset($POST_DATA)) {
+				<?php $order = (object)$order ?>
 
-				extract($POST_DATA);
-			}
-			?>
+				<div class="js-order-details details">
 
-			<form method="POST">
-				<div class="shopper-informations">
-					<div class="row">
-						<div class="col-sm-6 clearfix">
-							<div class="bill-to">
-								<p>Bill To</p>
-								<div class="form-one">
+					<!-- order details -->
+					<div style="display: flex;">
+						<table class="table" style="flex: 1; margin: 4px;">
+							<tr>
+								<th>Country</th>
+								<td><?= $order->country ?></td>
+							</tr>
+							<tr>
+								<th>State</th>
+								<td><?= $order->state ?></td>
+							</tr>
+							<tr>
+								<th>Phone</th>
+								<td><?= $order->phone ?></td>
+							</tr>
+							<tr>
+								<th>Zip / Postal Code</th>
+								<td><?= $order->postal_code ?></td>
+							</tr>
+						</table>
 
-									<input class="form-control" type="text" name="address1" value="<?= $address1 ?>" placeholder="Address 1 *" autofocus required><br>
-									<input class="form-control" type="text" name="address2" value="<?= $address2 ?>" placeholder="Address 2"><br>
-									<input class="form-control" type="text" name="phone" value="<?= $phone ?>" placeholder="Phone *" required>
+						<table class="table" style="flex: 1; margin: 4px;">
+							<tr>
+								<th>Delivery Address 1</th>
+								<td><?= $order->address1 ?></td>
+							</tr>
+							<tr>
+								<th>Delivery Address 2</th>
+								<td><?= $order->address2 ?></td>
+							</tr>
+							<tr>
+								<th>Date</th>
+								<td><?= date("Y-m-d") ?></td>
+							</tr>
+							<tr>
+								<td style="text-align: center;" colspan="2"><?= $order->message ?></td>
+							</tr>
+						</table>
 
-								</div>
-								<div class="form-two">
-
-									<input class="form-control" type="text" name="postal_code" value="<?= $postal_code ?>" placeholder="Zip / Postal Code *" required><br>
-									<select class="form-control" name="country" value="<?= $country ?>" class="js-country" oninput="get_states(this.value)" required>
-										<option>-- Country --</option>
-
-										<?php if (isset($countries) && $countries) : ?>
-											<?php foreach ($countries as $row) : ?>
-
-												<option value="<?= $row->id ?>"><?= $row->country ?></option>
-
-											<?php endforeach; ?>
-										<?php endif; ?>
-
-									</select><br>
-
-									<select name="state" value="<?= $state ?>" class="js-state">
-										<option>-- State / Province / Region --</option>
-									</select>
-
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="order-message">
-								<p>Shipping Order</p>
-								<textarea name="message" placeholder="Notes about your order, Special Notes for Delivery" rows="16"><?= $message ?></textarea>
-							</div>
-						</div>
 					</div>
+					<!-- /order details -->
 
-					<input type="submit" class="btn btn-warning pull-right" value="Continue >">
-					<!-- <input type="submit" class="btn btn-warning pull-right" value="Pay >"> -->
+					<hr>
+					<h4>Order Summary</h4>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Qty</th>
+								<th>Description</th>
+								<th>Amount</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<?php if (isset($order_details) && is_array($order_details)) : ?>
+							<?php foreach ($order_details as $detail) : ?>
+								<tbody>
+									<tr>
+										<td><?= $detail->cart_qty ?></td>
+										<td><?= $detail->description ?></td>
+										<td><?= $detail->price ?></td>
+										<td><?= $detail->cart_qty * $detail->price ?></td>
+									</tr>
+								</tbody>
+							<?php endforeach; ?>
+						<?php else : ?>
+							<div style="text-align: center;">No order details were found for this order.</div>
+						<?php endif; ?>
+					</table>
+					<h4 class="pull-right">Grand Total: <?= $sub_total; ?></h4>
 
 				</div>
-			</form>
+
+			<?php endforeach; ?>
 
 		<?php else : ?>
 			<h3 style="text-align: center;">
@@ -104,9 +119,15 @@ if (isset($errors) && count($errors) > 0) {
 			</h3>
 		<?php endif; ?>
 
+		<hr style="clear: both;">
+
 		<a href="<?= ROOT ?>checkout">
 			<input type="button" class="btn btn-warning pull-left" value="< Back to checkout">
 		</a>
+
+		<form action="" method="POST">
+			<input type="submit" class="btn btn-warning pull-right" value="Pay >">
+		</form>
 
 	</div>
 </section>
