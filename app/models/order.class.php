@@ -28,6 +28,30 @@ class Order extends Controller
                     $this->errors[] = "Please enter a valid state";
                 }
             }
+
+            if ($key == "address1") {
+
+                if (empty($value)) {
+
+                    $this->errors[] = "Please enter a valid address1";
+                }
+            }
+
+            if ($key == "postal_code") {
+
+                if (empty($value)) {
+
+                    $this->errors[] = "Please enter a valid postal code";
+                }
+            }
+
+            if ($key == "phone") {
+
+                if (empty($value)) {
+
+                    $this->errors[] = "Please enter a valid phone";
+                }
+            }
         }
     }
 
