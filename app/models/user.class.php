@@ -118,6 +118,40 @@ class User
         return false;
     }
 
+    public function get_customers()
+    {
+
+        $db = Database::newInstance();
+        $arr = false;
+        $arr['rank'] = "customer";
+        $query = "select * from users where rank = :rank";
+        $result = $db->read($query, $arr);
+
+        if (is_array($result)) {
+
+            return $result;
+        }
+
+        return false;
+    }
+
+    public function get_admins()
+    {
+
+        $db = Database::newInstance();
+        $arr = false;
+        $arr['rank'] = "admin";
+        $query = "select * from users where rank = :rank";
+        $result = $db->read($query, $arr);
+
+        if (is_array($result)) {
+
+            return $result;
+        }
+
+        return false;
+    }
+
     private function get_random_string_max($length)
     {
 
