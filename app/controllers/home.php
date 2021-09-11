@@ -4,6 +4,18 @@ class Home extends Controller
 {
     public function index()
     {
+
+        //check if it's a search
+
+        $search = false;
+
+        if (isset($_GET['find'])) {
+
+            $find = addslashes($_GET['find']);
+
+            $search = true;
+        }
+
         $User = $this->load_model('User');
 
         $image_class = $this->load_model('Image');
@@ -16,7 +28,15 @@ class Home extends Controller
 
         $DB = Database::newInstance();
 
-        $ROWS = $DB->read("select * from products");
+        if ($search) {
+
+            $arr['description'] = "%" . $find . "%";
+
+            $ROWS = $DB->read("select * from products where description like :description", $arr);
+        } else {
+
+            $ROWS = $DB->read("select * from products");
+        }
 
         $data['page_title'] = "Home";
 
@@ -27,6 +47,8 @@ class Home extends Controller
         }
 
         $data['ROWS'] = $ROWS;
+
+        $data['show_search'] = true;
 
         $this->view("index", $data);
     }
