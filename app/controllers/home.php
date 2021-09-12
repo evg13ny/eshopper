@@ -46,10 +46,12 @@ class Home extends Controller
             }
         }
 
+        // get all categories
+        $category = $this->load_model('category');
+        $data['categories'] = $category->get_all();
+
         $data['ROWS'] = $ROWS;
-
         $data['show_search'] = true;
-
         $this->view("index", $data);
     }
 }

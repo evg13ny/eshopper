@@ -17,7 +17,7 @@
 					<!--features_items-->
 					<h2 class="title text-center">Features Items</h2>
 
-					<?php if (is_array($ROWS)) : ?>
+					<?php if (isset($ROWS) && is_array($ROWS)) : ?>
 						<?php foreach ($ROWS as $row) : ?>
 
 							<!--one product-->
