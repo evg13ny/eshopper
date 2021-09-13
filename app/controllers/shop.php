@@ -55,10 +55,12 @@ class Shop extends Controller
         $this->view("shop", $data);
     }
 
-    public function category($category = '')
+    public function category($cat_find = '')
     {
 
         $User = $this->load_model('User');
+
+        $category = $this->load_model('category');
 
         $image_class = $this->load_model('Image');
 
@@ -70,7 +72,16 @@ class Shop extends Controller
 
         $DB = Database::newInstance();
 
-        $ROWS = $DB->read("select * from products");
+        $cat_id = null;
+
+        $check = $category->get_one_by_name($cat_find);
+
+        if (is_object($check)) {
+
+            $cat_id = $check->id;
+        }
+
+        $ROWS = $DB->read("select * from products where category = :cat_id", ["cat_id" => $cat_id]);
 
         $data['page_title'] = "Shop";
 
@@ -81,7 +92,6 @@ class Shop extends Controller
         }
 
         // get all categories
-        $category = $this->load_model('category');
         $data['categories'] = $category->get_all();
 
         $data['ROWS'] = $ROWS;

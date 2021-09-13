@@ -29,25 +29,25 @@
     </thead>
 
     <tbody>
-        <?php if (isset($users) && is_array($users)) : ?>
-            <?php foreach ($users as $user) : ?>
+        <?php if (isset($settings) && is_array($settings)) : ?>
+            <?php foreach ($settings as $setting) : ?>
                 <tr style="position: relative;">
                     <td>
-                        <?= $user->id ?>
+                        <?= $setting->id ?>
                     </td>
                     <td>
-                        <a href="<?= ROOT ?>profile/<?= $user->url_address ?>">
-                            <?= $user->name ?>
+                        <a href="<?= ROOT ?>profile/<?= $setting->url_address ?>">
+                            <?= $setting->name ?>
                         </a>
                     </td>
                     <td>
-                        <?= $user->email ?>
+                        <?= $setting->email ?>
                     </td>
                     <td>
-                        <?= date("jS M Y h:i a", strtotime($user->date)) ?>
+                        <?= date("jS M Y h:i a", strtotime($setting->date)) ?>
                     </td>
                     <td>
-                        <?= $user->orders_count ?>
+                        <?= $setting->orders_count ?>
                     </td>
                     <td></td>
                 </tr>

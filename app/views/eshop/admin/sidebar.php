@@ -47,6 +47,9 @@ MAIN SIDEBAR MENU
                 <ul class="sub">
                     <li><a href="<?= ROOT ?>admin/settings/slider_images">Slider Images</a></li>
                 </ul>
+                <ul class="sub">
+                    <li><a href="<?= ROOT ?>admin/settings/socials">Social links / Contacts</a></li>
+                </ul>
             </li>
 
             <li class="sub-menu">

@@ -157,4 +157,21 @@ class Admin extends Controller
 
         $this->view("admin/users", $data);
     }
+
+    function settings($type)
+    {
+
+        $User = $this->load_model('User');
+        // $Order = $this->load_model('Order');
+
+        $user_data = $User->check_login(true, ["admin"]);
+
+        if (is_object($user_data)) {
+
+            $data['user_data'] = $user_data;
+        }
+
+        $data['page_title'] = ucwords("Admin - $type");
+        $this->view("admin/socials", $data);
+    }
 }
