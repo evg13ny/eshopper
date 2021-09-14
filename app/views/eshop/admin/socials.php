@@ -15,45 +15,32 @@
     }
 </style>
 
-<table class="table table-striped table-advance table-hover">
+<form method="POST">
+    <table class="table table-striped table-advance table-hover">
 
-    <thead>
-        <tr>
-            <th>User id</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Date created</th>
-            <th>Orders count</th>
-            <th>...</th>
-        </tr>
-    </thead>
+        <thead>
+            <tr>
+                <th>Setting</th>
+                <th>Value</th>
+            </tr>
+        </thead>
 
-    <tbody>
-        <?php if (isset($settings) && is_array($settings)) : ?>
-            <?php foreach ($settings as $setting) : ?>
-                <tr style="position: relative;">
-                    <td>
-                        <?= $setting->id ?>
-                    </td>
-                    <td>
-                        <a href="<?= ROOT ?>profile/<?= $setting->url_address ?>">
-                            <?= $setting->name ?>
-                        </a>
-                    </td>
-                    <td>
-                        <?= $setting->email ?>
-                    </td>
-                    <td>
-                        <?= date("jS M Y h:i a", strtotime($setting->date)) ?>
-                    </td>
-                    <td>
-                        <?= $setting->orders_count ?>
-                    </td>
-                    <td></td>
-                </tr>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </tbody>
-</table>
+        <tbody>
+            <?php if (isset($settings) && is_array($settings)) : ?>
+                <?php foreach ($settings as $setting) : ?>
+                    <tr>
+                        <td>
+                            <?= ucwords(str_replace("_", " ", $setting->setting)) ?>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" value="<?= $setting->value ?>">
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </tbody>
+    </table>
+    <input type="submit" value="Save Settings" class="btn btn-warning pull-right">
+</form>
 
 <?php $this->view("admin/footer", $data); ?>

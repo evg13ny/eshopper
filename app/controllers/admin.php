@@ -162,7 +162,7 @@ class Admin extends Controller
     {
 
         $User = $this->load_model('User');
-        // $Order = $this->load_model('Order');
+        $Settings = $this->load_model('setting');
 
         $user_data = $User->check_login(true, ["admin"]);
 
@@ -170,6 +170,8 @@ class Admin extends Controller
 
             $data['user_data'] = $user_data;
         }
+
+        $data['settings'] = $Settings->get_all();
 
         $data['page_title'] = ucwords("Admin - $type");
         $this->view("admin/socials", $data);
