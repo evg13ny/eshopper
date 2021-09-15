@@ -33,7 +33,7 @@
                             <?= ucwords(str_replace("_", " ", $setting->setting)) ?>
                         </td>
                         <td>
-                            <input class="form-control" type="text" value="<?= $setting->value ?>">
+                            <input name="<?= $setting->setting ?>" class="form-control" type="text" value="<?= $setting->value ?>">
                         </td>
                     </tr>
                 <?php endforeach; ?>

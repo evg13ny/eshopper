@@ -162,13 +162,19 @@ class Admin extends Controller
     {
 
         $User = $this->load_model('User');
-        $Settings = $this->load_model('setting');
 
         $user_data = $User->check_login(true, ["admin"]);
 
         if (is_object($user_data)) {
 
             $data['user_data'] = $user_data;
+        }
+
+        if (count($_POST) > 0) {
+
+            $errors = $Settings->save($_POST);
+            header("Location: " . ROOT . "admin/settings/socials");
+            die;
         }
 
         $data['settings'] = $Settings->get_all();
