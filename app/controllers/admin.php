@@ -2,6 +2,9 @@
 
 class Admin extends Controller
 {
+
+    use Setting;
+
     public function index()
     {
         $User = $this->load_model('User');
@@ -172,12 +175,12 @@ class Admin extends Controller
 
         if (count($_POST) > 0) {
 
-            $errors = $Settings->save($_POST);
+            $errors = $this->save_settings($_POST);
             header("Location: " . ROOT . "admin/settings/socials");
             die;
         }
 
-        $data['settings'] = $Settings->get_all();
+        $data['settings'] = $this->get_all_settings();
 
         $data['page_title'] = ucwords("Admin - $type");
         $this->view("admin/socials", $data);

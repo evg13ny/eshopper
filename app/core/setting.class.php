@@ -1,11 +1,13 @@
 <?php
 
-class Setting
+class Settings
 
 {
-    private $error = array();
 
-    public function get_all()
+    private $error = array();
+    protected static $SETTINGS = null;
+    public function get_all_settings()
+
     {
 
         $db = Database::newInstance();
@@ -13,7 +15,19 @@ class Setting
         return $db->read($query);
     }
 
-    public function get_all_as_object()
+    static function __callStatic($name, $arguments)
+    {
+
+        if (self::$SETTINGS) {
+            $settings = self::$SETTINGS;
+        } else {
+            $settings = self::get_all_settings_as_object();
+        }
+
+        return $settings->$name;
+    }
+
+    public static function get_all_settings_as_object()
     {
 
         $db = Database::newInstance();
@@ -27,10 +41,12 @@ class Setting
                 $settings->$setting_name = $row->value;
             }
         }
+
+        self::$SETTINGS = $settings;
         return $settings;
     }
 
-    public function save($POST)
+    public function save_settings($POST)
     {
 
         $this->$error = array();
@@ -43,7 +59,6 @@ class Setting
             $arr['value'] = $value;
             $query = "update settings set value = :value where setting = :setting ;imit 1";
             $db->write($query, $arr);
-            $this->$error[] = "an error";
         }
 
         return $this->$error;
