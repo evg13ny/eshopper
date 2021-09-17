@@ -3,8 +3,6 @@
 class Admin extends Controller
 {
 
-    use Setting;
-
     public function index()
     {
         $User = $this->load_model('User');
@@ -166,6 +164,8 @@ class Admin extends Controller
 
         $User = $this->load_model('User');
 
+        $Settings = new Settings();
+
         $user_data = $User->check_login(true, ["admin"]);
 
         if (is_object($user_data)) {
@@ -175,12 +175,12 @@ class Admin extends Controller
 
         if (count($_POST) > 0) {
 
-            $errors = $this->save_settings($_POST);
+            $errors = $Settings->save_settings($_POST);
             header("Location: " . ROOT . "admin/settings/socials");
             die;
         }
 
-        $data['settings'] = $this->get_all_settings();
+        $data['settings'] = $Settings->get_all_settings();
 
         $data['page_title'] = ucwords("Admin - $type");
         $this->view("admin/socials", $data);

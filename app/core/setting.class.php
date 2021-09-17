@@ -6,8 +6,8 @@ class Settings
 
     private $error = array();
     protected static $SETTINGS = null;
-    public function get_all_settings()
 
+    public function get_all_settings()
     {
 
         $db = Database::newInstance();
@@ -15,7 +15,7 @@ class Settings
         return $db->read($query);
     }
 
-    static function __callStatic($name, $arguments)
+    static function __callStatic($name, $params)
     {
 
         if (self::$SETTINGS) {
@@ -24,7 +24,11 @@ class Settings
             $settings = self::get_all_settings_as_object();
         }
 
-        return $settings->$name;
+        if (isset($settings->$name)) {
+            return $settings->$name;
+        }
+
+        return "";
     }
 
     public static function get_all_settings_as_object()
@@ -56,8 +60,17 @@ class Settings
 
             $arr = array();
             $arr['setting'] = $key;
-            $arr['value'] = $value;
-            $query = "update settings set value = :value where setting = :setting ;imit 1";
+
+            if (strstr($key, "_link")) {
+                if (trim($value) != "" && !strstr($value, "https://")) {
+                    $value = "https://" . $value;
+                }
+                $arr['value'] = $value;
+            } else {
+                $arr['value'] = $value;
+            }
+
+            $query = "update settings set value = :value where setting = :setting limit 1";
             $db->write($query, $arr);
         }
 
