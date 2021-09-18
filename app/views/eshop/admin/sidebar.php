@@ -19,28 +19,28 @@ MAIN SIDEBAR MENU
             </li>
 
             <li class="sub-menu">
-                <a href="<?= ROOT ?>admin/products">
+                <a <?= isset($current_page) && $current_page == "products" ? 'class="active"' : ''; ?> href="<?= ROOT ?>admin/products">
                     <i class="fa fa-barcode"></i>
                     <span>Products</span>
                 </a>
             </li>
 
             <li class="sub-menu">
-                <a href="<?= ROOT ?>admin/categories">
+                <a <?= isset($current_page) && $current_page == "categories" ? 'class="active"' : ''; ?> href="<?= ROOT ?>admin/categories">
                     <i class="fa fa-list-alt"></i>
                     <span>Categories</span>
                 </a>
             </li>
 
             <li class="sub-menu">
-                <a href="<?= ROOT ?>admin/orders">
+                <a <?= isset($current_page) && $current_page == "orders" ? 'class="active"' : ''; ?> href="<?= ROOT ?>admin/orders">
                     <i class="fa fa-reorder"></i>
                     <span>Orders</span>
                 </a>
             </li>
 
             <li class="sub-menu">
-                <a href="<?= ROOT ?>admin/settings">
+                <a <?= isset($current_page) && $current_page == "settings" ? 'class="active"' : ''; ?> href="<?= ROOT ?>admin/settings">
                     <i class="fa fa-cogs"></i>
                     <span>Settings</span>
                 </a>
@@ -53,7 +53,7 @@ MAIN SIDEBAR MENU
             </li>
 
             <li class="sub-menu">
-                <a href="<?= ROOT ?>admin/users">
+                <a <?= isset($current_page) && $current_page == "users" ? 'class="active"' : ''; ?> href="<?= ROOT ?>admin/users">
                     <i class="fa fa-user"></i>
                     <span>Users</span>
                 </a>

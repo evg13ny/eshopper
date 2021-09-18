@@ -15,6 +15,8 @@ class Admin extends Controller
 
         $data['page_title'] = "Admin";
 
+        $data['current_page'] = 'dashboard';
+
         $this->view("admin/index", $data);
     }
 
@@ -44,6 +46,8 @@ class Admin extends Controller
         $data['categories'] = $categories;
 
         $data['page_title'] = "Admin - Categories";
+
+        $data['current_page'] = 'categories';
 
         $this->view("admin/categories", $data);
     }
@@ -75,6 +79,8 @@ class Admin extends Controller
         $data['categories'] = $categories;
 
         $data['page_title'] = "Admin - Products";
+
+        $data['current_page'] = 'products';
 
         $this->view("admin/products", $data);
     }
@@ -119,6 +125,8 @@ class Admin extends Controller
 
         $data['page_title'] = "Admin - Orders";
 
+        $data['current_page'] = 'orders';
+
         $this->view("admin/orders", $data);
     }
 
@@ -156,10 +164,12 @@ class Admin extends Controller
 
         $data['page_title'] = ucwords("Admin - $type");
 
+        $data['current_page'] = 'users';
+
         $this->view("admin/users", $data);
     }
 
-    function settings($type)
+    function settings($type = '')
     {
 
         $User = $this->load_model('User');
@@ -173,16 +183,23 @@ class Admin extends Controller
             $data['user_data'] = $user_data;
         }
 
-        if (count($_POST) > 0) {
+        // select the right page
 
-            $errors = $Settings->save_settings($_POST);
-            header("Location: " . ROOT . "admin/settings/socials");
-            die;
+        if ($type == "socials") {
+
+            if (count($_POST) > 0) {
+
+                $errors = $Settings->save_settings($_POST);
+                header("Location: " . ROOT . "admin/settings/socials");
+                die;
+            }
+
+            $data['settings'] = $Settings->get_all_settings();
         }
 
-        $data['settings'] = $Settings->get_all_settings();
-
+        $data['type'] = $type;
         $data['page_title'] = ucwords("Admin - $type");
-        $this->view("admin/socials", $data);
+        $data['current_page'] = 'settings';
+        $this->view("admin/settings", $data);
     }
 }
