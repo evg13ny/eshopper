@@ -197,7 +197,11 @@ class Admin extends Controller
             $data['settings'] = $Settings->get_all_settings();
         } else if ($type == "slider_images") {
 
+            $Slider = $this->load_model('Slider');
             $data['action'] = "show";
+
+            // read all slider images
+            $data['rows'] = $Slider->get_all();
 
             if (isset($_GET['action']) && $_GET['action'] == "add") {
 
@@ -206,11 +210,11 @@ class Admin extends Controller
                 // if new row was posted
                 if (count($_POST) > 0) {
 
-                    show($_POST);
-                    show($_FILES);
+                    $Image = $this->load_model('Image');
+                    $data['errors'] = $Slider->create($_POST, $_FILES, $Image);
                     $data['POST'] = $_POST;
-                    // header("Location: " . ROOT . "admin/settings/slider_images");
-                    // die;
+                    header("Location: " . ROOT . "admin/settings/slider_images");
+                    die;
                 }
             } else if (isset($_GET['action']) && $_GET['action'] == "edit") {
 

@@ -28,14 +28,14 @@
             </thead>
 
             <tbody>
-                <?php if (isset($settings) && is_array($settings)) : ?>
-                    <?php foreach ($settings as $setting) : ?>
+                <?php if (isset($rows) && is_array($rows)) : ?>
+                    <?php foreach ($rows as $row) : ?>
                         <tr>
                             <td>
-                                <?= ucwords(str_replace("_", " ", $setting->setting)) ?>
+                                <?= ucwords(str_replace("_", " ", $row->row)) ?>
                             </td>
                             <td>
-                                <input placeholder="<?= ucwords(str_replace("_", " ", $setting->setting)) ?>" name="<?= $setting->setting ?>" class="form-control" type="text" value="<?= $setting->value ?>">
+                                <input placeholder="<?= ucwords(str_replace("_", " ", $row->row)) ?>" name="<?= $row->row ?>" class="form-control" type="text" value="<?= $row->value ?>">
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -61,14 +61,26 @@
                 </thead>
 
                 <tbody>
-                    <?php if (isset($settings) && is_array($settings)) : ?>
-                        <?php foreach ($settings as $setting) : ?>
+                    <?php if (isset($rows) && is_array($rows)) : ?>
+                        <?php foreach ($rows as $row) : ?>
                             <tr>
                                 <td>
-                                    <?= ucwords(str_replace("_", " ", $setting->setting)) ?>
+                                    <?= $row->header1_text ?>
                                 </td>
                                 <td>
-                                    <input placeholder="<?= ucwords(str_replace("_", " ", $setting->setting)) ?>" name="<?= $setting->setting ?>" class="form-control" type="text" value="<?= $setting->value ?>">
+                                    <?= $row->header2_text ?>
+                                </td>
+                                <td>
+                                    <?= $row->text ?>
+                                </td>
+                                <td>
+                                    <?= $row->link ?>
+                                </td>
+                                <td>
+                                    <img src="<?= ROOT . $row->image ?>" style="width: 100px;" />
+                                </td>
+                                <td>
+                                    <?= $row->disabled ? "Yes" : "No" ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
