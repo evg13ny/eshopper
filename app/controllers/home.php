@@ -51,6 +51,18 @@ class Home extends Controller
         $category = $this->load_model('category');
         $data['categories'] = $category->get_all();
 
+        // get all slider content
+        $Slider = $this->load_model('Slider');
+        $data['slider'] = $Slider->get_all();
+
+        if ($data['slider']) {
+
+            foreach ($data['slider'] as $key => $row) {
+
+                $data['slider'][$key]->image = $image_class->get_thumb_post($data['slider'][$key]->image, 484, 441);
+            }
+        }
+
         $data['ROWS'] = $ROWS;
         $data['show_search'] = true;
         $this->view("index", $data);

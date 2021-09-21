@@ -4,75 +4,47 @@
         <div class="row">
             <div class="col-sm-12">
                 <div id="slider-carousel" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#slider-carousel" data-slide-to="1"></li>
-                        <li data-target="#slider-carousel" data-slide-to="2"></li>
-                        <li data-target="#slider-carousel" data-slide-to="3"></li>
-                    </ol>
 
-                    <div class="carousel-inner">
-                        <div class="item active">
-                            <div class="col-sm-6">
-                                <h1><span>E1</span>-SHOPPER</h1>
-                                <h2>Free E-Commerce Template</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                <button type="button" class="btn btn-default get">Get it now</button>
-                            </div>
-                            <div class="col-sm-6">
-                                <img src="<?= ASSETS . THEME ?>images/home/girl1.jpg" class="girl img-responsive" alt="" />
-                                <img src="<?= ASSETS . THEME ?>images/home/pricing.png" class="pricing" alt="" />
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="col-sm-6">
-                                <h1><span>E2</span>-SHOPPER</h1>
-                                <h2>100% Responsive Design</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                <button type="button" class="btn btn-default get">Get it now</button>
-                            </div>
-                            <div class="col-sm-6">
-                                <img src="<?= ASSETS . THEME ?>images/home/girl2.jpg" class="girl img-responsive" alt="" />
-                                <img src="<?= ASSETS . THEME ?>images/home/pricing.png" class="pricing" alt="" />
-                            </div>
+                    <?php if (isset($slider) && is_array($slider)) : ?>
+
+                        <ol class="carousel-indicators">
+                            <?php $num = 0; ?>
+                            <?php foreach ($slider as $row) : ?>
+                                <li data-target="#slider-carousel" data-slide-to="<?= $num ?>" class="<?= $num == 0 ? 'active' : ''; ?>"></li>
+                            <?php $num++;
+                            endforeach; ?>
+                        </ol>
+
+                        <?php $num = 0; ?>
+                        <div class="carousel-inner">
+                            <?php foreach ($slider as $row) : $num++; ?>
+                                <div class="item <?= $num == 1 ? 'active' : ''; ?>">
+                                    <div class="col-sm-6">
+                                        <h1><span><?= substr($row->header1_text, 0, 1) ?></span><?= substr($row->header1_text, 1) ?></h1>
+                                        <h2><?= $row->header2_text ?></h2>
+                                        <p><?= $row->text ?></p>
+                                        <a href="<?= $row->link ?>">
+                                            <button type="button" class="btn btn-default get">Get it now</button>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <img src="<?= ROOT . $row->image ?>" class="girl img-responsive" alt="" />
+                                        <img src="<?= ASSETS . THEME ?>images/home/pricing.png" class="pricing" alt="" />
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
 
-                        <div class="item">
-                            <div class="col-sm-6">
-                                <h1><span>E</span>-SHOPPER</h1>
-                                <h2>Free Ecommerce Template</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                <button type="button" class="btn btn-default get">Get it now</button>
-                            </div>
-                            <div class="col-sm-6">
-                                <img src="<?= ASSETS . THEME ?>images/home/girl3.jpg" class="girl img-responsive" alt="" />
-                                <img src="<?= ASSETS . THEME ?>images/home/pricing.png" class="pricing" alt="" />
-                            </div>
-                        </div>
+                        <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
 
-                        <div class="item">
-                            <div class="col-sm-6">
-                                <h1><span>E</span>-SHOPPER</h1>
-                                <h2>Free Ecommerce Template</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-                                <button type="button" class="btn btn-default get">Get it now</button>
-                            </div>
-                            <div class="col-sm-6">
-                                <img src="<?= ASSETS . THEME ?>images/home/girl3.jpg" class="girl img-responsive" alt="" />
-                                <img src="<?= ASSETS . THEME ?>images/home/pricing.png" class="pricing" alt="" />
-                            </div>
-                        </div>
+                    <?php endif; ?>
 
-                    </div>
-
-                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                 </div>
-
             </div>
         </div>
     </div>
