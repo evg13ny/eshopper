@@ -69,7 +69,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="logo pull-left">
-                            <a href="index"><img src="<?= ASSETS . THEME ?>images/home/logo.png" alt="" /></a>
+                            <a href="<?= ROOT ?>"><img src="<?= ASSETS . THEME ?>images/home/logo.png" alt="" /></a>
                         </div>
 
                     </div>

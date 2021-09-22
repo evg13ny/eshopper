@@ -28,14 +28,14 @@
             </thead>
 
             <tbody>
-                <?php if (isset($rows) && is_array($rows)) : ?>
-                    <?php foreach ($rows as $row) : ?>
+                <?php if (isset($settings) && is_array($settings)) : ?>
+                    <?php foreach ($settings as $setting) : ?>
                         <tr>
                             <td>
-                                <?= ucwords(str_replace("_", " ", $row->row)) ?>
+                                <?= ucwords(str_replace("_", " ", $setting->setting)) ?>
                             </td>
                             <td>
-                                <input placeholder="<?= ucwords(str_replace("_", " ", $row->row)) ?>" name="<?= $row->row ?>" class="form-control" type="text" value="<?= $row->value ?>">
+                                <input placeholder="<?= ucwords(str_replace("_", " ", $setting->setting)) ?>" name="<?= $setting->setting ?>" class="form-control" type="text" value="<?= $setting->value ?>">
                             </td>
                         </tr>
                     <?php endforeach; ?>
