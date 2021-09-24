@@ -8,6 +8,8 @@ class Contact_us extends Controller
 
         $User = $this->load_model('User');
 
+        $Message = $this->load_model('Message');
+
         $user_data = $User->check_login();
 
         if (is_object($user_data)) {
@@ -17,10 +19,12 @@ class Contact_us extends Controller
 
         $DB = Database::newInstance();
 
+        $data['errors'] = array();
+
         if (count($_POST) > 0) {
 
             $data['POST'] = $_POST;
-            show($_POST);
+            $data['errors'] = $Message->create($_POST);
         }
 
         $data['page_title'] = "Contact Us";
