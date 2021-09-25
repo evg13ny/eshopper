@@ -25,6 +25,11 @@ class Contact_us extends Controller
 
             $data['POST'] = $_POST;
             $data['errors'] = $Message->create($_POST);
+
+            if (!is_array($data['errors']) && $data['errors']) {
+
+                redirect("contact_us?success=true");
+            }
         }
 
         $data['page_title'] = "Contact Us";

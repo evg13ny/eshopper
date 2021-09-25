@@ -235,4 +235,26 @@ class Admin extends Controller
         $data['current_page'] = 'settings';
         $this->view("admin/settings", $data);
     }
+
+    function messages($type = '')
+    {
+
+        $type = 'Messages';
+        $User = $this->load_model('User');
+        $Message = $this->load_model('Message');
+        $user_data = $User->check_login(true, ["admin"]);
+
+        if (is_object($user_data)) {
+
+            $data['user_data'] = $user_data;
+        }
+
+        $messages = $Message->get_all();
+
+        $data['messages'] = $messages;
+        $data['page_title'] = "Admin - $type";
+        $data['current_page'] = 'messages';
+
+        $this->view("admin/messages", $data);
+    }
 }

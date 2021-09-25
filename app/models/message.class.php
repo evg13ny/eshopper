@@ -24,12 +24,12 @@ class Message
             $this->error[] = "Please enter a valid name";
         }
 
-        if (!preg_match("/^[a-zA-Z0-9_-. ]+$/", trim($arr['email']))) {
+        if (!filter_var($arr['email'], FILTER_VALIDATE_EMAIL)) {
 
             $this->error[] = "Please enter a valid email";
         }
 
-        if (!preg_match("/^[a-zA-Z ]+$/", trim($arr['subject']))) {
+        if (!preg_match("/^[a-zA-Z0-9 ]+$/", trim($arr['subject']))) {
 
             $this->error[] = "Please enter a valid subject";
         }
@@ -60,5 +60,12 @@ class Message
         $id = (int)$id;
         $query = "delete from contact_us where id = '$id' limit 1";
         $DB->write($query);
+    }
+
+    public function get_all()
+    {
+
+        $DB = Database::newInstance();
+        return $DB->read("select * from contact_us order by id desc");
     }
 }
