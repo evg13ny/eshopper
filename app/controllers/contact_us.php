@@ -32,7 +32,7 @@ class Contact_us extends Controller
             }
         }
 
-        $data['page_title'] = "Contact Us";
+        $data['page_title'] = "Contact-us";
 
         $this->view("contact", $data);
     }

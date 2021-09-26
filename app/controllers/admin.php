@@ -279,4 +279,61 @@ class Admin extends Controller
 
         $this->view("admin/messages", $data);
     }
+
+    function blogs($type = '')
+    {
+
+        $type = 'Blogs';
+
+        $User = $this->load_model('User');
+        $Message = $this->load_model('Message');
+
+        $user_data = $User->check_login(true, ["admin"]);
+
+        if (is_object($user_data)) {
+
+            $data['user_data'] = $user_data;
+        }
+
+        $mode = "read";
+
+        if (isset($_GET['delete'])) {
+
+            $mode = "delete";
+        }
+
+        if (isset($_GET['add_new'])) {
+
+            $mode = "add_new";
+        }
+
+        if (isset($_GET['delete_confirmed'])) {
+
+            $mode = "delete_confirmed";
+            $id = $_GET['delete_confirmed'];
+            $messages = $Message->delete($id);
+        }
+
+        if ($mode == "delete") {
+
+            $id = $_GET['delete'];
+            $blogs = $Message->get_one($id);
+        } else {
+            $blogs = $Message->get_all();
+        }
+
+        // if something was posted
+        if (count($_POST) > 0) {
+
+            show($_POST);
+            show($_FILES);
+        }
+
+        $data['mode'] = $mode;
+        $data['blogs'] = $blogs;
+        $data['page_title'] = "Admin - $type";
+        $data['current_page'] = 'blogs';
+
+        $this->view("admin/blogs", $data);
+    }
 }
