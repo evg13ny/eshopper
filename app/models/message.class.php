@@ -62,6 +62,16 @@ class Message
         $DB->write($query);
     }
 
+    public function get_one($id)
+    {
+        $id = (int)$id;
+        $DB = Database::newInstance();
+
+        $data = $DB->read("select * from contact_us where id = '$id' limit 1");
+
+        return $data[0];
+    }
+
     public function get_all()
     {
 

@@ -240,8 +240,11 @@ class Admin extends Controller
     {
 
         $type = 'Messages';
+        $mode = "read";
+
         $User = $this->load_model('User');
         $Message = $this->load_model('Message');
+
         $user_data = $User->check_login(true, ["admin"]);
 
         if (is_object($user_data)) {
@@ -249,8 +252,27 @@ class Admin extends Controller
             $data['user_data'] = $user_data;
         }
 
-        $messages = $Message->get_all();
+        if (isset($_GET['delete'])) {
 
+            $mode = "delete";
+        }
+
+        if (isset($_GET['delete_confirmed'])) {
+
+            $mode = "delete_confirmed";
+            $id = $_GET['delete_confirmed'];
+            $messages = $Message->delete($id);
+        }
+
+        if ($mode == "delete") {
+
+            $id = $_GET['delete'];
+            $messages = $Message->get_one($id);
+        } else {
+            $messages = $Message->get_all();
+        }
+
+        $data['mode'] = $mode;
         $data['messages'] = $messages;
         $data['page_title'] = "Admin - $type";
         $data['current_page'] = 'messages';
