@@ -10,12 +10,12 @@ class Product
         $DB = Database::newInstance();
 
         $arr['description'] = ucwords($DATA->description);
-        $arr['quantity']    = ucwords($DATA->quantity);
-        $arr['category']    = ucwords($DATA->category);
-        $arr['price']       = ucwords($DATA->price);
+        $arr['quantity']    = $DATA->quantity;
+        $arr['category']    = $DATA->category;
+        $arr['price']       = $DATA->price;
         $arr['date']        = date("Y-m-d H:i:s");
         $arr['user_url']    = $_SESSION['user_url'];
-        $arr['slag']        = $this->str_to_url($DATA->description);
+        $arr['slag']        = str_to_url($DATA->description);
 
         if (!preg_match("/^[a-zA-Z 0-9.,_\-]+$/", trim($arr['description']))) {
             $_SESSION['error'] .= "Please enter a valid description for this product<br>";
@@ -33,7 +33,7 @@ class Product
             $_SESSION['error'] .= "Please enter a valid price<br>";
         }
 
-        // check is slag unique
+        // check if slag is unique
 
         $slag_arr['slag'] = $arr['slag'];
         $query = "select slag from products where slag = :slag limit 1";
@@ -207,15 +207,5 @@ class Product
             }
         }
         return $result;
-    }
-
-    public function str_to_url($url)
-    {
-        $url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);
-        $url = trim($url, "-");
-        $url = iconv("utf-8", "us-ascii//TRANSLIT", $url);
-        $url = strtolower($url);
-        $url = preg_replace('~[^-a-z0-9_]+~', '', $url);
-        return $url;
     }
 }

@@ -61,15 +61,18 @@
         </tbody>
 
     <?php elseif ($mode == "add_new") : ?>
+        <?php if (isset($errors)) : ?>
+            <div class="status alert alert-danger"><?= $errors ?></div>
+        <?php endif; ?>
         <form method="POST" enctype="multipart/form-data">
             <label for="title">Post Title</label>
-            <input id="title" type="text" name="title" class="form-control"><br>
+            <input id="title" type="text" name="title" class="form-control" value="<?= isset($POST['title']) ? $POST['title'] : '' ?>"><br>
 
             <label for="image">Post Image</label>
             <input id="image" type="file" name="image" class="form-control"><br>
 
             <label for="post">Post Text</label>
-            <textarea id="post" name="post" class="form-control"></textarea><br>
+            <textarea id="post" name="post" class="form-control"><?= isset($POST['post']) ? $POST['post'] : '' ?></textarea><br>
 
             <input type="submit" value="Post" class="btn btn-success pull-right">
         </form>

@@ -325,8 +325,18 @@ class Admin extends Controller
         // if something was posted
         if (count($_POST) > 0) {
 
-            show($_POST);
-            show($_FILES);
+            $post = $this->load_model('post');
+            $image_class = $this->load_model('image');
+            $post->create($_POST, $_FILES, $image_class);
+
+            if (isset($_SESSION['error']) && $_SESSION['error'] != "") {
+
+                $data['errors'] = $_SESSION['error'];
+                $data['POST'] = $_POST;
+            } else {
+
+                redirect("admin/blogs");
+            }
         }
 
         $data['mode'] = $mode;
