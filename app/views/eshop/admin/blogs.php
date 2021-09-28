@@ -32,26 +32,31 @@
             </tr>
         </thead>
         <tbody>
-            <?php if (isset($messages) && is_array($messages)) : ?>
-                <?php foreach ($messages as $message) : ?>
+            <?php if (isset($blogs) && is_array($blogs)) : ?>
+                <?php foreach ($blogs as $blog) : ?>
                     <tr style="position: relative;">
                         <td>
-                            <?= $message->name ?>
+                            <?= $blog->title ?>
                         </td>
                         <td>
-                            <?= $message->email ?>
+                            <a href="<?= ROOT ?>profile/<?= $blog->user_url ?>">
+                                <?= $blog->user_data->name ?>
+                            </a>
                         </td>
                         <td>
-                            <?= $message->subject ?>
+                            <?= $blog->post ?>
                         </td>
                         <td>
-                            <?= $message->message ?>
+                            <img src="<?= ROOT . $blog->image ?>" style="width: 75px;">
                         </td>
                         <td>
-                            <?= date("jS M Y h:i a", strtotime($message->date)) ?>
+                            <?= date("jS M Y h:i a", strtotime($blog->date)) ?>
                         </td>
                         <td>
-                            <a href="<?= ROOT ?>admin/messages?delete=<?= $message->id ?>">
+                            <a href="<?= ROOT ?>admin/blogs?edit=<?= $blog->url_address ?>">
+                                <i class="fa fa-pencil"></i> Edit |
+                            </a>
+                            <a href="<?= ROOT ?>admin/blogs?delete=<?= $blog->url_address ?>">
                                 <i class="fa fa-trash-o"></i> Delete
                             </a>
                         </td>
@@ -64,6 +69,8 @@
         <?php if (isset($errors)) : ?>
             <div class="status alert alert-danger"><?= $errors ?></div>
         <?php endif; ?>
+
+        <h4>Add New Post</h4>
         <form method="POST" enctype="multipart/form-data">
             <label for="title">Post Title</label>
             <input id="title" type="text" name="title" class="form-control" value="<?= isset($POST['title']) ? $POST['title'] : '' ?>"><br>
@@ -75,6 +82,29 @@
             <textarea id="post" name="post" class="form-control"><?= isset($POST['post']) ? $POST['post'] : '' ?></textarea><br>
 
             <input type="submit" value="Post" class="btn btn-success pull-right">
+        </form>
+
+    <?php elseif ($mode == "edit") : ?>
+        <?php if (isset($errors)) : ?>
+            <div class="status alert alert-danger"><?= $errors ?></div>
+        <?php endif; ?>
+
+        <h4>Edit Post</h4>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="title">Post Title</label>
+            <input id="title" type="text" name="title" class="form-control" value="<?= isset($POST['title']) ? $POST['title'] : '' ?>"><br>
+
+            <label for="image">Post Image</label>
+            <input id="image" type="file" name="image" class="form-control">
+            <input type="hidden" name="url_address" value="<?= isset($POST['url_address']) ? $POST['url_address'] : '' ?>"><br>
+
+            <label for="post">Post Text</label>
+            <textarea id="post" name="post" class="form-control"><?= isset($POST['post']) ? $POST['post'] : '' ?></textarea><br>
+
+            <input type="submit" value="Save" class="btn btn-success pull-right">
+            <hr>
+
+            <img src="<?= ROOT ?><?= isset($POST['image']) ? $POST['image'] : '' ?>" style="width: 150px;">
         </form>
 
     <?php elseif ($mode == "delete_confirmed") : ?>

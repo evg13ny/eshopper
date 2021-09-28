@@ -269,6 +269,7 @@ class Admin extends Controller
             $id = $_GET['delete'];
             $messages = $Message->get_one($id);
         } else {
+
             $messages = $Message->get_all();
         }
 
@@ -283,10 +284,11 @@ class Admin extends Controller
     function blogs($type = '')
     {
 
-        $type = 'Blogs';
+        $type = 'Blog Posts';
 
         $User = $this->load_model('User');
-        $Message = $this->load_model('Message');
+        $post_class = $this->load_model('post');
+        $image_class = $this->load_model('Image');
 
         $user_data = $User->check_login(true, ["admin"]);
 
@@ -307,19 +309,44 @@ class Admin extends Controller
             $mode = "add_new";
         }
 
+        if (isset($_GET['edit'])) {
+
+            $mode = "edit";
+        }
+
         if (isset($_GET['delete_confirmed'])) {
 
             $mode = "delete_confirmed";
             $id = $_GET['delete_confirmed'];
-            $messages = $Message->delete($id);
+            $posts = $post_class->delete($id);
         }
 
+        if ($mode == "edit") {
+
+            $id = $_GET['edit'];
+            $blogs = $post_class->get_one($id);
+            $data['POST'] = (array)$blogs;
+        } else
         if ($mode == "delete") {
 
             $id = $_GET['delete'];
-            $blogs = $Message->get_one($id);
+            $blogs = $post_class->get_one($id);
         } else {
-            $blogs = $Message->get_all();
+
+            $blogs = $post_class->get_all();
+
+            if ($blogs) {
+
+                foreach ($blogs as $key => $row) {
+
+                    if (file_exists($blogs[$key]->image)) {
+
+                        $blogs[$key]->image = $image_class->get_thumb_post($blogs[$key]->image);
+                    }
+
+                    $blogs[$key]->user_data = $User->get_user($blogs[$key]->user_url);
+                }
+            }
         }
 
         // if something was posted
@@ -327,7 +354,14 @@ class Admin extends Controller
 
             $post = $this->load_model('post');
             $image_class = $this->load_model('image');
-            $post->create($_POST, $_FILES, $image_class);
+
+            if ($mode == "edit") {
+
+                $post_class->edit($_POST, $_FILES, $image_class);
+            } else {
+
+                $post_class->create($_POST, $_FILES, $image_class);
+            }
 
             if (isset($_SESSION['error']) && $_SESSION['error'] != "") {
 
