@@ -108,19 +108,19 @@
         </form>
 
     <?php elseif ($mode == "delete_confirmed") : ?>
-        <div class="status alert alert-success">Message was deleted successfully!</div>
-        <a href="<?= ROOT ?>admin/messages">
-            <input type="button" class="btn btn-success pull-right" value="Back to messages">
+        <div class="status alert alert-success">Post was deleted successfully!</div>
+        <a href="<?= ROOT ?>admin/blogs">
+            <input type="button" class="btn btn-success pull-right" value="Back to posts">
         </a>
 
-    <?php elseif ($mode == "delete" && is_object($messages)) : ?>
-        <div class="status alert alert-danger">Are you sure you want to delete this message??</div>
+    <?php elseif ($mode == "delete" && is_object($blogs)) : ?>
+        <div class="status alert alert-danger">Are you sure you want to delete this post??</div>
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Subject</th>
-                <th>Message</th>
+                <th>Title</th>
+                <th>Owner</th>
+                <th>Post</th>
+                <th>Image</th>
                 <th>Date Created</th>
                 <th>Action</th>
             </tr>
@@ -128,22 +128,32 @@
         <tbody>
             <tr style="position: relative;">
                 <td>
-                    <?= $messages->name ?>
+                    <?= $blogs->title ?>
                 </td>
                 <td>
-                    <?= $messages->email ?>
+                    <a href="<?= ROOT ?>profile/<?= $blogs->user_url ?>">
+                        <?= $blogs->user_data->name ?>
+                    </a>
                 </td>
                 <td>
-                    <?= $messages->subject ?>
+                    <?= $blogs->post ?>
                 </td>
                 <td>
-                    <?= $messages->message ?>
+                    <img src="<?= ROOT . $blogs->image ?>" style="width: 75px;">
                 </td>
                 <td>
-                    <?= date("jS M Y h:i a", strtotime($messages->date)) ?>
+                    <?= date("jS M Y h:i a", strtotime($blogs->date)) ?>
+                </td>
+                <td>
+                    <a href="<?= ROOT ?>admin/blogs?edit=<?= $blogs->url_address ?>">
+                        <i class="fa fa-pencil"></i> Edit |
+                    </a>
+                    <a href="<?= ROOT ?>admin/blogs?delete=<?= $blogs->url_address ?>">
+                        <i class="fa fa-trash-o"></i> Delete
+                    </a>
                 </td>
             </tr>
-            <a href="<?= ROOT ?>admin/messages?delete_confirmed=<?= $messages->id ?>">
+            <a href="<?= ROOT ?>admin/blogs?delete_confirmed=<?= $blogs->url_address ?>">
                 <input type="button" class="btn btn-warning pull-right" value="Delete">
             </a>
         </tbody>

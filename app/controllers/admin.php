@@ -331,6 +331,18 @@ class Admin extends Controller
 
             $id = $_GET['delete'];
             $blogs = $post_class->get_one($id);
+
+            if ($blogs) {
+
+                if (file_exists($blogs->image)) {
+
+                    $blogs->image = $image_class->get_thumb_post($blogs->image);
+                }
+
+                $blogs->user_data = $User->get_user($blogs->user_url);
+            }
+
+            $data['POST'] = (array)$blogs;
         } else {
 
             $blogs = $post_class->get_all();
@@ -351,9 +363,6 @@ class Admin extends Controller
 
         // if something was posted
         if (count($_POST) > 0) {
-
-            $post = $this->load_model('post');
-            $image_class = $this->load_model('image');
 
             if ($mode == "edit") {
 
