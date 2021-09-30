@@ -44,7 +44,7 @@
                             </a>
                         </td>
                         <td>
-                            <?= $blog->post ?>
+                            <?= nl2br($blog->post) ?>
                         </td>
                         <td>
                             <img src="<?= ROOT . $blog->image ?>" style="width: 75px;">

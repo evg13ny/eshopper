@@ -13,8 +13,8 @@
 					<?php if (isset($ROWS) && is_array($ROWS)) : ?>
 						<?php foreach ($ROWS as $row) : ?>
 							<!-- single-blog-post -->
-							<div class="single-blog-post">
-								<h3><?= $row->title ?></h3>
+							<div class="single-blog-post" style="border-bottom: solid thin #ccc;">
+								<h3><?= htmlspecialchars($row->title) ?></h3>
 								<div class="post-meta">
 									<ul>
 										<li><i class="fa fa-user"></i> Mac Doe</li>
@@ -29,11 +29,11 @@
 										<i class="fa fa-star-half-o"></i>
 									</span>
 								</div>
-								<a href="">
+								<a href="<?= ROOT ?>post/<?= $row->url_address ?>">
 									<img src="<?= ROOT . $row->image ?>" alt="">
 								</a>
-								<p><?= $row->post ?></p>
-								<a class="btn btn-primary" href="">Read More</a>
+								<p><?= nl2br(htmlspecialchars(substr($row->post, 0, 500))) ?> ...</p>
+								<a class="btn btn-primary" href="<?= ROOT ?>post/<?= $row->url_address ?>">Read More</a>
 							</div>
 							<!-- /single-blog-post -->
 						<?php endforeach; ?>
