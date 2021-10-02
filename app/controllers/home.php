@@ -28,23 +28,42 @@ class Home extends Controller
         }
 
         $DB = Database::newInstance();
+        $data['page_title'] = "Home";
 
+        // read main posts
         if ($search) {
 
             $arr['description'] = "%" . $find . "%";
-
             $ROWS = $DB->read("select * from products where description like :description", $arr);
         } else {
 
             $ROWS = $DB->read("select * from products");
         }
 
-        $data['page_title'] = "Home";
-
         if ($ROWS) {
             foreach ($ROWS as $key => $row) {
                 $ROWS[$key]->image = $image_class->get_thumb_post($ROWS[$key]->image);
             }
+        }
+
+        $data['ROWS'] = $ROWS;
+
+        // carousel posts
+        $carousel_pages_count = 3;
+
+        for ($i = 0; $i < $carousel_pages_count; $i++) {
+
+            $Slider_ROWS[$i] = $DB->read("select * from products where rand() limit 3");
+
+            if ($Slider_ROWS[$i]) {
+
+                foreach ($Slider_ROWS[$i] as $key => $row) {
+
+                    $Slider_ROWS[$i][$key]->image = $image_class->get_thumb_post($Slider_ROWS[$i][$key]->image);
+                }
+            }
+
+            $data['Slider_ROWS'][] = $Slider_ROWS[$i];
         }
 
         // get all categories
@@ -63,7 +82,6 @@ class Home extends Controller
             }
         }
 
-        $data['ROWS'] = $ROWS;
         $data['show_search'] = true;
         $this->view("index", $data);
     }

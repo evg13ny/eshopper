@@ -44,6 +44,7 @@ class Blog extends Controller
         if ($ROWS) {
             foreach ($ROWS as $key => $row) {
                 $ROWS[$key]->image = $image_class->get_thumb_blog_post($ROWS[$key]->image);
+                $ROWS[$key]->user_data = $User->get_user($ROWS[$key]->user_url);
             }
         }
 

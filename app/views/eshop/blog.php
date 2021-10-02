@@ -17,7 +17,7 @@
 								<h3><?= htmlspecialchars($row->title) ?></h3>
 								<div class="post-meta">
 									<ul>
-										<li><i class="fa fa-user"></i> Mac Doe</li>
+										<li><i class="fa fa-user"></i><?=$row->user_data->name?></li>
 										<li><i class="fa fa-clock-o"></i> <?= date("h:i a", strtotime($row->date)) ?></li>
 										<li><i class="fa fa-calendar"></i> <?= date("M jS, Y", strtotime($row->date)) ?></li>
 									</ul>

@@ -43,14 +43,17 @@ class Post extends Controller
         if ($ROWS) {
 
             $data['page_title'] = $ROWS[0]->title;
-            $ROWS[0]->image = $image_class->get_thumb_blog_post($ROWS[0]->image);
+            // $ROWS[0]->image = $image_class->get_thumb_blog_post($ROWS[0]->image);
+            $ROWS[0]->user_data = $User->get_user($ROWS[0]->user_url);
         }
 
         // get all categories
         $category = $this->load_model('category');
+
         $data['categories'] = $category->get_all();
         $data['row'] = $ROWS[0];
         $data['show_search'] = true;
+
         $this->view("single_post", $data);
     }
 }

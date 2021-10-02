@@ -16,7 +16,7 @@
 							<h3><?= htmlspecialchars($row->title) ?></h3>
 							<div class="post-meta">
 								<ul>
-									<li><i class="fa fa-user"></i> Mac Doe</li>
+									<li><i class="fa fa-user"></i><?= $row->user_data->name ?></li>
 									<li><i class="fa fa-clock-o"></i> <?= date("h:i a", strtotime($row->date)) ?></li>
 									<li><i class="fa fa-calendar"></i> <?= date("M jS, Y", strtotime($row->date)) ?></li>
 								</ul>
@@ -28,8 +28,9 @@
 									<i class="fa fa-star-half-o"></i>
 								</span>
 							</div>
-							<img src="<?= ROOT . $row->image ?>" alt="<?= htmlspecialchars($row->title) ?>">
-							<p><?= nl2br(htmlspecialchars(substr($row->post, 0, 500))) ?> ...</p>
+							<img src="<?= ROOT . $row->image ?>" style="width: 100%;" alt="<?= htmlspecialchars($row->title) ?>">
+							<br><br>
+							<p><?= nl2br(htmlspecialchars($row->post)) ?></p>
 							<div class="pager-area">
 								<ul class="pager pull-right">
 									<li><a href="#">Pre</a></li>
