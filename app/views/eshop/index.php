@@ -22,7 +22,7 @@
 
 						<?php endforeach; ?>
 					<?php endif; ?>
-
+					<?php show($segment_data) ?>
 					<!--features_items-->
 				</div>
 
@@ -328,13 +328,15 @@
 
 									<div class="item <?= $num == 1 ? 'active' : ''; ?>">
 
-										<?php foreach ($Slider_ROW as $row) : ?>
+										<?php if (is_array($Slider_ROW)) : ?>
+											<?php foreach ($Slider_ROW as $row) : ?>
 
-											<!--one item-->
-											<?php $this->view("product.inc", $row); ?>
-											<!--/one item-->
+												<!--one item-->
+												<?php $this->view("product.inc", $row); ?>
+												<!--/one item-->
 
-										<?php endforeach; ?>
+											<?php endforeach; ?>
+										<?php endif; ?>
 
 									</div>
 

@@ -11,7 +11,7 @@ class Category
 
         $arr['parent'] = ucwords($DATA->parent);
 
-        if (!preg_match("/^[a-zA-Z ]+$/", trim($arr['category']))) {
+        if (!preg_match("/^[a-zA-Z' ]+$/", trim($arr['category']))) {
             $_SESSION['error'] = "Please enter a valid category name";
         }
 
@@ -81,7 +81,7 @@ class Category
                 $color = $cat_row->disabled ? "#ae7c04" : "#5bc0de";
                 $cat_row->disabled = $cat_row->disabled ? "Disabled" : "Enabled";
                 $args = $cat_row->id . ",'" . $cat_row->disabled . "'";
-                $edit_args = $cat_row->id . ",'" . $cat_row->category . "'," . $cat_row->parent;
+                $edit_args = $cat_row->id . ",'" . addslashes($cat_row->category) . "'," . $cat_row->parent;
 
                 $parent = "";
 

@@ -70,6 +70,9 @@ class Home extends Controller
         $category = $this->load_model('category');
         $data['categories'] = $category->get_all();
 
+        // get products for segment for lower segment
+        $data['segment_data'] = $this->get_segment_data($DB, $data['categories']);
+
         // get all slider content
         $Slider = $this->load_model('Slider');
         $data['slider'] = $Slider->get_all();
@@ -84,5 +87,34 @@ class Home extends Controller
 
         $data['show_search'] = true;
         $this->view("index", $data);
+    }
+
+    private function get_segment_data($DB, $categories)
+    {
+
+        $results = array();
+        $mycats = array();
+        $num = 0;
+
+        foreach ($categories as $cat) {
+
+            $arr['id'] = $cat->id;
+            $ROWS = $DB->read("select * from products where category = :id", $arr);
+
+            if (is_array($ROWS)) {
+
+                $cat->category = str_replace(" ", "_", $cat->category);
+                $cat->category = preg_replace("/\W+/", "", $cat->category);
+                $results[$cat->category] = $ROWS;
+                $num++;
+
+                if ($num > 5) {
+
+                    break;
+                }
+            }
+        }
+
+        return $results;
     }
 }

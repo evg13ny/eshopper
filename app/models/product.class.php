@@ -17,7 +17,7 @@ class Product
         $arr['user_url']    = $_SESSION['user_url'];
         $arr['slag']        = str_to_url($DATA->description);
 
-        if (!preg_match("/^[a-zA-Z 0-9.,_\-]+$/", trim($arr['description']))) {
+        if (!preg_match("/^[a-zA-Z 0-9'.,_\-]+$/", trim($arr['description']))) {
             $_SESSION['error'] .= "Please enter a valid description for this product<br>";
         }
 
