@@ -48,7 +48,7 @@ class Category
     {
         $DB = Database::newInstance();
 
-        return $DB->read("select * from categories order by id desc");
+        return $DB->read("select * from categories order by views desc");
     }
 
     public function get_one($id)
@@ -69,6 +69,11 @@ class Category
         $DB = Database::newInstance();
 
         $data = $DB->read("select * from categories where category like :name limit 1", ["name" => $name]);
+
+        if (is_array($data)) {
+
+            $DB->write("update categories set views = views + 1 where id = :id limit 1", ["id" => $data[0]->id]);
+        }
 
         return $data[0];
     }
