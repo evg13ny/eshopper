@@ -32,10 +32,12 @@
 					<br style="clear: both;">
 
 					<ul class="pagination">
+						<li><a href="<?= $page_links->prev ?>">Prev</a></li>
 						<li class="active"><a href="">1</a></li>
 						<li><a href="">2</a></li>
 						<li><a href="">3</a></li>
 						<li><a href="">&raquo;</a></li>
+						<li><a href="<?= $page_links->next ?>">Next</a></li>
 					</ul>
 				</div>
 				<!--features_items-->
