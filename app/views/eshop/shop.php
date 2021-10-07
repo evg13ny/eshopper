@@ -32,12 +32,21 @@
 					<br style="clear: both;">
 
 					<ul class="pagination">
-						<li><a href="<?= $page_links->prev ?>">Prev</a></li>
-						<li class="active"><a href="">1</a></li>
-						<li><a href="">2</a></li>
-						<li><a href="">3</a></li>
-						<li><a href="">&raquo;</a></li>
-						<li><a href="<?= $page_links->next ?>">Next</a></li>
+						<li><a href="<?= Page::links()->prev ?>">Prev</a></li>
+
+						<?php
+						$max = Page::links()->current + 5;
+						$cur = Page::links()->current < 6 ? 1 : Page::links()->current - 5;
+						?>
+
+						<?php for ($i = $cur; $i < $max; $i++) : ?>
+
+							<li <?= Page::links()->current == $i ? 'class="active"' : ''; ?>><a href="<?= Page::generate($i) ?>"><?= $i ?></a></li>
+							<!--<li><a href="">&raquo;</a></li>-->
+
+						<?php endfor; ?>
+
+						<li><a href="<?= Page::links()->next ?>">Next</a></li>
 					</ul>
 				</div>
 				<!--features_items-->
