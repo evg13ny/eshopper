@@ -284,6 +284,10 @@ class Admin extends Controller
     function blogs($type = '')
     {
 
+        // pagination formula
+        $limit = 10;
+        $offset = Page::get_offset($limit);
+
         $type = 'Blog Posts';
 
         $User = $this->load_model('User');

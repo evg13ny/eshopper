@@ -103,6 +103,8 @@
 				</div>
 				<!--/recommended_items-->
 
+				<?php Page::show_links() ?>
+
 			</div>
 		</div>
 	</div>

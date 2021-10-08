@@ -6,24 +6,26 @@ class Home extends Controller
     public function index()
     {
 
-        //check if it's a search
+        // pagination formula
+        $limit = 10;
+        $offset = Page::get_offset($limit);
 
+        //check if it's a search
         $search = false;
 
         if (isset($_GET['find'])) {
 
             $find = addslashes($_GET['find']);
-
             $search = true;
         }
 
         $User = $this->load_model('User');
-
         $image_class = $this->load_model('Image');
 
         $user_data = $User->check_login();
 
         if (is_object($user_data)) {
+
             $data['user_data'] = $user_data;
         }
 
@@ -34,10 +36,10 @@ class Home extends Controller
         if ($search) {
 
             $arr['description'] = "%" . $find . "%";
-            $ROWS = $DB->read("select * from products where description like :description", $arr);
+            $ROWS = $DB->read("select * from products where description like :description limit $limit offset $offset", $arr);
         } else {
 
-            $ROWS = $DB->read("select * from products");
+            $ROWS = $DB->read("select * from products limit $limit offset $offset");
         }
 
         if ($ROWS) {

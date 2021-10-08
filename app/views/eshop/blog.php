@@ -17,7 +17,7 @@
 								<h3><?= htmlspecialchars($row->title) ?></h3>
 								<div class="post-meta">
 									<ul>
-										<li><i class="fa fa-user"></i><?=$row->user_data->name?></li>
+										<li><i class="fa fa-user"></i><?= $row->user_data->name ?></li>
 										<li><i class="fa fa-clock-o"></i> <?= date("h:i a", strtotime($row->date)) ?></li>
 										<li><i class="fa fa-calendar"></i> <?= date("M jS, Y", strtotime($row->date)) ?></li>
 									</ul>
@@ -39,14 +39,8 @@
 						<?php endforeach; ?>
 					<?php endif; ?>
 
-					<div class="pagination-area">
-						<ul class="pagination">
-							<li><a href="" class="active">1</a></li>
-							<li><a href="">2</a></li>
-							<li><a href="">3</a></li>
-							<li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
-						</ul>
-					</div>
+					<?php Page::show_links() ?>
+
 				</div>
 			</div>
 		</div>

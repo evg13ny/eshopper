@@ -44,7 +44,7 @@
                             </a>
                         </td>
                         <td>
-                            <?= nl2br($blog->post) ?>
+                            <?= nl2br(htmlspecialchars($blog->post)) ?>
                         </td>
                         <td>
                             <img src="<?= ROOT . $blog->image ?>" style="width: 75px;">
@@ -63,6 +63,9 @@
                     </tr>
                 <?php endforeach; ?>
             <?php endif; ?>
+            <tr>
+                <td colspan="6"><?php Page::show_links() ?></td>
+            </tr>
         </tbody>
 
     <?php elseif ($mode == "add_new") : ?>

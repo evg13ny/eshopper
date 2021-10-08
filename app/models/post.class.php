@@ -187,7 +187,11 @@ class Post
     public function get_all()
     {
 
+        // pagination
+        $limit = 4;
+        $offset = Page::get_offset($limit);
+
         $DB = Database::newInstance();
-        return $DB->read("select * from blogs order by id desc");
+        return $DB->read("select * from blogs order by id desc limit $limit offset $offset");
     }
 }
