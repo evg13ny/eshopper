@@ -10,6 +10,7 @@
         box-shadow: 0px 0px 10px #aaa;
         position: absolute;
         padding: 6px;
+        z-index: 100;
     }
 
     .show {
@@ -232,6 +233,9 @@
                     <?= $tbl_rows ?>
 
                 </tbody>
+
+                <?php Page::show_links(); ?>
+
             </table>
         </div><!-- /content-panel -->
     </div><!-- /col-md-12 -->

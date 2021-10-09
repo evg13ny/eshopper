@@ -115,6 +115,9 @@
                 <tbody id="table_body">
 
                     <?= $tbl_rows ?>
+                    <tr>
+                        <td colspan="4"><?php Page::show_links(); ?></td>
+                    </tr>
 
                 </tbody>
             </table>

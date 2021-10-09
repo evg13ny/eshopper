@@ -33,7 +33,10 @@ class Admin extends Controller
 
         $DB = Database::newInstance();
 
-        $categories_all = $DB->read("select * from categories order by id desc");
+        $limit = 10;
+        $offset = Page::get_offset($limit);
+
+        $categories_all = $DB->read("select * from categories order by id desc limit $limit offset $offset");
 
         $categories = $DB->read("select * from categories where disabled = 0 order by id desc");
 
@@ -64,7 +67,10 @@ class Admin extends Controller
 
         $DB = Database::newInstance();
 
-        $products = $DB->read("select * from products order by id desc");
+        $limit = 10;
+        $offset = Page::get_offset($limit);
+
+        $products = $DB->read("select * from products order by id desc limit $limit offset $offset");
 
         $categories = $DB->read("select * from categories where disabled = 0 order by id desc");
 

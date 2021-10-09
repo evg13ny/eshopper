@@ -55,6 +55,9 @@
                     </tr>
                 <?php endforeach; ?>
             <?php endif; ?>
+            <tr>
+                <td colspan="6"><?php Page::show_links(); ?></td>
+            </tr>
         </tbody>
 
     <?php elseif ($mode == "delete_confirmed") : ?>
