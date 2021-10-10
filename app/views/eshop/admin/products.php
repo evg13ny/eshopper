@@ -5,7 +5,7 @@
 <style type="text/css">
     .add_edit_panel {
         width: 500px;
-        height: 600px;
+        height: 650px;
         background-color: #eae8e8;
         box-shadow: 0px 0px 10px #aaa;
         position: absolute;
@@ -70,6 +70,21 @@
                                     <?php if (is_array($categories)) : ?>
                                         <?php foreach ($categories as $categ) : ?>
                                             <option value="<?= $categ->id ?>"><?= $categ->category ?></option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <br><br style="clear: both;">
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Brand:</label>
+                            <div class="col-sm-10">
+                                <select id="brand" name="brand" class="form-control" required>
+                                    <option></option>
+                                    <?php if (is_array($brands)) : ?>
+                                        <?php foreach ($brands as $brand) : ?>
+                                            <option value="<?= $brand->id ?>"><?= $brand->brand ?></option>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                 </select>
@@ -223,6 +238,7 @@
                         <th>Product Name</th>
                         <th>Quantity</th>
                         <th>Category</th>
+                        <th>Brand</th>
                         <th>Price</th>
                         <th>Date</th>
                         <th><i class=" fa fa-edit"></i> Action</th>
@@ -316,6 +332,12 @@
             return;
         }
 
+        var brand_input = document.querySelector("#brand");
+        if (brand_input.value.trim() == "" || isNaN(brand_input.value.trim())) {
+            alert("Please enter a valid brand");
+            return;
+        }
+
         var price_input = document.querySelector("#price");
         if (price_input.value.trim() == "" || isNaN(price_input.value.trim())) {
             alert("Please enter a valid price");
@@ -349,6 +371,7 @@
         data.append('description', product_input.value.trim());
         data.append('quantity', quantity_input.value.trim());
         data.append('category', category_input.value.trim());
+        data.append('brand', brand_input.value.trim());
         data.append('price', price_input.value.trim());
         data.append('data_type', 'add_product');
         data.append('image', image_input.files[0]);

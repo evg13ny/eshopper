@@ -12,6 +12,7 @@ class Product
         $arr['description'] = ucwords($DATA->description);
         $arr['quantity']    = $DATA->quantity;
         $arr['category']    = $DATA->category;
+        $arr['brand']       = $DATA->brand;
         $arr['price']       = $DATA->price;
         $arr['date']        = date("Y-m-d H:i:s");
         $arr['user_url']    = $_SESSION['user_url'];
@@ -27,6 +28,10 @@ class Product
 
         if (!is_numeric($arr['category'])) {
             $_SESSION['error'] .= "Please enter a valid category<br>";
+        }
+
+        if (!is_numeric($arr['brand'])) {
+            $_SESSION['error'] .= "Please enter a valid brand<br>";
         }
 
         if (!is_numeric($arr['price'])) {
@@ -78,7 +83,7 @@ class Product
         }
 
         if (!isset($_SESSION['error']) || $_SESSION['error'] == "") {
-            $query = "insert into products (description, quantity, category, price, date, user_url, image, image2, image3, image4, slag) values (:description, :quantity, :category, :price, :date, :user_url, :image, :image2, :image3, :image4, :slag)";
+            $query = "insert into products (description, quantity, category, brand, price, date, user_url, image, image2, image3, image4, slag) values (:description, :quantity, :category, :brand, :price, :date, :user_url, :image, :image2, :image3, :image4, :slag)";
             $check = $DB->write($query, $arr);
 
             if ($check) {
@@ -178,6 +183,7 @@ class Product
                 $info['description'] = $cat_row->description;
                 $info['quantity']    = $cat_row->quantity;
                 $info['category']    = $cat_row->category;
+                $info['category']    = $cat_row->brand_name;
                 $info['price']       = $cat_row->price;
                 $info['image']       = $cat_row->image;
                 $info['image2']      = $cat_row->image2;
@@ -194,6 +200,7 @@ class Product
                     <td><a href="basic_table.html#">' . $cat_row->description . '</a></td>
                     <td><a href="basic_table.html#">' . $cat_row->quantity . '</a></td>
                     <td><a href="basic_table.html#">' . $one_cat->category . '</a></td>
+                    <td><a href="basic_table.html#">' . $cat_row->brand_name . '</a></td>
                     <td><a href="basic_table.html#">' . $cat_row->price . '</a></td>
                     <td><a href="basic_table.html#">' . date("jS M, y H:i:s", strtotime($cat_row->date)) . '</a></td>
                     <td><a href="basic_table.html#"><img src="' . ROOT . $cat_row->image . '" style="width: 70px; height: 70px;"/></a></td>                    
