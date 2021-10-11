@@ -32,11 +32,76 @@
         margin: 2px;
         height: 80px;
     }
+
+    .my-table {
+        background-color: #eee;
+    }
+
+    .my-table th {
+        background-color: #ddd;
+    }
 </style>
 
 <div class="row mt">
     <div class="col-md-12">
         <div class="content-panel">
+
+            <!-- searchbox -->
+            <form method="get">
+                <table class="table table-condensed my-table">
+                    <tr>
+                        <th>Description</th>
+                        <td>
+                            <input class="form-control" type="text" name="description" placeholder="Search Text" autofocus>
+                        </td>
+                        <th>Category</th>
+                        <td>
+                            <select class="form-control" name="category">
+                                <option>--Any Category--</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Brands</th>
+                        <td colspan="3">
+                            <input id="abrand" class="form-checkbox-input" type="checkbox" name="brand-0">
+                            <label for="abrand">A Brand . </label>
+                            <input id="abrand" class="form-checkbox-input" type="checkbox" name="brand-1">
+                            <label for="abrand">A Brand . </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Price</th>
+                        <td>
+                            <div class="form-inline">
+                                <label>Min:</label>
+                                <input class="form-control" type="number" value="0" step="0.01" name="price">
+                                <label>Max:</label>
+                                <input class="form-control" type="number" value="0" step="0.01" name="price">
+                            </div>
+                        </td>
+                        <th>Quantity</th>
+                        <td>
+                            <div class="form-inline">
+                                <label>Min:</label>
+                                <input class="form-control" type="number" value="0" step="1" name="quantity">
+                                <label>Max:</label>
+                                <input class="form-control" type="number" value="0" step="1" name="quantity">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Year</th>
+                        <td>
+                            <select class="form-control">
+                                <option>--Any Year--</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <!-- /searchbox -->
+
             <table class="table table-striped table-advance table-hover">
                 <h4><i class="fa fa-angle-right"></i> Products <button class="btn btn-primary btn-xs" onclick="show_add_new(event)"><i class="fa fa-plus"></i> Add New</button></h4>
 
