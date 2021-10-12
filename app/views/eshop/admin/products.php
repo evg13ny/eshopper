@@ -47,6 +47,7 @@
         <div class="content-panel">
 
             <!-- searchbox -->
+            <h4>Search</h4>
             <form method="get">
                 <table class="table table-condensed my-table">
                     <tr>
@@ -58,16 +59,14 @@
                         <td>
                             <select class="form-control" name="category">
                                 <option>--Any Category--</option>
+                                <?php Search::get_categories() ?>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <th>Brands</th>
                         <td colspan="3">
-                            <input id="abrand" class="form-checkbox-input" type="checkbox" name="brand-0">
-                            <label for="abrand">A Brand . </label>
-                            <input id="abrand" class="form-checkbox-input" type="checkbox" name="brand-1">
-                            <label for="abrand">A Brand . </label>
+                            <?php Search::get_brands() ?>
                         </td>
                     </tr>
                     <tr>
@@ -75,27 +74,33 @@
                         <td>
                             <div class="form-inline">
                                 <label>Min:</label>
-                                <input class="form-control" type="number" value="0" step="0.01" name="price">
+                                <input class="form-control" type="number" value="0" step="0.01" name="min-price">
                                 <label>Max:</label>
-                                <input class="form-control" type="number" value="0" step="0.01" name="price">
+                                <input class="form-control" type="number" value="0" step="0.01" name="max-price">
                             </div>
                         </td>
                         <th>Quantity</th>
                         <td>
                             <div class="form-inline">
                                 <label>Min:</label>
-                                <input class="form-control" type="number" value="0" step="1" name="quantity">
+                                <input class="form-control" type="number" value="0" step="1" name="min-qty">
                                 <label>Max:</label>
-                                <input class="form-control" type="number" value="0" step="1" name="quantity">
+                                <input class="form-control" type="number" value="0" step="1" name="max-qty">
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <th>Year</th>
                         <td>
-                            <select class="form-control">
+                            <select class="form-control" name="year">
                                 <option>--Any Year--</option>
+                                <?php Search::get_years() ?>
                             </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <input type="submit" class="btn btn-success pull-right" value="Search" name="search">
                         </td>
                     </tr>
                 </table>

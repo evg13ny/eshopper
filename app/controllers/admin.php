@@ -58,6 +58,14 @@ class Admin extends Controller
     public function products()
     {
 
+        $search = false;
+
+        if (isset($_GET['search'])) {
+
+            show($_GET);
+            $search = true;
+        }
+
         $User = $this->load_model('User');
         $user_data = $User->check_login(true, ["admin"]);
 
