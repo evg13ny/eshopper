@@ -3,7 +3,7 @@
 class Search
 {
 
-    public static function get_categories()
+    public static function get_categories($name = '')
     {
 
         $DB = Database::newInstance();
@@ -14,12 +14,12 @@ class Search
 
             foreach ($data as $row) {
 
-                echo "<option id='$row->id'>$row->category</option>";
+                echo "<option value='$row->id' " . self::get_sticky('select', $name, $row->id) . ">$row->category</option>";
             }
         }
     }
 
-    public static function get_years()
+    public static function get_years($name)
     {
 
         $DB = Database::newInstance();
@@ -30,7 +30,8 @@ class Search
 
             foreach ($data as $row) {
 
-                echo "<option>" . date("Y", strtotime($row->date)) . "</option>";
+                $year =  date("Y", strtotime($row->date));
+                echo "<option " . self::get_sticky('select', $name, $year) . ">" . $year . "</option>";
             }
         }
     }
@@ -48,11 +49,37 @@ class Search
 
             foreach ($data as $row) {
 
-                echo "<input id=\"$row->id\" value=\"$row->id\" class=\"form-checkbox-input\" type=\"checkbox\" name=\"brand-$num\">
+                echo "<input " . self::get_sticky('checkbox', 'brand-' . $num, $row->id) . " id=\"$row->id\" value=\"$row->id\" class=\"form-checkbox-input\" type=\"checkbox\" name=\"brand-$num\">
                 <label for=\"$row->id\">$row->brand</label> &nbsp ";
 
                 $num++;
             }
+        }
+    }
+
+    public static function get_sticky($type, $name, $value = '')
+    {
+
+        switch ($type) {
+
+            case 'textbox':
+                echo isset($_GET[$name]) ? $_GET[$name] : "";
+                break;
+
+            case 'select':
+                return isset($_GET[$name]) && $value == $_GET[$name] ? "selected='true'" : "";
+                break;
+
+            case 'number':
+                echo isset($_GET[$name]) ? $_GET[$name] : "0";
+                break;
+
+            case 'checkbox':
+                return isset($_GET[$name]) && $value == $_GET[$name] ? "checked='true'" : "";
+                break;
+
+            default:
+                break;
         }
     }
 }
