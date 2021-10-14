@@ -62,7 +62,7 @@ class Admin extends Controller
 
         if (isset($_GET['search'])) {
 
-            show($_GET);
+            // show($_GET);
             $search = true;
         }
 
@@ -79,7 +79,52 @@ class Admin extends Controller
         $limit = 10;
         $offset = Page::get_offset($limit);
 
-        $products = $DB->read("select products.*, brands.brand as brand_name from products join brands on brands.id = products.brand order by products.id desc limit $limit offset $offset");
+        if ($search) {
+
+            $params = array();
+
+            if (isset($_GET['description']) && trim($_GET['description']) != "") {
+
+                $params['description'] = $_GET['description'];
+            }
+
+            if (isset($_GET['category']) && trim($_GET['category']) != "--Any Category--") {
+
+                $params['category'] = $_GET['category'];
+            }
+
+            $query = " 
+             select prod.*, cat.category as category_name, brands.brand as brand_name 
+             from products as prod 
+             join categories as cat on cat.id = prod.category 
+             join brands on brands.id = prod.brand 
+             ";
+
+            if (count($params) > 0) {
+
+                $query .= " where ";
+            }
+
+            if (isset($params['description'])) {
+
+                $query .= " prod.description like '%$params[description]%' AND ";
+            }
+
+            if (isset($params['category'])) {
+
+                $query .= " cat.id = '$params[category]' AND";
+            }
+
+            $query = trim($query);
+            $query = trim($query, 'AND');
+            $query .= " order by prod.id desc limit $limit offset $offset ";
+
+            $products = $DB->read($query);
+        } else {
+
+            $products = $DB->read("select prod.*, brands.brand as brand_name, cat.category as category_name from products as prod join brands on brands.id = prod.brand join categories as cat on cat.id = prod.category order by prod.id desc limit $limit offset $offset");
+        }
+
         $categories = $DB->read("select * from categories where disabled = 0 order by views desc");
         $brands = $DB->read("select * from brands where disabled = 0 order by views desc");
 
