@@ -83,15 +83,56 @@ class Admin extends Controller
 
             $params = array();
 
+            // add description if available
             if (isset($_GET['description']) && trim($_GET['description']) != "") {
 
                 $params['description'] = $_GET['description'];
             }
 
+            // add category if available
             if (isset($_GET['category']) && trim($_GET['category']) != "--Any Category--") {
 
                 $params['category'] = $_GET['category'];
             }
+
+
+            // add year if available
+            if (isset($_GET['year']) && trim($_GET['year']) != "--Any Year--") {
+
+                $params['year'] = $_GET['year'];
+            }
+
+            // add price if available
+            if (isset($_GET['min-price']) && trim($_GET['min-price']) != "0") {
+
+                $params['min-price'] = $_GET['min-price'];
+                $params['max-price'] = $_GET['max-price'];
+            }
+
+            // add qty if available
+            if (isset($_GET['min-qty']) && trim($_GET['min-qty']) != "0") {
+
+                $params['min-qty'] = $_GET['min-qty'];
+                $params['max-qty'] = $_GET['max-qty'];
+            }
+
+            // add brands if available
+            $brands = array();
+
+            foreach ($_GET as $key => $value) {
+
+                if (strstr($key, "brand-")) {
+
+                    $brands[] = $value;
+                }
+            }
+
+            if (count($brands) > 0) {
+
+                $params['brands'] = implode("','", $brands);
+            }
+
+
 
             $query = " 
              select prod.*, cat.category as category_name, brands.brand as brand_name 
@@ -112,13 +153,33 @@ class Admin extends Controller
 
             if (isset($params['category'])) {
 
-                $query .= " cat.id = '$params[category]' AND";
+                $query .= " cat.id = '$params[category]' AND ";
+            }
+
+            if (isset($params['min-price'])) {
+
+                $query .= " prod.price BETWEEN '" . $params['min-price'] . "' AND '" . $params['max-price'] . "' AND ";
+            }
+
+            if (isset($params['min-qty'])) {
+
+                $query .= " prod.quantity BETWEEN '" . $params['min-qty'] . "' AND '" . $params['max-qty'] . "' AND ";
+            }
+
+            if (isset($params['year'])) {
+
+                $query .= " YEAR(prod.date) = '$params[year]' AND ";
+            }
+
+            if (isset($params['brands'])) {
+
+                $query .= " brands.id IN ('" . $params['brands'] . "') AND ";
             }
 
             $query = trim($query);
             $query = trim($query, 'AND');
             $query .= " order by prod.id desc limit $limit offset $offset ";
-
+            // echo $query;
             $products = $DB->read($query);
         } else {
 
