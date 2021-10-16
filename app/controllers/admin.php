@@ -90,30 +90,30 @@ class Admin extends Controller
             }
 
             // add category if available
-            if (isset($_GET['category']) && trim($_GET['category']) != "--Any Category--") {
+            if (isset($_GET['category']) && trim($_GET['category']) != "--Select Category--") {
 
                 $params['category'] = $_GET['category'];
             }
 
 
             // add year if available
-            if (isset($_GET['year']) && trim($_GET['year']) != "--Any Year--") {
+            if (isset($_GET['year']) && trim($_GET['year']) != "--Select Year--") {
 
                 $params['year'] = $_GET['year'];
             }
 
             // add price if available
-            if (isset($_GET['min-price']) && trim($_GET['min-price']) != "0") {
+            if (isset($_GET['min-price']) && trim($_GET['max-price']) != "0" && trim($_GET['min-price']) != "" && trim($_GET['max-price']) != "") {
 
-                $params['min-price'] = $_GET['min-price'];
-                $params['max-price'] = $_GET['max-price'];
+                $params['min-price'] = (float)$_GET['min-price'];
+                $params['max-price'] = (float)$_GET['max-price'];
             }
 
             // add qty if available
-            if (isset($_GET['min-qty']) && trim($_GET['min-qty']) != "0") {
+            if (isset($_GET['min-qty']) && trim($_GET['max-qty']) != "0" && trim($_GET['min-qty']) != "" && trim($_GET['max-qty']) != "") {
 
-                $params['min-qty'] = $_GET['min-qty'];
-                $params['max-qty'] = $_GET['max-qty'];
+                $params['min-qty'] = (int)$_GET['min-qty'];
+                $params['max-qty'] = (int)$_GET['max-qty'];
             }
 
             // add brands if available

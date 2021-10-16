@@ -54,6 +54,79 @@
         </div>
         <!--/category-products-->
 
+        <!-- searchbox -->
+        <h2>Advanced Search</h2>
+
+        <style>
+            .my-table {
+                background-color: #eee;
+            }
+
+            .my-table th {
+                background-color: #ddd;
+            }
+        </style>
+
+        <form method="get">
+            <table class="table table-condensed my-table">
+                <tr>
+                    <td>
+                        <input class="form-control" type="text" name="description" value="<?php Search::get_sticky('textbox', 'description') ?>" placeholder="Product Name" autofocus>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <select class="form-control" name="category">
+                            <option>--Select Category--</option>
+                            <?php Search::get_categories('category') ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>Brands</div>
+                        <?php Search::get_brands() ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>Price Range</div>
+                        <div class="form-inline">
+                            <label>Min:</label>
+                            <input class="form-control" type="number" value="<?php Search::get_sticky('number', 'min-price') ?>" step="0.01" name="min-price">
+                            <label>Max:</label>
+                            <input class="form-control" type="number" value="<?php Search::get_sticky('number', 'max-price') ?>" step="0.01" name="max-price">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>Quantity</div>
+                        <div class="form-inline">
+                            <label>Min:</label>
+                            <input class="form-control" type="number" value="<?php Search::get_sticky('number', 'min-qty') ?>" step="1" name="min-qty">
+                            <label>Max:</label>
+                            <input class="form-control" type="number" value="<?php Search::get_sticky('number', 'max-qty') ?>" step="1" name="max-qty">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <select class="form-control" name="year">
+                            <option>--Select Year--</option>
+                            <?php Search::get_years('year') ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" class="btn btn-success pull-right" value="Search" name="search">
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <!-- /searchbox -->
+
         <div class="shipping text-center">
             <!--shipping-->
             <img src="<?= ASSETS . THEME ?>images/home/shipping.jpg" alt="" />
