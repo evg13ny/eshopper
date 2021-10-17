@@ -19,6 +19,12 @@ class Home extends Controller
             $search = true;
         }
 
+        if (isset($_GET['search'])) {
+
+            show($_GET);
+            $search = true;
+        }
+
         $User = $this->load_model('User');
         $image_class = $this->load_model('Image');
 
@@ -35,8 +41,16 @@ class Home extends Controller
         // read main posts
         if ($search) {
 
-            $arr['description'] = "%" . $find . "%";
-            $ROWS = $DB->read("select * from products where description like :description limit $limit offset $offset", $arr);
+            if (isset($_GET['find'])) {
+
+                $arr['description'] = "%" . $find . "%";
+                $ROWS = $DB->read("select * from products where description like :description limit $limit offset $offset", $arr);
+            } else {
+                // advanced search
+                // generate searching query
+                $query = Search::make_query($_GET, $limit, $offset);
+                $ROWS = $DB->read($query);
+            }
         } else {
 
             $ROWS = $DB->read("select * from products limit $limit offset $offset");

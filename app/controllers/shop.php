@@ -15,7 +15,12 @@ class Shop extends Controller
         if (isset($_GET['find'])) {
 
             $find = addslashes($_GET['find']);
+            $search = true;
+        }
 
+        if (isset($_GET['search'])) {
+
+            // show($_GET);
             $search = true;
         }
 
@@ -33,9 +38,16 @@ class Shop extends Controller
 
         if ($search) {
 
-            $arr['description'] = "%" . $find . "%";
+            if (isset($_GET['find'])) {
 
-            $ROWS = $DB->read("select * from products where description like :description limit $limit offset $offset", $arr);
+                $arr['description'] = "%" . $find . "%";
+                $ROWS = $DB->read("select * from products where description like :description limit $limit offset $offset", $arr);
+            } else {
+                // advanced search
+                // generate searching query
+                $query = Search::make_query($_GET, $limit, $offset);
+                $ROWS = $DB->read($query);
+            }
         } else {
 
             $ROWS = $DB->read("select * from products limit $limit offset $offset");
