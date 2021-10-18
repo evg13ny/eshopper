@@ -57,7 +57,7 @@ class Search
         }
     }
 
-    public static function get_sticky($type, $name, $value = '')
+    public static function get_sticky($type, $name, $value = '', $default = null)
     {
 
         switch ($type) {
@@ -71,7 +71,14 @@ class Search
                 break;
 
             case 'number':
-                echo isset($_GET[$name]) ? $_GET[$name] : "0";
+
+                $def = 0;
+
+                if ($default) {
+                    $def = $default;
+                }
+
+                echo isset($_GET[$name]) ? $_GET[$name] : $def;
                 break;
 
             case 'checkbox':

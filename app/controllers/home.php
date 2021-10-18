@@ -21,7 +21,7 @@ class Home extends Controller
 
         if (isset($_GET['search'])) {
 
-            show($_GET);
+            // show($_GET);
             $search = true;
         }
 

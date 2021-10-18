@@ -5,13 +5,14 @@ class Profile extends Controller
     public function index($url_address = null)
     {
         $User = $this->load_model('User');
-
         $Order = $this->load_model('Order');
 
         $user_data = $User->check_login(true);
 
         if ($url_address) {
 
+            $_SESSION['user_url'] = isset($_SESSION['user_url']) ?  $_SESSION['user_url'] : '';
+            $url_address = $url_address == 'home' ? $_SESSION['user_url'] : $url_address;
             $profile_data = $User->get_user($url_address);
         } else {
 
@@ -22,7 +23,7 @@ class Profile extends Controller
             $data['user_data'] = $user_data;
         }
 
-        if (is_array($profile_data)) {
+        if (is_object($profile_data)) {
 
             $orders = $Order->get_orders_by_user($profile_data->url_address);
         } else {
@@ -44,9 +45,7 @@ class Profile extends Controller
         }
 
         $data['profile_data'] = $profile_data;
-
         $data['page_title'] = "Profile";
-
         $data['orders'] = $orders;
 
         $this->view("profile", $data);
