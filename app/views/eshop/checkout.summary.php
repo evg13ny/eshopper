@@ -26,7 +26,7 @@ if (isset($errors) && count($errors) > 0) {
 		</div>
 		<!--/breadcrums-->
 
-		<?php if (is_array($orders)) : ?>
+		<?php if (isset($orders) && is_array($orders)) : ?>
 
 			<div class="register-req">
 				<p style="text-align: center;">Please confirm the information below</p>
