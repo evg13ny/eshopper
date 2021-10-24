@@ -60,16 +60,16 @@
 
 						// Or go to another URL:  actions.redirect('thank_you.html');
 
-						window.location.href = '<?= ROOT . "thanks?mode=approved" ?>';
+						window.location.href = '<?= ROOT . "checkout/thank_you?mode=approved" ?>';
 					});
 				},
 
 				onCancel: function(data) {
-					window.location.href = '<?= ROOT . "thanks?mode=cancel" ?>';
+					window.location.href = '<?= ROOT . "checkout/thank_you?mode=cancel" ?>';
 				},
 
 				onError: function(err) {
-					window.location.href = '<?= ROOT . "thanks?mode=error" ?>';
+					window.location.href = '<?= ROOT . "checkout/thank_you?mode=error" ?>';
 				}
 
 			}).render('#paypal-button-container');

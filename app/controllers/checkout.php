@@ -75,7 +75,7 @@ class Checkout extends Controller
             $order = $this->load_model('Order');
             $order->validate($_POST);
             $data['errors'] = $order->errors;
-            $_POST['order_id'] = get_order_id();
+            // $_POST['order_id'] = get_order_id();
 
             $_SESSION['POST_DATA'] = $_POST;
             $data['POST_DATA'] = $_POST;
@@ -180,6 +180,11 @@ class Checkout extends Controller
 
     public function thank_you()
     {
+
+        if (isset($_SESSION['POST_DATA'])) {
+
+            unset($_SESSION['POST_DATA']);
+        }
 
         $data['page_title'] = "Thank you";
         $this->view("checkout.thank_you", $data);

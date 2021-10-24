@@ -2,9 +2,25 @@
 
 <div style="text-align: center;">
 
-	<h2>Thank you for shopping this us!</h2>
+	<?php if (isset($_GET['mode']) && $_GET['mode'] == 'approved') : ?>
 
-	<h4>Your order was successful</h4><br><br>
+		<h2>Thank you for shopping this us!</h2>
+
+		<h4>Your order was successful</h4><br><br>
+
+	<?php elseif (isset($_GET['mode']) && $_GET['mode'] == 'cancel') : ?>
+		<center>
+			<h1>Payment was cancelled.</h1>
+		</center>
+	<?php elseif (isset($_GET['mode']) && $_GET['mode'] == 'error') : ?>
+		<center>
+			<h1>An error occured! Payment unsuccessful.</h1>
+		</center>
+	<?php else : ?>
+		<center>
+			<h1>Sorry, an error occured.</h1>
+		</center>
+	<?php endif; ?>
 
 	<div>What would you like to do next?</div><br>
 

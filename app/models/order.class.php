@@ -89,22 +89,21 @@ class Order extends Controller
             $data['date']             = date("Y-m-d H:i:s");
             $data['phone']            = $POST['phone'];
 
-            $query = "insert into orders (user_url,delivery_address,total,country,state,zip,tax,shipping,date,sessionid,phone) values (:user_url,:delivery_address,:total,:country,:state,:zip,:tax,:shipping,:date,:sessionid,:phone)";
-
-            $result = $db->write($query, $data);
-
             // save details
-
             $orderid = 0;
-
             $query = "select id from orders order by id desc limit 1";
-
             $result = $db->read($query);
 
             if (is_array($result)) {
 
-                $orderid = $result[0]->id;
+                $orderid = $result[0]->id + 1;
             }
+
+            $data['description'] = "order " . $orderid;
+
+            $query = "insert into orders (description,user_url,delivery_address,total,country,state,zip,tax,shipping,date,sessionid,phone) values (:description,:user_url,:delivery_address,:total,:country,:state,:zip,:tax,:shipping,:date,:sessionid,:phone)";
+
+            $result = $db->write($query, $data);
 
             foreach ($ROWS as $row) {
 
