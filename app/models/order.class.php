@@ -58,13 +58,6 @@ class Order extends Controller
     public function save_order($POST, $ROWS, $user_url, $sessionid)
     {
 
-        $total = 0;
-
-        foreach ($ROWS as $key => $row) {
-
-            $total += $row->cart_qty * $row->price;
-        }
-
         $db = Database::newInstance();
 
         if (is_array($ROWS) && count($this->errors) == 0) {
@@ -76,7 +69,8 @@ class Order extends Controller
             $data['user_url']         = $user_url;
             $data['sessionid']        = $sessionid;
             $data['delivery_address'] = $POST['address1'] . "" . $POST['address2'];
-            $data['total']            = $total;
+            $data['total']            = $POST['total'];
+            $data['description']      = $POST['description'];
             // $country_obj              = $countries->get_country($POST['country']);
             $data['country']          = $POST['country'];
             // $data['country']          = $countries->get_country($POST['country']);
@@ -98,8 +92,6 @@ class Order extends Controller
 
                 $orderid = $result[0]->id + 1;
             }
-
-            $data['description'] = "order " . $orderid;
 
             $query = "insert into orders (description,user_url,delivery_address,total,country,state,zip,tax,shipping,date,sessionid,phone) values (:description,:user_url,:delivery_address,:total,:country,:state,:zip,:tax,:shipping,:date,:sessionid,:phone)";
 

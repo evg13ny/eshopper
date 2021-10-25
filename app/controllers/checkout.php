@@ -75,7 +75,7 @@ class Checkout extends Controller
             $order = $this->load_model('Order');
             $order->validate($_POST);
             $data['errors'] = $order->errors;
-            // $_POST['order_id'] = get_order_id();
+            $_POST['order_id'] = get_order_id();
 
             $_SESSION['POST_DATA'] = $_POST;
             $data['POST_DATA'] = $_POST;
@@ -158,6 +158,8 @@ class Checkout extends Controller
             }
 
             $order = $this->load_model('Order');
+            $_SESSION['POST_DATA']['total'] = get_total($ROWS);
+            $_SESSION['POST_DATA']['description'] = get_order_id();
             $order->save_order($_SESSION['POST_DATA'], $ROWS, $user_url, $sessionid);
             $data['errors'] = $order->errors;
 
@@ -184,6 +186,11 @@ class Checkout extends Controller
         if (isset($_SESSION['POST_DATA'])) {
 
             unset($_SESSION['POST_DATA']);
+        }
+
+        if (isset($_SESSION['CART'])) {
+
+            unset($_SESSION['CART']);
         }
 
         $data['page_title'] = "Thank you";

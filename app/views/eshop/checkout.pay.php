@@ -4,6 +4,13 @@
 
 	<h1>Select a payment method below</h1>
 
+	<?php if (isset($_SESSION['POST_DATA'])) {
+
+		$total = 0;
+		$description = "order 0";
+		extract($_SESSION['POST_DATA']);
+	} ?>
+
 	<div id="smart-button-container">
 		<div style="text-align: center;">
 			<div id="paypal-button-container"></div>
@@ -24,22 +31,22 @@
 				createOrder: function(data, actions) {
 					return actions.order.create({
 						purchase_units: [{
-							"description": "Мой товар",
+							"description": "<?= $description ?>",
 							"amount": {
 								"currency_code": "RUB",
-								"value": 13.2,
+								"value": <?= $total ?>,
 								"breakdown": {
 									"item_total": {
 										"currency_code": "RUB",
-										"value": 10
+										"value": <?= $total ?>
 									},
 									"shipping": {
 										"currency_code": "RUB",
-										"value": 3
+										"value": 0
 									},
 									"tax_total": {
 										"currency_code": "RUB",
-										"value": 0.2
+										"value": 0
 									}
 								}
 							}

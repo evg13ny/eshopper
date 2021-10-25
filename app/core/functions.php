@@ -47,8 +47,21 @@ function get_order_id()
 
     if (is_array($ROWS)) {
 
-        $order = $ROWS[0]->id + 1;
+        $order = "order " . ($ROWS[0]->id + 1);
     }
 
     return $order;
+}
+
+function get_total($ROWS)
+{
+
+    $total = 0;
+
+    foreach ($ROWS as $key => $row) {
+
+        $total += $row->cart_qty * $row->price;
+    }
+
+    return $total;
 }
