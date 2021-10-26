@@ -80,11 +80,15 @@
                                 <th>Delivery address</th>
                                 <th>City / State</th>
                                 <th>Phone</th>
+                                <th>Status</th>
                                 <th>...</th>
                             </tr>
                         </thead>
                         <tbody onclick="show_details(event)">
                             <?php foreach ($orders as $order) : ?>
+                                <?php
+                                $status = is_paid($order);
+                                ?>
                                 <tr style="position: relative;">
                                     <td>
                                         <?= $order->id ?>
@@ -103,6 +107,9 @@
                                     </td>
                                     <td>
                                         <?= $order->phone ?>
+                                    </td>
+                                    <td>
+                                        <?= $status ?>
                                     </td>
                                     <td>
                                         <i class="fa fa-arrow-down"></i>

@@ -65,3 +65,9 @@ function get_total($ROWS)
 
     return $total;
 }
+
+function is_paid($order)
+{
+
+    return "Not Paid";
+}

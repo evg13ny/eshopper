@@ -36,8 +36,14 @@ class Profile extends Controller
             foreach ($orders as $key => $row) {
 
                 $details = $Order->get_orders_details($row->id);
-                $totals = array_column($details, "total");
-                $grand_total = array_sum($totals);
+
+                $grand_total = 0;
+
+                if ($details) {
+
+                    $totals = array_column($details, "total");
+                    $grand_total = array_sum($totals);
+                }
 
                 $orders[$key]->details = $details;
                 $orders[$key]->grand_total = $grand_total;
