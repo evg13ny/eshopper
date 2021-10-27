@@ -18,6 +18,8 @@ if ($_SERVER['SERVER_NAME'] == "localhost") {
     define('DB_HOST', "localhost");
 }
 
+$url = $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . str_replace("index.php", "", $_SERVER['PHP_SELF']) . str_replace("url=", "", $_SERVER['QUERY_STRING']);
+define('FULL_URL', $url);
 define('THEME', 'eshop/');
 
 define('DEBUG', true);

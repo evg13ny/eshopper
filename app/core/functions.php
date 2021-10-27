@@ -69,5 +69,33 @@ function get_total($ROWS)
 function is_paid($order)
 {
 
-    return "Not Paid";
+    $arr['amount'] = addslashes($order->total);
+    $arr['order_id'] = addslashes($order->description);
+
+    $DB = Database::newInstance();
+    $payment = $DB->read("select id from payments where amount = :amount && order_id = :order_id limit 1", $arr);
+
+    if (is_array($payment)) {
+
+        return "<button class='btn btn-success'>Paid</button>";
+    }
+
+    return "<button class='btn btn-warning'>Not Paid</button>";
+}
+
+function is_paid_boolean($order)
+{
+
+    $arr['amount'] = addslashes($order->total);
+    $arr['order_id'] = addslashes($order->description);
+
+    $DB = Database::newInstance();
+    $payment = $DB->read("select id from payments where amount = :amount && order_id = :order_id limit 1", $arr);
+
+    if (is_array($payment)) {
+
+        return true;
+    }
+
+    return false;
 }

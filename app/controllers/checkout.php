@@ -5,10 +5,10 @@ class Checkout extends Controller
     public function index()
     {
         $User = $this->load_model('User');
-
         $image_class = $this->load_model('Image');
 
-        $user_data = $User->check_login();
+        // make sure the user is logged in
+        $user_data = $User->check_login(true, ["admin", "customer"]);
 
         if (is_object($user_data)) {
             $data['user_data'] = $user_data;
@@ -94,10 +94,10 @@ class Checkout extends Controller
     {
 
         $User = $this->load_model('User');
-
         $image_class = $this->load_model('Image');
 
-        $user_data = $User->check_login();
+        // make sure the user is logged in
+        $user_data = $User->check_login(true, ["admin", "customer"]);
 
         if (is_object($user_data)) {
             $data['user_data'] = $user_data;
@@ -175,6 +175,10 @@ class Checkout extends Controller
 
     public function pay()
     {
+
+        // make sure the user is logged in
+        $User = $this->load_model('User');
+        $user_data = $User->check_login(true, ["admin", "customer"]);
 
         $data['page_title'] = "Pay Now";
         $this->view("checkout.pay", $data);

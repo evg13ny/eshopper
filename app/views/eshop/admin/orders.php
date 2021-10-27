@@ -26,6 +26,7 @@
             <th>Delivery address</th>
             <th>City / State</th>
             <th>Phone</th>
+            <th>Status</th>
             <th>...</th>
         </tr>
     </thead>
@@ -57,6 +58,9 @@
                     </td>
                     <td>
                         <?= $order->phone ?>
+                    </td>
+                    <td>
+                        <?= is_paid($order) ?>
                     </td>
                     <td>
                         <i class="fa fa-arrow-down"></i>

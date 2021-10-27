@@ -91,7 +91,16 @@ class User
 
             if (is_array($result)) {
                 $_SESSION['user_url'] = $result[0]->url_address;
-                header("Location: " . ROOT . "home");
+
+                if (isset($_SESSION['intended_url'])) {
+
+                    $url = $_SESSION['intended_url'];
+                    unset($_SESSION['intended_url']);
+                    header("Location: " . $url);
+                } else {
+
+                    header("Location: " . ROOT . "home");
+                }
                 die;
             }
 
@@ -174,7 +183,7 @@ class User
         $db = Database::getInstance();
 
         if (count($allowed) > 0) {
-            $arr['url'] = $_SESSION['user_url'];
+            $arr['url'] = isset($_SESSION['user_url']) ? $_SESSION['user_url'] : '';
             $query = "select * from users where url_address = :url limit 1";
             $result = $db->read($query, $arr);
 
@@ -186,6 +195,7 @@ class User
                 }
             }
 
+            $_SESSION['intended_url'] = FULL_URL;
             header("Location: " . ROOT . "login");
             die;
         } else {
@@ -201,6 +211,8 @@ class User
             }
 
             if ($redirect) {
+
+                $_SESSION['intended_url'] = FULL_URL;
                 header("Location: " . ROOT . "login");
                 die;
             }
