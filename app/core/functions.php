@@ -99,3 +99,69 @@ function is_paid_boolean($order)
 
     return false;
 }
+
+function get_admin_count()
+{
+
+    $DB = Database::newInstance();
+    $ROWS = $DB->read("select id from users where rank = 'admin'");
+
+    if (is_array($ROWS)) {
+
+        return count($ROWS);
+    }
+    return 0;
+}
+
+function get_customer_count()
+{
+
+    $DB = Database::newInstance();
+    $ROWS = $DB->read("select id from users where rank = 'customer'");
+
+    if (is_array($ROWS)) {
+
+        return count($ROWS);
+    }
+    return 0;
+}
+
+function get_order_count()
+{
+
+    $DB = Database::newInstance();
+    $ROWS = $DB->read("select id from orders");
+
+    if (is_array($ROWS)) {
+
+        return count($ROWS);
+    }
+    return 0;
+}
+
+function get_categories_count()
+{
+
+    $DB = Database::newInstance();
+    $ROWS = $DB->read("select id from categories");
+
+    if (is_array($ROWS)) {
+
+        return count($ROWS);
+    }
+    return 0;
+}
+
+function get_payment_total()
+{
+
+    $DB = Database::newInstance();
+    $ROWS = $DB->read("select amount from payments");
+
+    if (is_array($ROWS)) {
+
+        $amount = array_column($ROWS, 'amount');
+        return array_sum($amount);
+    }
+    return 0;
+}
